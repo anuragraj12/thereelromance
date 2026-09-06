@@ -13,6 +13,8 @@
 /* Sprint 6B — content-driven portfolio */
 .real-media{background:#f1ebe2;padding:11vw 5vw}.real-media-head{display:grid;grid-template-columns:1fr 1fr;gap:6vw;align-items:end;margin-bottom:5vw}.real-media h2{font:500 clamp(4rem,7vw,8rem)/.84 var(--serif);letter-spacing:-.06em}.real-media h2 em{font-style:italic}.real-media-copy{max-width:480px;line-height:1.75}.wedding-shell{display:grid;grid-template-columns:1fr 1.4fr;gap:1.2vw}.wedding-meta{background:#cbb9a7;padding:2.2rem;display:flex;flex-direction:column;justify-content:space-between;min-height:72vh}.wedding-meta h3{font:500 clamp(3rem,5vw,6rem)/.85 var(--serif);letter-spacing:-.05em}.wedding-meta h3 em{font-style:italic}.wedding-meta p{line-height:1.7;max-width:350px}.wedding-meta small{font:9px var(--mono);letter-spacing:.12em;text-transform:uppercase}.real-gallery{display:grid;grid-template-columns:1fr 1fr;gap:1.2vw}.real-gallery img{width:100%;height:35vh;object-fit:cover;display:block;cursor:pointer}.real-gallery img:first-child{grid-column:1/-1;height:58vh}.real-film{margin-top:1.2vw;position:relative;background:#111;color:#fff;min-height:28vh;padding:2rem;display:flex;align-items:end;overflow:hidden}.real-film:before{content:"FILM";position:absolute;right:1rem;top:1rem;font:9px var(--mono);letter-spacing:.12em;color:#fff8}.real-film video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.65}.real-film-info{position:relative;z-index:2}.real-film-info h4{font:500 2.5rem var(--serif)}.real-film-info p{font:10px var(--mono);margin-top:.5rem}.bts-strip{margin-top:1.2vw;display:grid;grid-template-columns:repeat(3,1fr);gap:1.2vw}.bts-strip video{width:100%;height:42vh;object-fit:cover;background:#111}.media-empty{padding:3rem;border:1px dashed #2225;font:10px var(--mono);text-transform:uppercase;letter-spacing:.08em}
 @media(max-width:750px){.real-media{padding:20vw 6vw}.real-media-head{display:block}.real-media-copy{margin-top:3rem}.wedding-shell{display:block}.wedding-meta{min-height:55vh;margin-bottom:2vw}.real-gallery{gap:2vw}.real-gallery img{height:28vh}.real-gallery img:first-child{height:45vh}.real-film{min-height:30vh}.bts-strip{gap:2vw}.bts-strip video{height:42vh}}
+
+.hosted-video{padding:0;min-height:55vh}.hosted-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.hosted-video .real-film-info{bottom:1.5rem;left:1.5rem}.hosted-bts{position:relative;height:42vh;background:#111;overflow:hidden}.hosted-bts iframe{width:100%;height:100%;border:0}@media(max-width:750px){.hosted-video{min-height:45vh}.hosted-bts{height:42vh}}
 </style></head><body><nav class="nav"><a class="logo" href="#">The Reel <em>Romance</em></a><div class="links"><a href="#portfolio">Work</a><a href="#services">Services</a><a href="#vibes">Vibes</a><a href="#stories">Stories</a></div><a class="pill" href="#enquire">Your date →</a></nav>
 <section class="hero"><div class="hero-bg"></div><div class="hero-content"><div class="eyebrow">Bangalore · Destination Weddings · Stories</div><h1>The Reel<br><em>Romance.</em></h1><p>Your wedding is a once-in-a-lifetime story. We capture the big moments, the quiet ones, and everything gloriously chaotic in between.</p></div><div class="hero-bottom"><span>Photography · Films · BTS</span><span>Explore the work ↓</span></div></section>
 <section class="section"><div class="intro-grid"><div class="kicker">01 / The way we see it</div><div><h2 class="big">A wedding isn't a <em>photoshoot.</em></h2><p class="copy"><strong>It's a thousand little moments.</strong><br><br>The shaky hands. The ugly crying. Your friends losing their minds on the dance floor. Your dad pretending he's completely fine. The glance you exchange across a room full of people.<br><br><b>That's the stuff we want to remember.</b></p></div></div></section>
@@ -114,12 +116,8 @@ document.getElementById('lbClose').onclick=()=>lb.classList.remove('open');lb.ad
       'media/weddings/anurag-garima/photos/IMG_3.jpg',
       'media/weddings/anurag-garima/photos/IMG_4.jpg'
     ],
-    film:'media/weddings/anurag-garima/film.mp4',
-    bts:[
-      'media/weddings/anurag-garima/bts/bts1.mp4',
-      'media/weddings/anurag-garima/bts/bts2.mp4',
-      'media/weddings/anurag-garima/bts/bts3.mp4'
-    ]
+    film:'',
+    bts:[]
   };
   try{
     const r=await fetch('content.json',{cache:'no-store'});
@@ -134,11 +132,26 @@ document.getElementById('lbClose').onclick=()=>lb.classList.remove('open');lb.ad
     </div>
     <div>
       <div class="real-gallery">${w.portfolio.map((src,i)=>`<img src="${src}" alt="${esc(w.couple)} wedding photograph ${i+1}" loading="lazy" onclick="openRealLightbox('${src}')">`).join('')}</div>
-      ${w.film?`<div class="real-film"><video src="${w.film}" muted autoplay loop playsinline preload="metadata"></video><div class="real-film-info"><h4>The Film.</h4><p>cinematic wedding story · ${esc(w.couple)}</p></div></div>`:''}
-      ${w.bts&&w.bts.length?`<div class="bts-strip">${w.bts.map(src=>`<video src="${src}" muted autoplay loop playsinline preload="metadata"></video>`).join('')}</div>`:''}
+      ${renderVideo(w.film,'The Film.',w.couple)}
+      ${w.bts&&w.bts.length?`<div class="bts-strip">${w.bts.map((src,i)=>renderBts(src,i)).join('')}</div>`:''}
     </div>
   </div>`;
 })();
+function youtubeId(url){const m=String(url||'').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([^?&/]+)/);return m?m[1]:null;}
+function vimeoId(url){const m=String(url||'').match(/vimeo\.com\/(?:video\/)?(\d+)/);return m?m[1]:null;}
+function renderVideo(src,title,couple){
+  if(!src)return '';
+  const y=youtubeId(src),v=vimeoId(src);
+  if(y)return `<div class="real-film hosted-video"><iframe src="https://www.youtube.com/embed/${y}?rel=0&modestbranding=1" title="${title}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><div class="real-film-info"><h4>${title}</h4><p>cinematic wedding story · ${esc(couple)}</p></div></div>`;
+  if(v)return `<div class="real-film hosted-video"><iframe src="https://player.vimeo.com/video/${v}" title="${title}" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe><div class="real-film-info"><h4>${title}</h4><p>cinematic wedding story · ${esc(couple)}</p></div></div>`;
+  return `<div class="real-film"><video src="${src}" muted autoplay loop playsinline preload="metadata"></video><div class="real-film-info"><h4>${title}</h4><p>cinematic wedding story · ${esc(couple)}</p></div></div>`;
+}
+function renderBts(src,i){
+  const y=youtubeId(src),v=vimeoId(src);
+  if(y)return `<div class="hosted-bts"><iframe src="https://www.youtube.com/embed/${y}?rel=0&modestbranding=1" title="BTS ${i+1}" loading="lazy" allowfullscreen></iframe></div>`;
+  if(v)return `<div class="hosted-bts"><iframe src="https://player.vimeo.com/video/${v}" title="BTS ${i+1}" loading="lazy" allowfullscreen></iframe></div>`;
+  return `<video src="${src}" muted autoplay loop playsinline preload="metadata"></video>`;
+}
 window.openRealLightbox=function(src){const lb=document.getElementById('lightbox'),im=document.getElementById('lbImage');if(lb&&im){im.src=src;lb.classList.add('open')}};
 </script>
 </body></html>
