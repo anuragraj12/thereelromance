@@ -1,32 +1,13 @@
 {
-  "brand": {
-    "name": "The Reel Romance",
-    "location": "Bangalore",
-    "services": [
-      "Photography",
-      "Films",
-      "BTS"
-    ]
-  },
-  "weddings": [
-    {
-      "id": "anurag-garima",
-      "couple": "Anurag & Garima",
-      "location": "Jim Corbett",
-      "date": "26 Apr 2026",
-      "hero": "media/weddings/anurag-garima/photos/IMG_hero.jpg",
-      "portfolio": [
-        "media/weddings/anurag-garima/photos/IMG_1.jpg",
-        "media/weddings/anurag-garima/photos/IMG_2.jpg",
-        "media/weddings/anurag-garima/photos/IMG_3.jpg",
-        "media/weddings/anurag-garima/photos/IMG_4.jpg"
-      ],
-      "film": "media/weddings/anurag-garima/film.mp4",
-      "bts": [
-        "media/weddings/anurag-garima/bts/bts1.mp4",
-        "media/weddings/anurag-garima/bts/bts2.mp4",
-        "media/weddings/anurag-garima/bts/bts3.mp4"
-      ]
-    }
-  ]
+  "brand":{"name":"The Reel Romance","location":"Bangalore","services":["Photography","Films","BTS"]},
+  "weddings":[{
+    "id":"anurag-garima",
+    "couple":"Anurag & Garima",
+    "location":"Jim Corbett",
+    "date":"26 Apr 2026",
+    "hero":"media/weddings/anurag-garima/photos/IMG_hero.jpg",
+    "portfolio":["media/weddings/anurag-garima/photos/IMG_1.jpg","media/weddings/anurag-garima/photos/IMG_2.jpg","media/weddings/anurag-garima/photos/IMG_3.jpg","media/weddings/anurag-garima/photos/IMG_4.jpg"],
+    "film":"media/weddings/anurag-garima/film.mp4",
+    "bts":["media/weddings/anurag-garima/bts/bts1.mp4","media/weddings/anurag-garima/bts/bts2.mp4","media/weddings/anurag-garima/bts/bts3.mp4"]
+  }]
 }
