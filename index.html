@@ -10,8 +10,9 @@
 
 .contact-actions{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:2rem}.contact-actions a{border:1px solid currentColor;border-radius:99px;padding:.85rem 1.05rem;font:9px var(--mono);letter-spacing:.08em;text-transform:uppercase}.contact-actions a.primary{background:#151311;color:#fff;border-color:#151311}.direct-contact{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid #2223;font-size:12px;line-height:1.8}.direct-contact a{text-decoration:underline;text-underline-offset:4px}
 
-/* Sprint 6 — media library structure */
-.media-guide{background:#f0e9df;padding:10vw 5vw}.media-guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:6vw}.media-guide h2{font:500 clamp(3.5rem,6vw,7rem)/.88 var(--serif);letter-spacing:-.06em}.media-guide h2 em{font-style:italic}.media-guide p{max-width:520px;line-height:1.75}.media-spec{margin-top:2rem;border-top:1px solid #2223}.media-spec div{display:flex;justify-content:space-between;gap:1rem;border-bottom:1px solid #2223;padding:1rem 0;font-size:12px}.media-spec span:first-child{font:9px var(--mono);text-transform:uppercase;letter-spacing:.1em}.media-spec span:last-child{text-align:right}.media-note{margin-top:2rem;font:9px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:#555}
+/* Sprint 6B — content-driven portfolio */
+.real-media{background:#f1ebe2;padding:11vw 5vw}.real-media-head{display:grid;grid-template-columns:1fr 1fr;gap:6vw;align-items:end;margin-bottom:5vw}.real-media h2{font:500 clamp(4rem,7vw,8rem)/.84 var(--serif);letter-spacing:-.06em}.real-media h2 em{font-style:italic}.real-media-copy{max-width:480px;line-height:1.75}.wedding-shell{display:grid;grid-template-columns:1fr 1.4fr;gap:1.2vw}.wedding-meta{background:#cbb9a7;padding:2.2rem;display:flex;flex-direction:column;justify-content:space-between;min-height:72vh}.wedding-meta h3{font:500 clamp(3rem,5vw,6rem)/.85 var(--serif);letter-spacing:-.05em}.wedding-meta h3 em{font-style:italic}.wedding-meta p{line-height:1.7;max-width:350px}.wedding-meta small{font:9px var(--mono);letter-spacing:.12em;text-transform:uppercase}.real-gallery{display:grid;grid-template-columns:1fr 1fr;gap:1.2vw}.real-gallery img{width:100%;height:35vh;object-fit:cover;display:block;cursor:pointer}.real-gallery img:first-child{grid-column:1/-1;height:58vh}.real-film{margin-top:1.2vw;position:relative;background:#111;color:#fff;min-height:28vh;padding:2rem;display:flex;align-items:end;overflow:hidden}.real-film:before{content:"FILM";position:absolute;right:1rem;top:1rem;font:9px var(--mono);letter-spacing:.12em;color:#fff8}.real-film video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.65}.real-film-info{position:relative;z-index:2}.real-film-info h4{font:500 2.5rem var(--serif)}.real-film-info p{font:10px var(--mono);margin-top:.5rem}.bts-strip{margin-top:1.2vw;display:grid;grid-template-columns:repeat(3,1fr);gap:1.2vw}.bts-strip video{width:100%;height:42vh;object-fit:cover;background:#111}.media-empty{padding:3rem;border:1px dashed #2225;font:10px var(--mono);text-transform:uppercase;letter-spacing:.08em}
+@media(max-width:750px){.real-media{padding:20vw 6vw}.real-media-head{display:block}.real-media-copy{margin-top:3rem}.wedding-shell{display:block}.wedding-meta{min-height:55vh;margin-bottom:2vw}.real-gallery{gap:2vw}.real-gallery img{height:28vh}.real-gallery img:first-child{height:45vh}.real-film{min-height:30vh}.bts-strip{gap:2vw}.bts-strip video{height:42vh}}
 </style></head><body><nav class="nav"><a class="logo" href="#">The Reel <em>Romance</em></a><div class="links"><a href="#portfolio">Work</a><a href="#services">Services</a><a href="#vibes">Vibes</a><a href="#stories">Stories</a></div><a class="pill" href="#enquire">Your date →</a></nav>
 <section class="hero"><div class="hero-bg"></div><div class="hero-content"><div class="eyebrow">Bangalore · Destination Weddings · Stories</div><h1>The Reel<br><em>Romance.</em></h1><p>Your wedding is a once-in-a-lifetime story. We capture the big moments, the quiet ones, and everything gloriously chaotic in between.</p></div><div class="hero-bottom"><span>Photography · Films · BTS</span><span>Explore the work ↓</span></div></section>
 <section class="section"><div class="intro-grid"><div class="kicker">01 / The way we see it</div><div><h2 class="big">A wedding isn't a <em>photoshoot.</em></h2><p class="copy"><strong>It's a thousand little moments.</strong><br><br>The shaky hands. The ugly crying. Your friends losing their minds on the dance floor. Your dad pretending he's completely fine. The glance you exchange across a room full of people.<br><br><b>That's the stuff we want to remember.</b></p></div></div></section>
@@ -19,27 +20,13 @@
 <section class="section service" id="services"><div class="head"><div class="kicker">03 / What we do</div><div class="kicker">Three ways to remember it</div></div><div class="row"><span class="kicker">01</span><h3>The <em>Frame.</em></h3><p>Editorial, candid photography that feels like you — not a catalogue of poses.</p></div><div class="row"><span class="kicker">02</span><h3>The <em>Film.</em></h3><p>Cinematic wedding films built around your people, your music and the moments that made the day.</p></div><div class="row"><span class="kicker">03</span><h3>The <em>Chaos.</em></h3><p>Fast, fun, social-first BTS content so you can relive the energy while the confetti is still falling.</p></div></section>
 <section class="section dark"><div class="bts"><div><div class="kicker">04 / BTS</div><h2 class="big">Your personal <em>paparazzi.</em></h2><p class="copy">Your wedding has a second life on your phone. We capture the behind-the-scenes madness, the reactions and the little moments you didn't even know happened.</p></div><div class="phone"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=85"></div></div></section>
 
-<section class="portfolio" id="portfolio">
-  <div class="portfolio-intro">
-    <div class="kicker">05 / The work</div>
-    <div>
-      <h2>Not just<br>pictures. <em>Proof.</em></h2>
-      <p class="portfolio-copy">A wedding is made of hundreds of moments. We look for the ones that make you stop, smile, laugh, cry — and immediately send the photo to someone you love.</p>
-    </div>
+
+<section class="real-media" id="portfolio">
+  <div class="real-media-head">
+    <div><div class="kicker">05 / Real work</div><h2>Stories that<br>actually <em>happened.</em></h2></div>
+    <p class="real-media-copy">Every wedding in the portfolio is driven by its own content record. Add a wedding once, map its hero, photographs, film and BTS, and the website knows how to present it.</p>
   </div>
-  <div class="filterbar">
-    <button class="filter active" data-filter="all">All work</button>
-    <button class="filter" data-filter="photo">Photography</button>
-    <button class="filter" data-filter="film">Films</button>
-    <button class="filter" data-filter="bts">BTS</button>
-  </div>
-  <div class="portfolio-grid">
-    <article class="work-card" data-type="photo" data-img="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1300&q=88" alt="Wedding couple"><div class="work-card-info"><small>Photography</small><h3>The look.</h3><span>Open ↗</span></div></article>
-    <article class="work-card" data-type="photo" data-img="https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1800&q=90"><img src="https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1300&q=88" alt="Wedding details"><div class="work-card-info"><small>Photography</small><h3>The details.</h3><span>Open ↗</span></div></article>
-    <article class="work-card" data-type="bts" data-img="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=90"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1300&q=88" alt="Wedding celebration"><div class="work-card-info"><small>BTS</small><h3>The chaos.</h3><span>Open ↗</span></div></article>
-    <article class="work-card" data-type="film" data-img="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1800&q=90"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1300&q=88" alt="Wedding film still"><div class="work-card-info"><small>Film</small><h3>The feeling.</h3><span>Play ↗</span></div></article>
-    <article class="work-card" data-type="bts" data-img="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1800&q=90"><img src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1300&q=88" alt="Destination wedding"><div class="work-card-info"><small>BTS</small><h3>The after.</h3><span>Open ↗</span></div></article>
-  </div>
+  <div id="weddingMount"></div>
 </section>
 <section class="vibes" id="vibes">
   <div class="vibes-head"><div class="kicker">06 / Your vibe</div><h2>How do you want<br>to <em>remember it?</em></h2></div>
@@ -66,22 +53,6 @@
 <section class="section" id="stories"><div class="head"><div class="kicker">08 / The stories</div><h2 class="big">Every wedding has<br>a story worth <em>telling.</em></h2></div><div class="stories"><article class="story"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=85"><div class="story-info"><small>Bangalore · Coming soon</small><h3>Your wedding could be here</h3><p>Real moments. Real people. Your story. →</p></div></article><article class="story"><img src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1600&q=85"><div class="story-info"><small>Destination · Coming soon</small><h3>Your story, next</h3><p>A little romance. A lot of chaos. →</p></div></article></div></section>
 <section class="section proof"><div class="kicker">09 / The feeling</div><h2 class="big">The best photos<br>make you <em>feel it again.</em></h2><p class="quote">“The goal is simple: you should feel like the camera was never there.”</p><div class="kicker">— The Reel Romance · Bangalore</div></section>
 
-
-<section class="media-guide">
-  <div class="media-guide-grid">
-    <div><div class="kicker">08 / Built for your real work</div><h2>Swap the placeholders.<br>Keep the <em>experience.</em></h2></div>
-    <div>
-      <p>The site is now structured around real wedding stories. When your media is ready, each placeholder can be replaced without changing the design or the portfolio flow.</p>
-      <div class="media-spec">
-        <div><span>Photography</span><span>JPG / WebP · landscape + portrait</span></div>
-        <div><span>Films</span><span>MP4 / YouTube / Vimeo</span></div>
-        <div><span>BTS</span><span>Vertical MP4 · 9:16</span></div>
-        <div><span>Stories</span><span>Hero + supporting frames</span></div>
-      </div>
-      <div class="media-note">Media folder included in this sprint · replace files when ready</div>
-    </div>
-  </div>
-</section>
 <section class="enquire" id="enquire">
   <div class="enquire-grid">
     <div>
@@ -130,5 +101,44 @@ document.getElementById('lbClose').onclick=()=>lb.classList.remove('open');lb.ad
  build();
 })();
 </script>
-<!-- Sprint 6 media map: replace portfolio image URLs with local /media assets when real media is supplied. -->
+
+<script>
+(async function(){
+  const mount=document.getElementById('weddingMount');
+  const fallback={
+    couple:'Anurag & Garima',location:'Jim Corbett',date:'26 Apr 2026',
+    hero:'media/weddings/anurag-garima/photos/IMG_hero.jpg',
+    portfolio:[
+      'media/weddings/anurag-garima/photos/IMG_1.jpg',
+      'media/weddings/anurag-garima/photos/IMG_2.jpg',
+      'media/weddings/anurag-garima/photos/IMG_3.jpg',
+      'media/weddings/anurag-garima/photos/IMG_4.jpg'
+    ],
+    film:'media/weddings/anurag-garima/film.mp4',
+    bts:[
+      'media/weddings/anurag-garima/bts/bts1.mp4',
+      'media/weddings/anurag-garima/bts/bts2.mp4',
+      'media/weddings/anurag-garima/bts/bts3.mp4'
+    ]
+  };
+  try{
+    const r=await fetch('content.json',{cache:'no-store'});
+    if(r.ok){const d=await r.json(); if(d.weddings&&d.weddings[0]) Object.assign(fallback,d.weddings[0]);}
+  }catch(e){}
+  const w=fallback;
+  const esc=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  mount.innerHTML=`<div class="wedding-shell">
+    <div class="wedding-meta">
+      <div><small>${esc(w.location)} · ${esc(w.date)}</small><h3>${esc(w.couple).replace('&amp;','<em>&amp;</em>')}</h3></div>
+      <div><p>Photography, film and BTS — one wedding, told from every angle.</p><a class="story-link" href="#enquire">Ask us about your wedding ↗</a></div>
+    </div>
+    <div>
+      <div class="real-gallery">${w.portfolio.map((src,i)=>`<img src="${src}" alt="${esc(w.couple)} wedding photograph ${i+1}" loading="lazy" onclick="openRealLightbox('${src}')">`).join('')}</div>
+      ${w.film?`<div class="real-film"><video src="${w.film}" muted autoplay loop playsinline preload="metadata"></video><div class="real-film-info"><h4>The Film.</h4><p>cinematic wedding story · ${esc(w.couple)}</p></div></div>`:''}
+      ${w.bts&&w.bts.length?`<div class="bts-strip">${w.bts.map(src=>`<video src="${src}" muted autoplay loop playsinline preload="metadata"></video>`).join('')}</div>`:''}
+    </div>
+  </div>`;
+})();
+window.openRealLightbox=function(src){const lb=document.getElementById('lightbox'),im=document.getElementById('lbImage');if(lb&&im){im.src=src;lb.classList.add('open')}};
+</script>
 </body></html>
