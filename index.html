@@ -109,15 +109,19 @@ document.getElementById('lbClose').onclick=()=>lb.classList.remove('open');lb.ad
   const mount=document.getElementById('weddingMount');
   const fallback={
     couple:'Anurag & Garima',location:'Jim Corbett',date:'26 Apr 2026',
-    hero:'media/weddings/anurag-garima/photos/IMG_hero.jpg',
+    hero:'IMG_hero.JPG',
     portfolio:[
-      'media/weddings/anurag-garima/photos/IMG_1.jpg',
-      'media/weddings/anurag-garima/photos/IMG_2.jpg',
-      'media/weddings/anurag-garima/photos/IMG_3.jpg',
-      'media/weddings/anurag-garima/photos/IMG_4.jpg'
+      'IMG_1.jpg',
+      'IMG_2.jpg',
+      'IMG_3.jpg',
+      'IMG_4.jpg'
     ],
-    film:'',
-    bts:[]
+    film:'https://youtu.be/iCyohnh7PDs',
+    bts:[
+      'https://files.catbox.moe/79hueb.mp4',
+      'https://files.catbox.moe/0qxg6s.mp4',
+      'https://files.catbox.moe/9v5uxo.mp4'
+    ]
   };
   try{
     const r=await fetch('content.json',{cache:'no-store'});
