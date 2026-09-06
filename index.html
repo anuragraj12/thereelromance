@@ -7,6 +7,8 @@
 
 /* Sprint 4 — enquiry experience */
 .enquire{background:#e8e0d5;color:#141210;padding:11vw 5vw}.enquire-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:8vw}.enquire h2{font:500 clamp(4rem,7vw,8rem)/.84 var(--serif);letter-spacing:-.06em}.enquire h2 em{font-style:italic}.enquire-copy{max-width:440px;margin-top:3rem;line-height:1.75}.form{border-top:1px solid #2224}.field{border-bottom:1px solid #2224;padding:1.6rem 0}.field label{display:block;font:9px var(--mono);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.7rem}.field input,.field select,.field textarea{width:100%;border:0;outline:0;background:transparent;font:500 1.15rem var(--sans);color:inherit;padding:.2rem 0}.field textarea{min-height:110px;resize:vertical}.field input::placeholder,.field textarea::placeholder{color:#14121077}.field select{appearance:none}.form-actions{display:flex;align-items:center;gap:1.5rem;margin-top:2rem}.submit{border:1px solid #151311;border-radius:99px;padding:1rem 1.3rem;font:9px var(--mono);letter-spacing:.1em;text-transform:uppercase;transition:.25s}.submit:hover{background:#151311;color:#fff}.form-note{font-size:11px;line-height:1.5;max-width:300px;color:#555}.success{display:none;margin-top:2rem;padding:1.5rem;background:#151311;color:#fff}.success.show{display:block}.success strong{font:500 1.8rem var(--serif)}.success p{margin-top:.6rem;line-height:1.6;font-size:.85rem}.contact-strip{background:#151311;color:#fff;padding:5vw;display:flex;justify-content:space-between;align-items:center;gap:2rem}.contact-strip h3{font:500 clamp(2rem,4vw,4rem) var(--serif)}.contact-strip h3 em{font-style:italic}.contact-strip a{border:1px solid #fff8;border-radius:99px;padding:1rem 1.2rem;font:9px var(--mono);text-transform:uppercase}@media(max-width:750px){.enquire{padding:20vw 6vw}.enquire-grid{display:block}.enquire-copy{margin:2.5rem 0 4rem}.field{padding:1.4rem 0}.form-actions{display:block}.form-note{margin-top:1rem}.contact-strip{display:block;padding:12vw 6vw}.contact-strip a{display:inline-block;margin-top:2rem}}
+
+.contact-actions{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:2rem}.contact-actions a{border:1px solid currentColor;border-radius:99px;padding:.85rem 1.05rem;font:9px var(--mono);letter-spacing:.08em;text-transform:uppercase}.contact-actions a.primary{background:#151311;color:#fff;border-color:#151311}.direct-contact{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid #2223;font-size:12px;line-height:1.8}.direct-contact a{text-decoration:underline;text-underline-offset:4px}
 </style></head><body><nav class="nav"><a class="logo" href="#">The Reel <em>Romance</em></a><div class="links"><a href="#portfolio">Work</a><a href="#services">Services</a><a href="#vibes">Vibes</a><a href="#stories">Stories</a></div><a class="pill" href="#enquire">Your date →</a></nav>
 <section class="hero"><div class="hero-bg"></div><div class="hero-content"><div class="eyebrow">Bangalore · Destination Weddings · Stories</div><h1>The Reel<br><em>Romance.</em></h1><p>Your wedding is a once-in-a-lifetime story. We capture the big moments, the quiet ones, and everything gloriously chaotic in between.</p></div><div class="hero-bottom"><span>Photography · Films · BTS</span><span>Explore the work ↓</span></div></section>
 <section class="section"><div class="intro-grid"><div class="kicker">01 / The way we see it</div><div><h2 class="big">A wedding isn't a <em>photoshoot.</em></h2><p class="copy"><strong>It's a thousand little moments.</strong><br><br>The shaky hands. The ugly crying. Your friends losing their minds on the dance floor. Your dad pretending he's completely fine. The glance you exchange across a room full of people.<br><br><b>That's the stuff we want to remember.</b></p></div></div></section>
@@ -66,7 +68,7 @@
     <div>
       <div class="kicker">11 / Let's talk</div>
       <h2>Tell us<br>about <em>your day.</em></h2>
-      <p class="enquire-copy">No packages to decode. No pressure. Just tell us what you're planning, where it's happening and what you want to remember. We'll take it from there.</p>
+      <p class="enquire-copy">No packages to decode. No pressure. Just tell us what you're planning, where it's happening and what you want to remember. We'll take it from there.</p><div class="direct-contact"><div>WhatsApp: <a href="https://wa.me/918800168227" target="_blank" rel="noopener">+91 88001 68227</a></div><div>Email: <a href="mailto:anurag@reelromance.com">anurag@reelromance.com</a></div></div>
     </div>
     <div>
       <form class="form" id="enquiryForm">
@@ -77,12 +79,12 @@
         <div class="field"><label for="service">What are you looking for?</label><select id="service" name="service" required><option value="">Choose one</option><option>Photography</option><option>Wedding Film</option><option>BTS</option><option>Photography + Film</option><option>Everything — Photography + Film + BTS</option><option>Not sure yet</option></select></div>
         <div class="field"><label for="message">Tell us a little more</label><textarea id="message" name="message" placeholder="The vibe, the venue, the chaos — anything you already know."></textarea></div>
         <div class="form-actions"><button class="submit" type="submit">Send enquiry ↗</button><span class="form-note">This is a preview form for now. Your real submission channel will be connected once we add your WhatsApp/email details.</span></div>
-        <div class="success" id="success"><strong>You're on our radar.</strong><p>Your enquiry was captured locally for this prototype. In the next sprint we'll connect this to your actual contact workflow.</p></div>
+        <div class="success" id="success"><strong>Ready to send.</strong><p>Your details have been turned into a message. Choose WhatsApp or email above to send it.</p></div>
       </form>
     </div>
   </div>
 </section>
-<section class="contact-strip"><h3>Still scrolling?<br><em>We should probably talk.</em></h3><a href="#enquire">Start an enquiry ↗</a></section>
+<section class="contact-strip"><h3>Still scrolling?<br><em>We should probably talk.</em></h3><div class="contact-actions"><a href="https://wa.me/918800168227" target="_blank" rel="noopener">WhatsApp ↗</a><a href="mailto:anurag@reelromance.com">Email ↗</a></div></section>
 <section class="section final" id="contact"><div><div class="kicker">12 / Your story</div><h2 class="big">Let's make<br>your story <em>unforgettable.</em></h2></div><div><p class="copy">Planning a wedding in Bangalore or somewhere worth travelling for? Tell us what you're dreaming up. We'll take care of the remembering — from the first frame to the last dance.</p><a class="cta" href="#enquire">Start an enquiry ↗</a></div><footer class="footer"><span>© 2026 The Reel Romance</span><span>Bangalore · Everywhere</span></footer></section>
 <div class="lightbox" id="lightbox"><button id="lbClose">×</button><img id="lbImage" src="" alt=""><span class="counter" id="lbCounter"></span></div>
 <script>
@@ -97,8 +99,16 @@ document.getElementById('lbClose').onclick=()=>lb.classList.remove('open');lb.ad
 
 <script>
 (function(){
- const f=document.getElementById('enquiryForm'),s=document.getElementById('success');
- if(f)f.addEventListener('submit',e=>{e.preventDefault();s.classList.add('show');s.scrollIntoView({behavior:'smooth',block:'center'});});
+ const f=document.getElementById('enquiryForm'),s=document.getElementById('success'),wa=document.getElementById('waForm'),em=document.getElementById('emailForm');
+ function build(){
+   const d=new FormData(f), msg=`Hi The Reel Romance!%0A%0AName: ${encodeURIComponent(d.get('name')||'')}%0AEmail: ${encodeURIComponent(d.get('email')||'')}%0AEvent date: ${encodeURIComponent(d.get('date')||'')}%0ALocation: ${encodeURIComponent(d.get('location')||'')}%0AService: ${encodeURIComponent(d.get('service')||'')}%0AMessage: ${encodeURIComponent(d.get('message')||'')}`;
+   wa.href='https://wa.me/918800168227?text='+msg;
+   em.href='mailto:anurag@reelromance.com?subject='+encodeURIComponent('Wedding enquiry — '+(d.get('name')||'The Reel Romance'))+'&body='+decodeURIComponent(msg.replaceAll('%0A','%0D%0A'));
+ }
+ f.addEventListener('input',build);
+ f.addEventListener('change',build);
+ f.addEventListener('submit',e=>{e.preventDefault();build();s.classList.add('show');s.scrollIntoView({behavior:'smooth',block:'center'});});
+ build();
 })();
 </script>
 </body></html>
