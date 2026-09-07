@@ -52,7 +52,7 @@
     </div>
   </div>
 </section>
-<section class="section" id="stories"><div class="head"><div class="kicker">08 / The stories</div><h2 class="big">Every wedding has<br>a story worth <em>telling.</em></h2></div><div class="stories"><article class="story"><img src="IMG_2.jpg"><div class="story-info"><small>Jim Corbett · 26 Apr 2026</small><h3>Anurag &amp; Garima</h3><p>One wedding. Every angle. →</p></div></article><article class="story"><img src="IMG_hero.JPG"><div class="story-info"><small>The Reel Romance · Wedding story</small><h3>Photography + Film + BTS</h3><p>The complete story, from first look to last dance. →</p></div></article></div></section>
+<section class="section" id="stories"><div class="head"><div class="kicker">08 / The stories</div><h2 class="big">Every wedding has<br>a story worth <em>telling.</em></h2></div><div class="stories"><a class="story" href="#portfolio" data-img="IMG_2.jpg" aria-label="Open Anurag and Garima story"><img src="IMG_2.jpg" alt="Anurag and Garima wedding story"><div class="story-info"><small>Jim Corbett · 26 Apr 2026</small><h3>Anurag &amp; Garima</h3><p>One wedding. Every angle. →</p></div></a><a class="story" href="#portfolio" data-img="IMG_hero.JPG" aria-label="Open The Reel Romance story"><img src="IMG_hero.JPG" alt="The Reel Romance wedding story"><div class="story-info"><small>The Reel Romance · Wedding story</small><h3>Photography + Film + BTS</h3><p>The complete story, from first look to last dance. →</p></div></a></div></section>
 <section class="section proof"><div class="kicker">09 / The feeling</div><h2 class="big">The best photos<br>make you <em>feel it again.</em></h2><p class="quote">“The goal is simple: you should feel like the camera was never there.”</p><div class="kicker">— The Reel Romance · Bangalore</div></section>
 
 <section class="enquire" id="enquire">
@@ -84,7 +84,20 @@
 const cards=[...document.querySelectorAll('.work-card')], filters=[...document.querySelectorAll('.filter')];
 filters.forEach(btn=>btn.addEventListener('click',()=>{filters.forEach(x=>x.classList.remove('active'));btn.classList.add('active');const f=btn.dataset.filter;cards.forEach(c=>c.style.display=(f==='all'||c.dataset.type===f)?'block':'none')}));
 const lb=document.getElementById('lightbox'), im=document.getElementById('lbImage'), co=document.getElementById('lbCounter');
+const openImage = (src, label='') => {
+  if(!lb || !im) return;
+  im.src=src;
+  if(co) co.textContent = label || 'Story';
+  lb.classList.add('open');
+};
 cards.forEach((c,i)=>c.addEventListener('click',()=>{im.src=c.dataset.img;co.textContent=String(i+1).padStart(2,'0')+' / '+String(cards.length).padStart(2,'0');lb.classList.add('open')}));
+document.querySelectorAll('.story').forEach(story => {
+  story.addEventListener('click', e => {
+    e.preventDefault();
+    const src = story.dataset.img || story.querySelector('img')?.src;
+    if (src) openImage(src, 'Wedding story');
+  });
+});
 document.getElementById('lbClose').onclick=()=>lb.classList.remove('open');lb.addEventListener('click',e=>{if(e.target===lb)lb.classList.remove('open')});document.addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('open')});
 })();
 </script>
