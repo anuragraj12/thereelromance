@@ -107,8 +107,8 @@ document.getElementById('lbClose').onclick=()=>lb.classList.remove('open');lb.ad
  const f=document.getElementById('enquiryForm'),s=document.getElementById('success'),wa=document.getElementById('waForm'),em=document.getElementById('emailForm');
  function build(){
    const d=new FormData(f), msg=`Hi The Reel Romance!%0A%0AName: ${encodeURIComponent(d.get('name')||'')}%0AEmail: ${encodeURIComponent(d.get('email')||'')}%0AEvent date: ${encodeURIComponent(d.get('date')||'')}%0ALocation: ${encodeURIComponent(d.get('location')||'')}%0AService: ${encodeURIComponent(d.get('service')||'')}%0AMessage: ${encodeURIComponent(d.get('message')||'')}`;
-   wa.href='https://wa.me/918800168227?text='+msg;
-   em.href='mailto:anurag@reelromance.com?subject='+encodeURIComponent('Wedding enquiry — '+(d.get('name')||'The Reel Romance'))+'&body='+decodeURIComponent(msg.replaceAll('%0A','%0D%0A'));
+   if(wa) wa.href='https://wa.me/918800168227?text='+msg;
+   if(em) em.href='mailto:anurag@reelromance.com?subject='+encodeURIComponent('Wedding enquiry — '+(d.get('name')||'The Reel Romance'))+'&body='+decodeURIComponent(msg.replaceAll('%0A','%0D%0A'));
  }
  f.addEventListener('input',build);
  f.addEventListener('change',build);
