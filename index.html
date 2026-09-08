@@ -131,13 +131,13 @@ document.getElementById('lbClose').onclick=()=>lb.classList.remove('open');lb.ad
     ],
     film:'https://youtu.be/iCyohnh7PDs',
     bts:[
-      'https://files.catbox.moe/79hueb.mp4',
-      'https://files.catbox.moe/0qxg6s.mp4',
-      'https://files.catbox.moe/9v5uxo.mp4'
+      'https://files.catbox.moe/udrcd2.mp4',
+      'https://files.catbox.moe/1m7sx2.mp4',
+      'https://files.catbox.moe/lht3eg.mp4'
     ]
   };
   try{
-    const r=await fetch('content.json',{cache:'no-store'});
+    const r=await fetch('content.json?v=2',{cache:'no-store'});
     if(r.ok){const d=await r.json(); if(d.weddings&&d.weddings[0]) Object.assign(fallback,d.weddings[0]);}
   }catch(e){}
   const w=fallback;
