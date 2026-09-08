@@ -118,6 +118,7 @@ document.getElementById('lbClose').onclick=()=>lb.classList.remove('open');lb.ad
 </script>
 
 <script>
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 (async function(){
   const mount=document.getElementById('weddingMount');
   const fallback={
@@ -141,7 +142,6 @@ document.getElementById('lbClose').onclick=()=>lb.classList.remove('open');lb.ad
     if(r.ok){const d=await r.json(); if(d.weddings&&d.weddings[0]) Object.assign(fallback,d.weddings[0]);}
   }catch(e){}
   const w=fallback;
-  const esc=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
   mount.innerHTML=`<div class="wedding-shell">
     <div class="wedding-meta">
       <div><small>${esc(w.location)} · ${esc(w.date)}</small><h3>${esc(w.couple).replace('&amp;','<em>&amp;</em>')}</h3></div>
