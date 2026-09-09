@@ -1,0 +1,25 @@
+{
+  "site": {"brand":"The Reel Romance","location":"Bangalore · India · Destination","tagline":"Weddings, photographed like stories.","intro":"Photographs, films and the moments between them — made for couples who want to remember how it felt."},
+  "hero": {"slides":[
+    {"type":"image","src":"PLACEHOLDER_HERO_01.jpg","eyebrow":"Bangalore · India · Destination"},
+    {"type":"video","src":"PLACEHOLDER_HERO_FILM_01.mp4","eyebrow":"A little movement"},
+    {"type":"image","src":"PLACEHOLDER_HERO_02.jpg","eyebrow":"The moments between"},
+    {"type":"image","src":"PLACEHOLDER_HERO_03.jpg","eyebrow":"Made to be remembered"}
+  ]},
+  "stories":[
+    {"id":"anurag-garima","title":"Anurag & Garima","location":"Jim Corbett","date":"26 Apr 2026","hero":"PLACEHOLDER_ANURAG_HERO.jpg","description":"A wedding story full of warmth, wild landscapes, family, chaos and the quiet moments in between.","film":"https://youtu.be/iCyohnh7PDs","images":["PLACEHOLDER_ANURAG_01.jpg","PLACEHOLDER_ANURAG_02.jpg","PLACEHOLDER_ANURAG_03.jpg","PLACEHOLDER_ANURAG_04.jpg","PLACEHOLDER_ANURAG_05.jpg","PLACEHOLDER_ANURAG_06.jpg","PLACEHOLDER_ANURAG_07.jpg","PLACEHOLDER_ANURAG_08.jpg","PLACEHOLDER_ANURAG_09.jpg","PLACEHOLDER_ANURAG_10.jpg","PLACEHOLDER_ANURAG_11.jpg","PLACEHOLDER_ANURAG_12.jpg"],"bts":["https://youtu.be/G1eAvLR0WII","https://youtu.be/OPmWYErwquI","https://youtu.be/RsikBPvC0aE"],"quote":"There are photographs of our wedding we don't remember being taken.","quoteBy":"Anurag & Garima"},
+    {"id":"ravi-saloni","title":"Ravi & Saloni","location":"PLACEHOLDER_LOCATION","date":"PLACEHOLDER_DATE","hero":"PLACEHOLDER_RAVI_SALONI_HERO.jpg","description":"PLACEHOLDER — write a short, human description of their wedding story here.","film":"PLACEHOLDER_RAVI_SALONI_FILM_URL","images":["PLACEHOLDER_RAVI_SALONI_01.jpg","PLACEHOLDER_RAVI_SALONI_02.jpg","PLACEHOLDER_RAVI_SALONI_03.jpg","PLACEHOLDER_RAVI_SALONI_04.jpg","PLACEHOLDER_RAVI_SALONI_05.jpg","PLACEHOLDER_RAVI_SALONI_06.jpg","PLACEHOLDER_RAVI_SALONI_07.jpg","PLACEHOLDER_RAVI_SALONI_08.jpg","PLACEHOLDER_RAVI_SALONI_09.jpg","PLACEHOLDER_RAVI_SALONI_10.jpg","PLACEHOLDER_RAVI_SALONI_11.jpg","PLACEHOLDER_RAVI_SALONI_12.jpg"],"bts":["PLACEHOLDER_RAVI_BTS_01_URL","PLACEHOLDER_RAVI_BTS_02_URL","PLACEHOLDER_RAVI_BTS_03_URL"],"quote":"PLACEHOLDER — real couple quote","quoteBy":"Ravi & Saloni"}
+  ],
+  "films":[
+    {"title":"Anurag & Garima — Wedding Film","url":"https://youtu.be/iCyohnh7PDs","thumbnail":"PLACEHOLDER_FILM_01.jpg"},
+    {"title":"Ravi & Saloni — Wedding Film","url":"PLACEHOLDER_RAVI_SALONI_FILM_URL","thumbnail":"PLACEHOLDER_FILM_02.jpg"},
+    {"title":"BTS — Behind the story","url":"https://youtu.be/G1eAvLR0WII","thumbnail":"PLACEHOLDER_BTS_01.jpg"},
+    {"title":"BTS — The in-between","url":"https://youtu.be/OPmWYErwquI","thumbnail":"PLACEHOLDER_BTS_02.jpg"}
+  ],
+  "testimonialPlaceholders":[
+    {"quote":"PLACEHOLDER REAL CLIENT QUOTE 01","by":"PLACEHOLDER COUPLE 01","storyId":"anurag-garima"},
+    {"quote":"PLACEHOLDER REAL CLIENT QUOTE 02","by":"PLACEHOLDER COUPLE 02","storyId":"ravi-saloni"},
+    {"quote":"PLACEHOLDER REAL CLIENT QUOTE 03","by":"PLACEHOLDER COUPLE 03","storyId":"PLACEHOLDER"}
+  ],
+  "trust":{"years":"PLACEHOLDER","weddings":"PLACEHOLDER","cities":"Bangalore · India · Destination","startingPrice":"PLACEHOLDER","responseTime":"PLACEHOLDER"}
+}
