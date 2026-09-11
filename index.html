@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f2eee7">
-<meta name="media-source" content="media.json">
 <meta name="description" content="The Reel Romance — candid wedding photography, cinematic films, pre-wedding stories and behind-the-scenes reels. Bangalore · India · Worldwide.">
 <meta property="og:title" content="The Reel Romance — Weddings, remembered.">
 <meta property="og:description" content="Candid photographs, cinematic films and the beautiful chaos between them.">
@@ -289,8 +288,36 @@ img,video{display:block;max-width:100%}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
   .ticker-track{animation:none}.reveal,.scale-in{opacity:1;transform:none}
 }
+
+/* Visual refinement — the photograph owns the first viewport */
+.hero{min-height:0!important;height:100svh!important}
+.hero-content{bottom:6.5vh!important}
+.hero-title{font-size:clamp(3.5rem,8.4vw,9.2rem)!important;line-height:.78!important;max-width:920px!important}
+.hero-bottom{margin-top:22px!important}
+.hero-bottom p{max-width:390px!important;font-size:13px!important;line-height:1.55!important}
+.hero-topline{margin-bottom:16px!important}
+@media(max-width:1000px){.hero-content{bottom:6vh!important}.hero-title{font-size:clamp(3.3rem,13vw,7rem)!important;max-width:720px!important}}
+@media(max-width:600px){.hero-content{bottom:5vh!important}.hero-title{font-size:clamp(3.15rem,15.5vw,5.6rem)!important;line-height:.79!important}.hero-bottom p{font-size:12px!important;max-width:300px!important}}
+
+
+/* Idea → Craft: fewer words, more atmosphere */
+.idea-craft-transition{background:var(--paper);padding:clamp(50px,7vw,105px) 0 clamp(80px,10vw,150px);overflow:hidden}
+.ict-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:28px}
+.ict-head p{font:italic 500 clamp(1.5rem,2.6vw,2.8rem)/1 var(--serif);max-width:510px;margin:0}
+.ict-track{display:grid;grid-template-columns:1.15fr .62fr 1fr;gap:10px;padding:0 var(--gutter);align-items:start}
+.ict-photo{margin:0;height:clamp(300px,42vw,620px);overflow:hidden;background:#d8cec2}
+.ict-photo-tall{height:clamp(370px,50vw,720px);margin-top:clamp(25px,5vw,75px)}
+.ict-photo img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease),filter .8s}
+.ict-photo:hover img{transform:scale(1.045);filter:saturate(1.04)}
+@media(max-width:600px){
+ .idea-craft-transition{padding:42px 0 75px}
+ .ict-head{display:block;padding:0 var(--gutter)}
+ .ict-head p{margin-top:10px;font-size:21px;max-width:310px}
+ .ict-track{grid-template-columns:1fr 1fr;gap:7px;padding:0 7px}
+ .ict-photo{height:55vw}.ict-photo-tall{height:68vw;margin-top:20px}.ict-photo:nth-child(3){grid-column:1/-1;height:52vw;margin-top:0}
+}
+
 </style>
-<!-- Media is controlled by media.json. Do not edit media URLs in this file. -->
 </head>
 <body>
 
@@ -321,9 +348,9 @@ img,video{display:block;max-width:100%}
 
 <section class="hero" aria-label="Featured wedding stories">
   <div class="hero-slides" id="heroSlides">
-    <div class="hero-slide active"><img src="" data-media="HERO-01" alt="Wedding couple embracing"></div>
-    <div class="hero-slide"><img src="" data-media="HERO-02" alt="Wedding celebration"></div>
-    <div class="hero-slide"><img src="" data-media="HERO-03" alt="Couple walking together"></div>
+    <div class="hero-slide active"><img src="" data-media="M-01" alt="Wedding couple embracing"></div>
+    <div class="hero-slide"><img src="" data-media="M-02" alt="Wedding celebration"></div>
+    <div class="hero-slide"><img src="" data-media="M-03" alt="Couple walking together"></div>
   </div>
   <div class="hero-dots" id="heroDots">
     <button class="hero-dot active" aria-label="Hero image 1"></button><button class="hero-dot" aria-label="Hero image 2"></button><button class="hero-dot" aria-label="Hero image 3"></button>
@@ -386,12 +413,12 @@ img,video{display:block;max-width:100%}
       <p class="body reveal delay1">One studio. Different languages — candid photography, cinematic frames, pre-wedding stories and the work that happens behind the camera.</p>
     </div>
     <div class="craft-grid">
-      <figure class="craft-card tall scale-in"><img src="" data-media="CRAFT-01" alt="Candid wedding portrait"><span class="card-label">Candid</span></figure>
-      <figure class="craft-card land scale-in delay1"><img src="" data-media="CRAFT-02" alt="Wedding detail"><span class="card-label">Details</span></figure>
-      <figure class="craft-card square scale-in delay2"><img src="" data-media="CRAFT-03" alt="Wedding celebration"><span class="card-label">Celebration</span></figure>
-      <figure class="craft-card land scale-in"><img src="" data-media="CRAFT-04" alt="Wedding couple outdoors"><span class="card-label">Portraits</span></figure>
-      <figure class="craft-card tall scale-in delay1"><img src="" data-media="CRAFT-05" alt="Intimate couple portrait"><span class="card-label">Intimate</span></figure>
-      <figure class="craft-card land scale-in delay2"><img src="" data-media="CRAFT-06" alt="Wedding bouquet detail"><span class="card-label">The in-between</span></figure>
+      <figure class="craft-card tall scale-in"><img src="" data-media="M-04" alt="Candid wedding portrait"><span class="card-label">Candid</span></figure>
+      <figure class="craft-card land scale-in delay1"><img src="" data-media="M-05" alt="Wedding detail"><span class="card-label">Details</span></figure>
+      <figure class="craft-card square scale-in delay2"><img src="" data-media="M-06" alt="Wedding celebration"><span class="card-label">Celebration</span></figure>
+      <figure class="craft-card land scale-in"><img src="" data-media="M-07" alt="Wedding couple outdoors"><span class="card-label">Portraits</span></figure>
+      <figure class="craft-card tall scale-in delay1"><img src="" data-media="M-08" alt="Intimate couple portrait"><span class="card-label">Intimate</span></figure>
+      <figure class="craft-card land scale-in delay2"><img src="" data-media="M-09" alt="Wedding bouquet detail"><span class="card-label">The in-between</span></figure>
     </div>
   </div>
 </section>
@@ -411,32 +438,32 @@ img,video{display:block;max-width:100%}
 
     <div class="work-panel active" id="panel-candid">
       <div class="work-feature">
-        <div class="work-feature-main"><figure><img src="" data-media="CANDID-01" alt="Candid wedding couple"><figcaption><span>01 / Candid</span><span>Open gallery ↗</span></figcaption></figure></div>
-        <div class="work-feature-side"><figure><img src="" data-media="CANDID-02" alt="Wedding ceremony"><figcaption><span>02</span><span>The room</span></figcaption></figure><figure><img src="" data-media="CANDID-03" alt="Wedding details"><figcaption><span>03</span><span>The details</span></figcaption></figure></div>
+        <div class="work-feature-main"><figure><img src="" data-media="M-10" alt="Candid wedding couple"><figcaption><span>01 / Candid</span><span>Open gallery ↗</span></figcaption></figure></div>
+        <div class="work-feature-side"><figure><img src="" data-media="M-11" alt="Wedding ceremony"><figcaption><span>02</span><span>The room</span></figcaption></figure><figure><img src="" data-media="M-12" alt="Wedding details"><figcaption><span>03</span><span>The details</span></figcaption></figure></div>
       </div>
       <div class="work-copy"><h3>For the moments<br>you didn't know<br>were <em>happening.</em></h3><p>We stay close enough to notice what matters and quiet enough not to interrupt it. The glances, reactions, family, friends and all the beautiful in-between.</p></div>
     </div>
 
     <div class="work-panel" id="panel-cinema">
       <div class="work-feature">
-        <div class="work-feature-main"><figure><img src="" data-media="CINEMA-01" alt="Cinematic wedding film placeholder"><figcaption><span>01 / Cinematography</span><span>Play highlights ↗</span></figcaption></figure></div>
-        <div class="work-feature-side"><figure><img src="" data-media="CINEMA-02" alt="Cinematic portrait"><figcaption><span>02</span><span>Light</span></figcaption></figure><figure><img src="" data-media="CINEMA-03" alt="Wedding celebration"><figcaption><span>03</span><span>Energy</span></figcaption></figure></div>
+        <div class="work-feature-main"><figure><img src="" data-media="M-13" alt="Cinematic wedding film placeholder"><figcaption><span>01 / Cinematography</span><span>Play highlights ↗</span></figcaption></figure></div>
+        <div class="work-feature-side"><figure><img src="" data-media="M-14" alt="Cinematic portrait"><figcaption><span>02</span><span>Light</span></figcaption></figure><figure><img src="" data-media="M-15" alt="Wedding celebration"><figcaption><span>03</span><span>Energy</span></figcaption></figure></div>
       </div>
       <div class="work-copy"><h3>Not a recap.<br>A piece of life<br>you can <em>step into.</em></h3><p>Voices, music, movement and the tiny details become one cinematic memory — something you can return to long after the flowers are gone.</p></div>
     </div>
 
     <div class="work-panel" id="panel-pre">
       <div class="work-feature">
-        <div class="work-feature-main"><figure><img src="" data-media="PRE-EX-01" alt="Pre-wedding couple"><figcaption><span>01 / Pre-wedding</span><span>Explore ↗</span></figcaption></figure></div>
-        <div class="work-feature-side"><figure><img src="" data-media="PRE-EX-02" alt="Pre-wedding outdoors"><figcaption><span>02</span><span>Wandering</span></figcaption></figure><figure><img src="" data-media="PRE-EX-03" alt="Couple by the sea"><figcaption><span>03</span><span>Unscripted</span></figcaption></figure></div>
+        <div class="work-feature-main"><figure><img src="" data-media="M-16" alt="Pre-wedding couple"><figcaption><span>01 / Pre-wedding</span><span>Explore ↗</span></figcaption></figure></div>
+        <div class="work-feature-side"><figure><img src="" data-media="M-17" alt="Pre-wedding outdoors"><figcaption><span>02</span><span>Wandering</span></figcaption></figure><figure><img src="" data-media="M-18" alt="Couple by the sea"><figcaption><span>03</span><span>Unscripted</span></figcaption></figure></div>
       </div>
       <div class="work-copy"><h3>The story<br>starts <em>before.</em></h3><p>No mandap. No 500 guests. No schedule. Just the two of you somewhere beautiful, making memories before the madness begins.</p></div>
     </div>
 
     <div class="work-panel" id="panel-btswork">
       <div class="work-feature">
-        <div class="work-feature-main"><figure><img src="" data-media="BTS-EX-01" alt="Photographer working"><figcaption><span>01 / BTS</span><span>Tap to play ↗</span></figcaption></figure></div>
-        <div class="work-feature-side"><figure><img src="" data-media="BTS-EX-02" alt="Camera closeup"><figcaption><span>02</span><span>The setup</span></figcaption></figure><figure><img src="" data-media="BTS-EX-03" alt="Production outdoors"><figcaption><span>03</span><span>On the move</span></figcaption></figure></div>
+        <div class="work-feature-main"><figure><img src="" data-media="M-19" alt="Photographer working"><figcaption><span>01 / BTS</span><span>Tap to play ↗</span></figcaption></figure></div>
+        <div class="work-feature-side"><figure><img src="" data-media="M-20" alt="Camera closeup"><figcaption><span>02</span><span>The setup</span></figcaption></figure><figure><img src="" data-media="M-21" alt="Production outdoors"><figcaption><span>03</span><span>On the move</span></figcaption></figure></div>
       </div>
       <div class="work-copy"><h3>You see the frame.<br><em>We remember</em><br>everything around it.</h3><p>The running, fixing, laughing, climbing, whispering and ridiculous teamwork behind the final frame. This is a core part of the experience — and a story worth seeing.</p></div>
     </div>
@@ -453,9 +480,9 @@ img,video{display:block;max-width:100%}
         <div>
           <h3 class="story-title reveal">Anurag <em>&amp;</em><br>Garima</h3>
           <div class="story-intro reveal delay1"><p>A day full of yellow light, loud friends, quiet glances and the kind of chaos that makes the best frames. Enter the full wedding experience.</p><button class="pill story-open" data-story="garima">View their experience ↗</button></div>
-          <button class="story-film reveal delay2" data-media="AG-FILM" aria-label="Play Anurag and Garima highlights"><img src="" data-media="AG-HERO" alt="Anurag and Garima highlights placeholder"><span class="story-play"> </span></button>
-          <div class="story-links"><a href="#work">Candid photographs ↗</a><a href="#" class="video-link" data-media="AG-FILM">Highlights film ↗</a><a href="#bts">BTS reels ↗</a><a href="#prewedding">Pre-wedding ↗</a></div>
-          <div class="story-gallery"><img src="" data-media="AG-01" alt="Wedding story"><img src="" data-media="AG-02" alt="Wedding detail"><img src="" data-media="AG-03" alt="Wedding portrait"></div>
+          <button class="story-film reveal delay2" data-video="iCyohnh7PDs" aria-label="Play Anurag and Garima highlights"><img src="" data-media="M-22" alt="Anurag and Garima highlights placeholder"><span class="story-play"> </span></button>
+          <div class="story-links"><a href="#work">Candid photographs ↗</a><a href="#" class="video-link" data-video="iCyohnh7PDs">Highlights film ↗</a><a href="#bts">BTS reels ↗</a><a href="#prewedding">Pre-wedding ↗</a></div>
+          <div class="story-gallery"><img src="" data-media="M-23" alt="Wedding story"><img src="" data-media="M-24" alt="Wedding detail"><img src="" data-media="M-25" alt="Wedding portrait"></div>
           <div class="story-experience"><span class="body">Wedding highlights · Candid gallery · BTS · Pre-wedding · Details</span><button class="pill story-open" data-story="garima">Enter full story ↗</button></div>
         </div>
       </div>
@@ -467,9 +494,9 @@ img,video{display:block;max-width:100%}
         <div>
           <h3 class="story-title reveal">Ravi <em>&amp;</em><br>Saloni</h3>
           <div class="story-intro reveal delay1"><p>A second world, a different rhythm. A complete experience is ready to grow here — photographs, film, pre-wedding and BTS.</p><button class="pill story-open" data-story="ravi">View their experience ↗</button></div>
-          <button class="story-film reveal delay2" data-media="RS-FILM" aria-label="Play Ravi and Saloni highlights"><img src="" data-media="RS-HERO" alt="Ravi and Saloni highlights placeholder"><span class="story-play"> </span></button>
-          <div class="story-links"><a href="#work">Candid photographs ↗</a><a href="#" class="video-link" data-media="AG-FILM">Highlights film ↗</a><a href="#bts">BTS reels ↗</a><a href="#prewedding">Pre-wedding ↗</a></div>
-          <div class="story-gallery"><img src="" data-media="RS-01" alt="Ravi and Saloni placeholder"><img src="" data-media="RS-02" alt="Ravi and Saloni portrait placeholder"><img src="" data-media="RS-03" alt="Ravi and Saloni celebration placeholder"></div>
+          <button class="story-film reveal delay2" data-video="iCyohnh7PDs" aria-label="Play Ravi and Saloni highlights"><img src="" data-media="M-26" alt="Ravi and Saloni highlights placeholder"><span class="story-play"> </span></button>
+          <div class="story-links"><a href="#work">Candid photographs ↗</a><a href="#" class="video-link" data-video="iCyohnh7PDs">Highlights film ↗</a><a href="#bts">BTS reels ↗</a><a href="#prewedding">Pre-wedding ↗</a></div>
+          <div class="story-gallery"><img src="" data-media="M-27" alt="Ravi and Saloni placeholder"><img src="" data-media="M-28" alt="Ravi and Saloni portrait placeholder"><img src="" data-media="M-29" alt="Ravi and Saloni celebration placeholder"></div>
           <div class="story-experience"><span class="body">Highlights · Photography · BTS · Pre-wedding · More to come</span><button class="pill story-open" data-story="ravi">Enter full story ↗</button></div>
         </div>
       </div>
@@ -481,10 +508,10 @@ img,video{display:block;max-width:100%}
   <div class="wrap">
     <div class="bts-intro"><div><span class="eyebrow">05 / Behind the frame</span><h2 class="display reveal">Your personal<br><em>paparazzi.</em></h2></div><p class="body reveal delay1">The version of the wedding that lives on your phone. Unfiltered, immediate, gloriously chaotic. Hover on desktop; tap on mobile.</p></div>
     <div class="bts-grid">
-      <article class="bts-card scale-in"><img src="" data-media="BTS-01" alt="BTS reel 01"><video muted playsinline loop preload="metadata" src="" data-media="BTS-04-VIDEO"></video><div class="bts-meta"><span class="mono">BTS 01</span><span class="mono">Play ↗</span></div></article>
-      <article class="bts-card scale-in delay1"><img src="" data-media="BTS-02" alt="Photographer at work"><video muted playsinline loop preload="metadata" src="" data-media="BTS-02-VIDEO"></video><div class="bts-meta"><span class="mono">BTS 02</span><span class="mono">Play ↗</span></div></article>
-      <article class="bts-card scale-in delay2"><img src="" data-media="BTS-03" alt="Production outdoors"><video muted playsinline loop preload="metadata" src="" data-media="BTS-03-VIDEO"></video><div class="bts-meta"><span class="mono">BTS 03</span><span class="mono">Play ↗</span></div></article>
-      <article class="bts-card scale-in delay3"><img src="" data-media="BTS-04" alt="Camera closeup"><video muted playsinline loop preload="metadata" src="" data-media="BTS-04-VIDEO"></video><div class="bts-meta"><span class="mono">BTS 04</span><span class="mono">One more take ↗</span></div></article>
+      <article class="bts-card scale-in"><img src="" data-media="M-30" alt="BTS reel 01"><video muted playsinline loop preload="metadata" src="" data-media="M-38"></video><div class="bts-meta"><span class="mono">BTS 01</span><span class="mono">Play ↗</span></div></article>
+      <article class="bts-card scale-in delay1"><img src="" data-media="M-31" alt="Photographer at work"><video muted playsinline loop preload="metadata" src="" data-media="M-39"></video><div class="bts-meta"><span class="mono">BTS 02</span><span class="mono">Play ↗</span></div></article>
+      <article class="bts-card scale-in delay2"><img src="" data-media="M-32" alt="Production outdoors"><video muted playsinline loop preload="metadata" src="" data-media="M-40"></video><div class="bts-meta"><span class="mono">BTS 03</span><span class="mono">Play ↗</span></div></article>
+      <article class="bts-card scale-in delay3"><img src="" data-media="M-33" alt="Camera closeup"><video muted playsinline loop preload="metadata" src="" data-media="M-38"></video><div class="bts-meta"><span class="mono">BTS 04</span><span class="mono">One more take ↗</span></div></article>
     </div>
     <div class="bts-note reveal"><strong>You see the photograph.<br><em>We remember everything around it.</em></strong><span class="mono">Hover · tap · experience the chaos</span></div>
   </div>
@@ -496,10 +523,10 @@ img,video{display:block;max-width:100%}
     <div class="pre-line reveal">PRE-WEDDING <em>stories.</em></div>
     <div class="pre-track-wrap">
       <div class="pre-track" id="preTrack">
-        <figure class="pre-card"><img src="" data-media="PRE-01" alt="Pre-wedding couple"><figcaption><span>01 / The quiet</span><span>Before everything</span></figcaption></figure>
-        <figure class="pre-card"><img src="" data-media="PRE-02" alt="Couple outdoors"><figcaption><span>02 / The two of you</span><span>Nothing staged</span></figcaption></figure>
-        <figure class="pre-card"><img src="" data-media="PRE-03" alt="Couple by the sea"><figcaption><span>03 / The adventure</span><span>Wherever you are</span></figcaption></figure>
-        <figure class="pre-card"><img src="" data-media="PRE-04" alt="Couple portrait"><figcaption><span>04 / The in-between</span><span>Just being yourselves</span></figcaption></figure>
+        <figure class="pre-card"><img src="" data-media="M-34" alt="Pre-wedding couple"><figcaption><span>01 / The quiet</span><span>Before everything</span></figcaption></figure>
+        <figure class="pre-card"><img src="" data-media="M-35" alt="Couple outdoors"><figcaption><span>02 / The two of you</span><span>Nothing staged</span></figcaption></figure>
+        <figure class="pre-card"><img src="" data-media="M-36" alt="Couple by the sea"><figcaption><span>03 / The adventure</span><span>Wherever you are</span></figcaption></figure>
+        <figure class="pre-card"><img src="" data-media="M-37" alt="Couple portrait"><figcaption><span>04 / The in-between</span><span>Just being yourselves</span></figcaption></figure>
       </div>
     </div>
     <div class="pre-controls"><button class="circle" id="prePrev" aria-label="Previous pre-wedding image">←</button><button class="circle" id="preNext" aria-label="Next pre-wedding image">→</button></div>
@@ -629,13 +656,7 @@ img,video{display:block;max-width:100%}
       card.addEventListener('mouseenter',()=>{v.currentTime=0;v.play().catch(()=>{})});
       card.addEventListener('mouseleave',()=>{v.pause();v.currentTime=0});
     }else{
-      card.addEventListener('click',()=>{
-        const film = card.querySelector('[data-media]');
-        const id = film?.dataset.media;
-        const youtubeId = url => (url.match(/(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?v=|embed\/|shorts\/))([^?&#/]+)/i)||[])[1]||'';
-        const item = id && window.REEL_ROMANCE_MEDIA?.[id];
-        if(item?.url) openVideo(youtubeId(item.url));
-      });
+      card.addEventListener('click',()=>openVideo('iCyohnh7PDs'));
     }
   });
 
@@ -712,63 +733,37 @@ img,video{display:block;max-width:100%}
 </script>
 
 <script>
-/* MEDIA SYSTEM — all image/video URLs live in media.json */
-(function(){
-  const MEDIA_URL = 'media.json?v=1';
-  let mediaMap = {};
-  const byId = id => mediaMap[id];
+/* MEDIA.JSON BRIDGE — media URLs are intentionally kept out of the page markup. */
+(async function(){
+  try{
+    const response = await fetch('media.json?v=2',{cache:'no-store'});
+    if(!response.ok) throw new Error('media.json unavailable');
+    const manifest = await response.json();
+    const map = Object.fromEntries((manifest.media||[]).map(item=>[item.id,item]));
 
-  function youtubeId(url){
-    if(!url) return '';
-    const m = url.match(/(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?v=|embed\/|shorts\/))([^?&#/]+)/i);
-    return m ? m[1] : '';
-  }
-  function youtubeEmbed(url){
-    const id = youtubeId(url);
-    return id ? `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1&playsinline=1` : url;
-  }
-
-  function applyMedia(){
     document.querySelectorAll('[data-media]').forEach(el=>{
-      const id = el.dataset.media;
-      const item = byId(id);
+      const item = map[el.dataset.media];
       if(!item || !item.active || !item.url) return;
       if(el.tagName === 'IMG'){
-        el.src = item.url;
-        el.alt = item.alt || item.description || '';
-        el.dataset.src = item.url;
+        el.src=item.url;
+        if(item.alt) el.alt=item.alt;
       } else if(el.tagName === 'VIDEO'){
-        el.src = item.url;
-      } else if(el.tagName === 'IFRAME'){
-        el.src = youtubeEmbed(item.url);
-      } else {
-        el.dataset.mediaUrl = item.url;
+        el.src=item.url;
       }
     });
 
-    document.querySelectorAll('[data-media-video]').forEach(el=>{
-      const item = byId(el.dataset.mediaVideo);
-      if(item && item.active) el.src = item.url;
+    // Existing story-film buttons use YouTube IDs; convert matching JSON URLs.
+    const ytId = url => (url.match(/(?:youtu\\.be\\/|youtube(?:-nocookie)?\\.com\\/(?:watch\\?v=|embed\\/|shorts\\/))([^?&#/]+)/i)||[])[1]||'';
+    const youtubeItems = Object.values(map).filter(x=>x.type==='youtube');
+    document.querySelectorAll('[data-video]').forEach(el=>{
+      const old=el.dataset.video;
+      const match=youtubeItems.find(x=>ytId(x.url)===old);
+      if(match) el.dataset.media=match.id;
     });
-
-    // Story / film buttons use the JSON URL as their video source.
-    document.querySelectorAll('[data-media]').forEach(el=>{
-      const item = byId(el.dataset.media);
-      if(!item || !item.active || item.type !== 'youtube') return;
-      if(el.matches('.story-film,.video-link')){
-        el.dataset.video = youtubeId(item.url);
-      }
-    });
+    window.REEL_ROMANCE_MEDIA=map;
+  }catch(error){
+    console.warn('The Reel Romance media.json could not be loaded.',error);
   }
-
-  fetch(MEDIA_URL,{cache:'no-store'})
-    .then(r=>{if(!r.ok) throw new Error('media.json not found'); return r.json()})
-    .then(d=>{
-      (d.media||[]).forEach(x=>mediaMap[x.id]=x);
-      applyMedia();
-      window.REEL_ROMANCE_MEDIA = mediaMap;
-    })
-    .catch(err=>console.warn('The Reel Romance media.json could not be loaded.',err));
 })();
 </script>
 
