@@ -1,3386 +1,706 @@
-```html
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-
-  <meta name="description" content="The Reel Romance — cinematic wedding photography, films and the beautifully unplanned moments between.">
-  <meta name="theme-color" content="#11100e">
-
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="The Reel Romance — Weddings, told like stories.">
-  <meta property="og:description" content="Cinematic wedding photography, films and the little moments between.">
-  <meta property="og:image" content="IMG_hero.JPG">
-
-  <title>The Reel Romance — Weddings, told like stories.</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap"
-    rel="stylesheet"
-  >
-
-  <style>
-    :root {
-      --ink: #11100e;
-      --ink-soft: #181714;
-      --paper: #f0ebe2;
-      --paper-warm: #e8dfd3;
-      --sand: #cdb9a5;
-      --cream: #f7f2e9;
-      --white: #fffdf8;
-      --muted: #8d877f;
-      --line: rgba(17, 16, 14, .14);
-      --line-light: rgba(255, 255, 255, .16);
-
-      --serif: "Playfair Display", Georgia, serif;
-      --sans: "Manrope", Arial, sans-serif;
-      --mono: "DM Mono", monospace;
-
-      --container: min(1380px, calc(100vw - 10vw));
-      --ease: cubic-bezier(.22, 1, .36, 1);
-      --nav-height: 84px;
-    }
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      background: var(--ink);
-    }
-
-    body {
-      margin: 0;
-      background: var(--paper);
-      color: var(--ink);
-      font-family: var(--sans);
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-
-    body.is-locked {
-      overflow: hidden;
-    }
-
-    ::selection {
-      background: var(--ink);
-      color: var(--paper);
-    }
-
-    img {
-      display: block;
-      max-width: 100%;
-    }
-
-    button,
-    input,
-    textarea,
-    select {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .container {
-      width: var(--container);
-      margin-inline: auto;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: .8rem;
-      font: 9px var(--mono);
-      letter-spacing: .16em;
-      text-transform: uppercase;
-    }
-
-    .eyebrow::before {
-      content: "";
-      width: 28px;
-      height: 1px;
-      background: currentColor;
-      opacity: .65;
-    }
-
-    .display {
-      margin: 0;
-      font: 500 clamp(4rem, 8vw, 9rem)/.83 var(--serif);
-      letter-spacing: -.065em;
-    }
-
-    .display em {
-      font-style: italic;
-    }
-
-    .body-copy {
-      max-width: 560px;
-      font-size: 15px;
-      line-height: 1.85;
-      color: rgba(17, 16, 14, .7);
-    }
-
-    .dark .body-copy {
-      color: rgba(255, 255, 255, .64);
-    }
-
-    /* PRELOADER */
-
-    .preloader {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      display: grid;
-      place-items: center;
-      background: var(--ink);
-      color: var(--white);
-      transition: opacity 900ms var(--ease), visibility 900ms var(--ease);
-    }
-
-    .preloader.is-done {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .loader-inner {
-      width: min(520px, 76vw);
-    }
-
-    .loader-brand {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 2rem;
-      margin-bottom: 2rem;
-    }
-
-    .loader-brand strong {
-      font: 500 1.35rem var(--serif);
-    }
-
-    .loader-brand span {
-      font: 9px var(--mono);
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, .55);
-    }
-
-    .loader-line {
-      height: 1px;
-      background: rgba(255, 255, 255, .2);
-      overflow: hidden;
-    }
-
-    .loader-progress {
-      width: 0;
-      height: 100%;
-      background: var(--white);
-      transition: width 1200ms var(--ease);
-    }
-
-    /* CURSOR */
-
-    .cursor {
-      position: fixed;
-      z-index: 9998;
-      top: 0;
-      left: 0;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: #fff;
-      mix-blend-mode: difference;
-      pointer-events: none;
-      opacity: 0;
-      transform: translate3d(-50%, -50%, 0);
-      transition:
-        width 250ms var(--ease),
-        height 250ms var(--ease),
-        opacity 300ms ease;
-    }
-
-    .cursor.is-visible {
-      opacity: 1;
-    }
-
-    .cursor.is-large {
-      width: 54px;
-      height: 54px;
-    }
-
-    @media (pointer: coarse) {
-      .cursor {
-        display: none;
-      }
-    }
-
-    /* NAV */
-
-    .nav {
-      position: fixed;
-      inset: 0 0 auto;
-      z-index: 100;
-      height: var(--nav-height);
-      padding-inline: 5vw;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      color: #fff;
-
-      transition:
-        background 500ms var(--ease),
-        color 500ms var(--ease),
-        height 500ms var(--ease),
-        transform 500ms var(--ease);
-    }
-
-    .nav::after {
-      content: "";
-      position: absolute;
-      left: 5vw;
-      right: 5vw;
-      bottom: 0;
-      height: 1px;
-      background: rgba(255, 255, 255, .18);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 800ms var(--ease);
-    }
-
-    .nav.is-scrolled {
-      height: 70px;
-      background: rgba(240, 235, 226, .94);
-      color: var(--ink);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-    }
-
-    .nav.is-scrolled::after {
-      background: rgba(17, 16, 14, .12);
-      transform: scaleX(1);
-    }
-
-    .nav-logo {
-      position: relative;
-      z-index: 2;
-      font: 500 1.2rem var(--serif);
-      letter-spacing: -.02em;
-    }
-
-    .nav-logo em {
-      font-style: italic;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    .nav-link {
-      position: relative;
-      padding: .4rem 0;
-      font: 9px var(--mono);
-      letter-spacing: .13em;
-      text-transform: uppercase;
-    }
-
-    .nav-link::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      height: 1px;
-      background: currentColor;
-      transform: scaleX(0);
-      transform-origin: right;
-      transition: transform 450ms var(--ease);
-    }
-
-    .nav-link:hover::after {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
-
-    .nav-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: .65rem;
-      padding: .75rem 1rem;
-      border: 1px solid currentColor;
-      border-radius: 999px;
-      font: 9px var(--mono);
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      transition:
-        background 350ms var(--ease),
-        color 350ms var(--ease),
-        transform 350ms var(--ease);
-    }
-
-    .nav-cta:hover {
-      background: currentColor;
-      color: var(--ink);
-      transform: translateY(-2px);
-    }
-
-    .nav.is-scrolled .nav-cta:hover {
-      background: var(--ink);
-      color: var(--paper);
-    }
-
-    .menu-button {
-      display: none;
-      position: relative;
-      z-index: 200;
-      width: 44px;
-      height: 44px;
-      padding: 0;
-      border: 1px solid currentColor;
-      border-radius: 50%;
-      background: transparent;
-      color: inherit;
-    }
-
-    .menu-lines {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-    }
-
-    .menu-lines span {
-      position: absolute;
-      width: 15px;
-      height: 1px;
-      background: currentColor;
-      transition: transform 400ms var(--ease);
-    }
-
-    .menu-lines span:first-child {
-      transform: translateY(-3px);
-    }
-
-    .menu-lines span:last-child {
-      transform: translateY(3px);
-    }
-
-    .menu-button.is-open .menu-lines span:first-child {
-      transform: rotate(45deg);
-    }
-
-    .menu-button.is-open .menu-lines span:last-child {
-      transform: rotate(-45deg);
-    }
-
-    .mobile-menu {
-      position: fixed;
-      inset: 0;
-      z-index: 150;
-
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-
-      padding: 0 7vw 9vh;
-
-      background: var(--ink);
-      color: var(--paper);
-
-      clip-path: inset(0 0 100% 0);
-      transition: clip-path 700ms var(--ease);
-    }
-
-    .mobile-menu.is-open {
-      clip-path: inset(0);
-    }
-
-    .mobile-menu nav {
-      display: grid;
-      gap: .5rem;
-    }
-
-    .mobile-menu a {
-      width: max-content;
-      font: 500 clamp(3.4rem, 15vw, 7rem)/.85 var(--serif);
-      letter-spacing: -.06em;
-    }
-
-    .mobile-meta {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 5rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(255, 255, 255, .15);
-      font: 8px var(--mono);
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, .5);
-    }
-
-    /* HERO */
-
-    .hero {
-      position: relative;
-      min-height: 100svh;
-      overflow: hidden;
-      display: flex;
-      align-items: flex-end;
-      background: #111;
-      color: #fff;
-      padding: 0 5vw 10vh;
-    }
-
-    .hero-media {
-      position: absolute;
-      inset: -5%;
-      overflow: hidden;
-    }
-
-    .hero-media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      filter: saturate(.88) contrast(1.03);
-      transform: scale(1.04);
-      animation: heroBreath 14s ease-in-out infinite alternate;
-    }
-
-    @keyframes heroBreath {
-      from {
-        transform: scale(1.04);
-      }
-      to {
-        transform: scale(1.1);
-      }
-    }
-
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        180deg,
-        rgba(0, 0, 0, .05) 0%,
-        rgba(0, 0, 0, .08) 35%,
-        rgba(0, 0, 0, .78) 100%
-      );
-    }
-
-    .hero-grain {
-      position: absolute;
-      inset: -100%;
-      opacity: .055;
-      pointer-events: none;
-
-      background-image:
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.65'/%3E%3C/svg%3E");
-
-      animation: grain .22s steps(2) infinite;
-    }
-
-    @keyframes grain {
-      0% { transform: translate(0, 0); }
-      25% { transform: translate(2%, -3%); }
-      50% { transform: translate(-3%, 2%); }
-      75% { transform: translate(3%, 3%); }
-      100% { transform: translate(-2%, -2%); }
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      width: min(100%, 1050px);
-    }
-
-    .hero-eyebrow {
-      margin-bottom: 1.7rem;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: rise 1000ms 1100ms var(--ease) forwards;
-    }
-
-    .hero-title {
-      max-width: 1050px;
-      margin: 0;
-      font: 500 clamp(5rem, 12.5vw, 13rem)/.74 var(--serif);
-      letter-spacing: -.075em;
-    }
-
-    .hero-title .line {
-      display: block;
-      overflow: hidden;
-    }
-
-    .hero-title .line span {
-      display: block;
-      transform: translateY(110%);
-      animation: titleIn 1200ms var(--ease) forwards;
-    }
-
-    .hero-title .line:nth-child(1) span {
-      animation-delay: 850ms;
-    }
-
-    .hero-title .line:nth-child(2) span {
-      animation-delay: 1000ms;
-    }
-
-    .hero-title em {
-      font-style: italic;
-    }
-
-    .hero-description {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 3rem;
-      margin-top: 2.5rem;
-      max-width: 980px;
-
-      opacity: 0;
-      transform: translateY(20px);
-      animation: rise 1000ms 1350ms var(--ease) forwards;
-    }
-
-    .hero-description p {
-      max-width: 510px;
-      margin: 0;
-      color: rgba(255, 255, 255, .72);
-      font-size: 14px;
-      line-height: 1.75;
-    }
-
-    .hero-scroll {
-      display: inline-flex;
-      align-items: center;
-      gap: .75rem;
-      flex-shrink: 0;
-      color: #fff;
-      font: 9px var(--mono);
-      letter-spacing: .13em;
-      text-transform: uppercase;
-    }
-
-    .hero-scroll-line {
-      position: relative;
-      width: 54px;
-      height: 1px;
-      overflow: hidden;
-      background: rgba(255, 255, 255, .35);
-    }
-
-    .hero-scroll-line::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: #fff;
-      transform: translateX(-100%);
-      animation: scan 2200ms 1800ms var(--ease) infinite;
-    }
-
-    @keyframes scan {
-      0% { transform: translateX(-100%); }
-      55%, 100% { transform: translateX(100%); }
-    }
-
-    .hero-index {
-      position: absolute;
-      z-index: 2;
-      left: 5vw;
-      right: 5vw;
-      bottom: 2rem;
-      display: flex;
-      justify-content: space-between;
-      color: rgba(255, 255, 255, .48);
-      font: 8px var(--mono);
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-
-    @keyframes titleIn {
-      to {
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes rise {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* MARQUEE */
-
-    .marquee {
-      overflow: hidden;
-      background: var(--ink);
-      color: var(--paper);
-      border-block: 1px solid rgba(255, 255, 255, .08);
-    }
-
-    .marquee-track {
-      display: flex;
-      width: max-content;
-      animation: marquee 30s linear infinite;
-    }
-
-    .marquee-item {
-      display: flex;
-      align-items: center;
-      gap: 2.5rem;
-      padding: 1.25rem 1.4rem;
-      font: 500 clamp(1rem, 1.5vw, 1.3rem) var(--serif);
-      white-space: nowrap;
-    }
-
-    .marquee-item::after {
-      content: "✦";
-      color: var(--sand);
-      font-size: .7em;
-    }
-
-    @keyframes marquee {
-      to {
-        transform: translateX(-50%);
-      }
-    }
-
-    /* INTRO */
-
-    .intro {
-      padding: 14vw 0;
-      background: var(--paper);
-    }
-
-    .intro-grid {
-      display: grid;
-      grid-template-columns: .75fr 1.65fr;
-      gap: 7vw;
-      align-items: start;
-    }
-
-    .intro-side {
-      position: sticky;
-      top: 120px;
-    }
-
-    .intro-side .eyebrow {
-      margin-bottom: 2rem;
-    }
-
-    .intro-mark {
-      width: 78px;
-      height: 78px;
-      margin-top: 5rem;
-      border: 1px solid rgba(17, 16, 14, .25);
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      font: italic 1.7rem var(--serif);
-    }
-
-    .intro-main .display {
-      max-width: 950px;
-    }
-
-    .intro-main .body-copy {
-      margin-top: 4rem;
-      margin-left: 13%;
-    }
-
-    .intro-main .body-copy strong {
-      display: block;
-      margin-bottom: 1rem;
-      font: 500 1.35rem/1.3 var(--serif);
-      color: var(--ink);
-    }
-
-    /* IMAGE STORY */
-
-    .image-story {
-      padding: 0 0 14vw;
-      background: var(--paper);
-    }
-
-    .image-story-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 3rem;
-      margin-bottom: 4vw;
-    }
-
-    .image-story-head h2 {
-      max-width: 760px;
-    }
-
-    .image-story-head p {
-      max-width: 280px;
-      margin: 0;
-      font: 10px/1.7 var(--mono);
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      color: rgba(17, 16, 14, .55);
-    }
-
-    .editorial-grid {
-      display: grid;
-      grid-template-columns: 1.05fr .7fr 1fr;
-      gap: 1.1vw;
-      align-items: start;
-    }
-
-    .editorial-item {
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      background: #ddd;
-    }
-
-    .editorial-item:nth-child(2) {
-      margin-top: 9vw;
-    }
-
-    .editorial-item:nth-child(3) {
-      margin-top: 3vw;
-    }
-
-    .editorial-item img {
-      width: 100%;
-      aspect-ratio: .72;
-      object-fit: cover;
-      transition:
-        transform 1100ms var(--ease),
-        filter 800ms var(--ease);
-    }
-
-    .editorial-item:hover img {
-      transform: scale(1.055);
-      filter: saturate(1.05);
-    }
-
-    .editorial-caption {
-      position: absolute;
-      left: 1rem;
-      right: 1rem;
-      bottom: 1rem;
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      color: #fff;
-      font: 8px var(--mono);
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      opacity: 0;
-      transform: translateY(8px);
-      transition:
-        opacity 400ms var(--ease),
-        transform 400ms var(--ease);
-    }
-
-    .editorial-item:hover .editorial-caption {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .editorial-caption span:last-child {
-      color: rgba(255, 255, 255, .65);
-    }
-
-    /* PHILOSOPHY */
-
-    .dark {
-      background: var(--ink);
-      color: var(--white);
-    }
-
-    .philosophy {
-      padding: 14vw 0;
-    }
-
-    .philosophy-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 5vw;
-      margin-bottom: 9vw;
-    }
-
-    .philosophy-head h2 {
-      max-width: 900px;
-    }
-
-    .philosophy-head p {
-      max-width: 280px;
-      margin: 1rem 0 0;
-      color: rgba(255, 255, 255, .52);
-      font-size: 11px;
-      line-height: 1.8;
-    }
-
-    .philosophy-list {
-      border-top: 1px solid var(--line-light);
-    }
-
-    .philosophy-row {
-      position: relative;
-      display: grid;
-      grid-template-columns: 70px 1fr 1fr 50px;
-      gap: 2rem;
-      align-items: center;
-      padding: 3.2vw 0;
-      border-bottom: 1px solid var(--line-light);
-      overflow: hidden;
-    }
-
-    .philosophy-row::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: var(--cream);
-      transform: translateX(-102%);
-      transition: transform 700ms var(--ease);
-    }
-
-    .philosophy-row:hover::before {
-      transform: translateX(0);
-    }
-
-    .philosophy-row > * {
-      position: relative;
-      z-index: 1;
-    }
-
-    .philosophy-number {
-      font: 9px var(--mono);
-      color: rgba(255, 255, 255, .42);
-      transition: color 500ms var(--ease);
-    }
-
-    .philosophy-row h3 {
-      margin: 0;
-      font: 500 clamp(2.8rem, 5vw, 6.3rem)/.85 var(--serif);
-      letter-spacing: -.06em;
-      transition: color 500ms var(--ease);
-    }
-
-    .philosophy-row h3 em {
-      font-style: italic;
-    }
-
-    .philosophy-row p {
-      max-width: 390px;
-      margin: 0;
-      color: rgba(255, 255, 255, .58);
-      font-size: 12px;
-      line-height: 1.7;
-      transition: color 500ms var(--ease);
-    }
-
-    .philosophy-arrow {
-      justify-self: end;
-      font-size: 1.5rem;
-      transition:
-        color 500ms var(--ease),
-        transform 500ms var(--ease);
-    }
-
-    .philosophy-row:hover h3,
-    .philosophy-row:hover .philosophy-number,
-    .philosophy-row:hover p,
-    .philosophy-row:hover .philosophy-arrow {
-      color: var(--ink);
-    }
-
-    .philosophy-row:hover .philosophy-arrow {
-      transform: translate(4px, -4px);
-    }
-
-    /* FEATURED */
-
-    .featured {
-      padding: 14vw 0;
-      background: var(--sand);
-      color: var(--ink);
-    }
-
-    .featured-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 4vw;
-      margin-bottom: 5vw;
-    }
-
-    .featured-top h2 {
-      max-width: 900px;
-    }
-
-    .featured-intro {
-      max-width: 360px;
-      font-size: 13px;
-      line-height: 1.8;
-    }
-
-    .featured-intro p {
-      margin: 0;
-    }
-
-    .featured-intro a {
-      display: inline-flex;
-      margin-top: 2rem;
-      border-bottom: 1px solid currentColor;
-      padding-bottom: .4rem;
-      font: 9px var(--mono);
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-
-    .featured-layout {
-      display: grid;
-      grid-template-columns: .8fr 1.6fr;
-      gap: 1.1vw;
-    }
-
-    .featured-meta {
-      min-height: 74vh;
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      background: rgba(255, 255, 255, .16);
-      border: 1px solid rgba(17, 16, 14, .12);
-    }
-
-    .featured-meta-top,
-    .featured-meta-bottom {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      font: 8px var(--mono);
-      letter-spacing: .13em;
-      text-transform: uppercase;
-    }
-
-    .featured-meta h3 {
-      margin: 2rem 0;
-      font: 500 clamp(3.2rem, 6vw, 7rem)/.82 var(--serif);
-      letter-spacing: -.065em;
-    }
-
-    .featured-meta h3 em {
-      font-style: italic;
-    }
-
-    .featured-meta p {
-      max-width: 330px;
-      margin: 0;
-      font-size: 13px;
-      line-height: 1.8;
-    }
-
-    .featured-meta-bottom {
-      padding-top: 1rem;
-      border-top: 1px solid rgba(17, 16, 14, .16);
-    }
-
-    .featured-gallery {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.1vw;
-    }
-
-    .featured-photo {
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-    }
-
-    .featured-photo:first-child {
-      grid-column: 1 / -1;
-    }
-
-    .featured-photo:first-child img {
-      aspect-ratio: 1.55;
-    }
-
-    .featured-photo img {
-      width: 100%;
-      height: 100%;
-      aspect-ratio: .95;
-      object-fit: cover;
-      transition:
-        transform 1100ms var(--ease),
-        filter 800ms var(--ease);
-    }
-
-    .featured-photo:hover img {
-      transform: scale(1.045);
-      filter: saturate(1.06);
-    }
-
-    .photo-label {
-      position: absolute;
-      left: 1rem;
-      bottom: 1rem;
-      padding: .55rem .7rem;
-      background: rgba(17, 16, 14, .7);
-      color: #fff;
-      font: 8px var(--mono);
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      backdrop-filter: blur(8px);
-    }
-
-    /* FILM */
-
-    .film-section {
-      padding: 14vw 0;
-      background: var(--ink-soft);
-      color: #fff;
-    }
-
-    .film-header {
-      display: grid;
-      grid-template-columns: 1fr .8fr;
-      gap: 7vw;
-      align-items: end;
-      margin-bottom: 5vw;
-    }
-
-    .film-header p {
-      max-width: 390px;
-      margin: 0;
-      color: rgba(255, 255, 255, .55);
-      font-size: 13px;
-      line-height: 1.8;
-    }
-
-    .film-card {
-      position: relative;
-      min-height: min(72vh, 800px);
-      overflow: hidden;
-      background: #090909;
-      cursor: pointer;
-    }
-
-    .film-card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, .82));
-    }
-
-    .film-poster {
-      position: absolute;
-      inset: -3%;
-      width: 106%;
-      height: 106%;
-      object-fit: cover;
-      filter: brightness(.7) saturate(.85);
-      transition:
-        transform 1200ms var(--ease),
-        filter 700ms var(--ease);
-    }
-
-    .film-card:hover .film-poster {
-      transform: scale(1.04);
-      filter: brightness(.78) saturate(1);
-    }
-
-    .film-content {
-      position: absolute;
-      z-index: 2;
-      left: 3vw;
-      right: 3vw;
-      bottom: 3vw;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 3rem;
-    }
-
-    .film-content h3 {
-      margin: 0;
-      font: 500 clamp(3rem, 6vw, 7rem)/.8 var(--serif);
-      letter-spacing: -.06em;
-    }
-
-    .film-content h3 em {
-      font-style: italic;
-    }
-
-    .play-button {
-      width: 82px;
-      height: 82px;
-      flex-shrink: 0;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(255, 255, 255, .7);
-      border-radius: 50%;
-      color: #fff;
-      background: transparent;
-      transition:
-        background 400ms var(--ease),
-        color 400ms var(--ease),
-        transform 500ms var(--ease);
-    }
-
-    .play-button svg {
-      width: 17px;
-      margin-left: 3px;
-      fill: currentColor;
-    }
-
-    .film-card:hover .play-button {
-      background: #fff;
-      color: var(--ink);
-      transform: scale(1.08);
-    }
-
-    .film-meta {
-      position: absolute;
-      z-index: 3;
-      left: 3vw;
-      top: 3vw;
-      font: 8px var(--mono);
-      letter-spacing: .13em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, .6);
-    }
-
-    /* BTS */
-
-    .bts-section {
-      padding: 14vw 0 16vw;
-      background: var(--paper-warm);
-    }
-
-    .bts-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 3rem;
-      margin-bottom: 5vw;
-    }
-
-    .bts-head p {
-      max-width: 300px;
-      margin: 0;
-      font: 10px/1.7 var(--mono);
-      text-transform: uppercase;
-      color: rgba(17, 16, 14, .5);
-    }
-
-    .bts-rail-wrap {
-      overflow: hidden;
-    }
-
-    .bts-rail {
-      display: flex;
-      gap: 1vw;
-      width: max-content;
-      padding-left: 5vw;
-      transform: translateX(0);
-      transition: transform 450ms var(--ease);
-    }
-
-    .bts-card {
-      position: relative;
-      width: min(31vw, 460px);
-      aspect-ratio: .73;
-      overflow: hidden;
-      background: #222;
-      cursor: pointer;
-    }
-
-    .bts-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 1000ms var(--ease);
-    }
-
-    .bts-card:hover img {
-      transform: scale(1.06);
-    }
-
-    .bts-card::after {
-      content: "";
-      position: absolute;
-      inset: 50% 0 0;
-      background: linear-gradient(transparent, rgba(0, 0, 0, .75));
-    }
-
-    .bts-card-info {
-      position: absolute;
-      z-index: 2;
-      left: 1.2rem;
-      right: 1.2rem;
-      bottom: 1.2rem;
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      color: #fff;
-      font: 8px var(--mono);
-      letter-spacing: .1em;
-      text-transform: uppercase;
-    }
-
-    .rail-controls {
-      display: flex;
-      gap: .5rem;
-      margin-top: 2rem;
-    }
-
-    .rail-button {
-      width: 44px;
-      height: 44px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(17, 16, 14, .25);
-      border-radius: 50%;
-      background: transparent;
-      color: var(--ink);
-      transition:
-        background 300ms var(--ease),
-        color 300ms var(--ease);
-    }
-
-    .rail-button:hover {
-      background: var(--ink);
-      color: var(--paper);
-    }
-
-    /* QUOTE */
-
-    .quote-section {
-      padding: 13vw 0;
-      background: var(--paper);
-      text-align: center;
-    }
-
-    .quote-section .eyebrow {
-      justify-content: center;
-    }
-
-    .quote {
-      max-width: 980px;
-      margin: 4rem auto 0;
-      font: italic 500 clamp(2.5rem, 5vw, 5.5rem)/.95 var(--serif);
-      letter-spacing: -.05em;
-    }
-
-    .quote-credit {
-      margin-top: 2.5rem;
-      font: 8px var(--mono);
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: rgba(17, 16, 14, .45);
-    }
-
-    /* ENQUIRY */
-
-    .enquire {
-      padding: 14vw 0;
-      background: #d7c6b4;
-    }
-
-    .enquire-grid {
-      display: grid;
-      grid-template-columns: .8fr 1.2fr;
-      gap: 9vw;
-    }
-
-    .enquire-copy h2 {
-      max-width: 700px;
-    }
-
-    .enquire-copy > p {
-      max-width: 410px;
-      margin: 3rem 0 0;
-      font-size: 13px;
-      line-height: 1.8;
-    }
-
-    .enquire-meta {
-      display: flex;
-      gap: 2rem;
-      margin-top: 3rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(17, 16, 14, .16);
-      font: 8px/1.7 var(--mono);
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-
-    .enquire-form {
-      border-top: 1px solid rgba(17, 16, 14, .2);
-    }
-
-    .field {
-      border-bottom: 1px solid rgba(17, 16, 14, .2);
-      padding: 1.5rem 0;
-    }
-
-    .field label {
-      display: block;
-      margin-bottom: .7rem;
-      font: 8px var(--mono);
-      letter-spacing: .13em;
-      text-transform: uppercase;
-    }
-
-    .field input,
-    .field textarea,
-    .field select {
-      width: 100%;
-      border: 0;
-      outline: 0;
-      padding: .1rem 0;
-      background: transparent;
-      color: var(--ink);
-      font: 500 1.05rem var(--sans);
-    }
-
-    .field textarea {
-      min-height: 110px;
-      resize: vertical;
-    }
-
-    .field select {
-      appearance: none;
-    }
-
-    .field input::placeholder,
-    .field textarea::placeholder {
-      color: rgba(17, 16, 14, .38);
-    }
-
-    .form-bottom {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-
-    .submit-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: .7rem;
-      border: 1px solid var(--ink);
-      border-radius: 999px;
-      padding: 1rem 1.25rem;
-      background: var(--ink);
-      color: var(--paper);
-      font: 8px var(--mono);
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      transition:
-        transform 400ms var(--ease),
-        background 300ms var(--ease),
-        color 300ms var(--ease);
-    }
-
-    .submit-button:hover {
-      transform: translateY(-3px);
-      background: transparent;
-      color: var(--ink);
-    }
-
-    .form-note {
-      max-width: 270px;
-      margin: 0;
-      font-size: 10px;
-      line-height: 1.6;
-      color: rgba(17, 16, 14, .55);
-    }
-
-    .form-success {
-      display: none;
-      margin-top: 1.5rem;
-      padding: 1.4rem;
-      background: var(--ink);
-      color: #fff;
-    }
-
-    .form-success.is-visible {
-      display: block;
-      animation: successIn 600ms var(--ease);
-    }
-
-    .form-success strong {
-      display: block;
-      font: 500 1.8rem var(--serif);
-    }
-
-    .form-success p {
-      margin: .6rem 0 0;
-      font-size: 11px;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, .6);
-    }
-
-    @keyframes successIn {
-      from {
-        opacity: 0;
-        transform: translateY(12px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* FOOTER */
-
-    .footer {
-      padding: 6vw 0 2rem;
-      background: var(--ink);
-      color: #fff;
-    }
-
-    .footer-main {
-      display: grid;
-      grid-template-columns: 1.5fr .7fr .7fr;
-      gap: 5vw;
-      padding-bottom: 8vw;
-    }
-
-    .footer-brand {
-      font: 500 clamp(4rem, 9vw, 10rem)/.78 var(--serif);
-      letter-spacing: -.07em;
-    }
-
-    .footer-brand em {
-      font-style: italic;
-    }
-
-    .footer-column h4 {
-      margin: 0 0 1.5rem;
-      font: 8px var(--mono);
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, .4);
-    }
-
-    .footer-column a,
-    .footer-column p {
-      display: block;
-      margin: 0 0 .65rem;
-      font-size: 12px;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, .72);
-    }
-
-    .footer-column a {
-      width: max-content;
-      transition: color 300ms var(--ease);
-    }
-
-    .footer-column a:hover {
-      color: #fff;
-    }
-
-    .footer-bottom {
-      display: flex;
-      justify-content: space-between;
-      gap: 2rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(255, 255, 255, .12);
-      font: 8px var(--mono);
-      letter-spacing: .11em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, .4);
-    }
-
-    /* LIGHTBOX */
-
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      z-index: 500;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 5vw;
-      background: rgba(7, 7, 6, .96);
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 500ms var(--ease),
-        visibility 500ms var(--ease);
-    }
-
-    .lightbox.is-open {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-    }
-
-    .lightbox-image {
-      max-width: 90vw;
-      max-height: 86vh;
-      object-fit: contain;
-      transform: scale(.94);
-      opacity: 0;
-      transition:
-        transform 700ms var(--ease),
-        opacity 500ms var(--ease);
-    }
-
-    .lightbox.is-open .lightbox-image {
-      transform: scale(1);
-      opacity: 1;
-    }
-
-    .lightbox-close,
-    .lightbox-arrow {
-      position: absolute;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(255, 255, 255, .3);
-      border-radius: 50%;
-      background: transparent;
-      color: #fff;
-      transition:
-        background 300ms var(--ease),
-        color 300ms var(--ease);
-    }
-
-    .lightbox-close {
-      top: 2rem;
-      right: 2rem;
-      width: 48px;
-      height: 48px;
-      font-size: 1.3rem;
-    }
-
-    .lightbox-close:hover,
-    .lightbox-arrow:hover {
-      background: #fff;
-      color: var(--ink);
-    }
-
-    .lightbox-counter {
-      position: absolute;
-      left: 2rem;
-      bottom: 2rem;
-      color: rgba(255, 255, 255, .5);
-      font: 8px var(--mono);
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-
-    .lightbox-arrow {
-      top: 50%;
-      width: 52px;
-      height: 52px;
-      transform: translateY(-50%);
-    }
-
-    .lightbox-prev {
-      left: 2rem;
-    }
-
-    .lightbox-next {
-      right: 2rem;
-    }
-
-    /* VIDEO */
-
-    .video-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 4vw;
-      background: rgba(5, 5, 4, .97);
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 500ms var(--ease),
-        visibility 500ms var(--ease);
-    }
-
-    .video-modal.is-open {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-    }
-
-    .video-frame {
-      position: relative;
-      width: min(1200px, 90vw);
-      aspect-ratio: 16 / 9;
-      background: #000;
-      transform: translateY(25px);
-      transition: transform 700ms var(--ease);
-    }
-
-    .video-modal.is-open .video-frame {
-      transform: translateY(0);
-    }
-
-    .video-frame iframe {
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-
-    .video-close {
-      position: absolute;
-      top: -65px;
-      right: 0;
-      width: 46px;
-      height: 46px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(255, 255, 255, .3);
-      border-radius: 50%;
-      background: transparent;
-      color: #fff;
-      font-size: 1.2rem;
-    }
-
-    /* REVEAL */
-
-    [data-reveal] {
-      opacity: 0;
-      transform: translateY(35px);
-      transition:
-        opacity 900ms var(--ease),
-        transform 1000ms var(--ease);
-    }
-
-    [data-reveal].is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    [data-reveal="left"] {
-      transform: translateX(-35px);
-    }
-
-    [data-reveal="left"].is-visible {
-      transform: translateX(0);
-    }
-
-    [data-reveal="right"] {
-      transform: translateX(35px);
-    }
-
-    [data-reveal="right"].is-visible {
-      transform: translateX(0);
-    }
-
-    /* RESPONSIVE */
-
-    @media (max-width: 900px) {
-      :root {
-        --container: calc(100vw - 12vw);
-        --nav-height: 68px;
-      }
-
-      .nav {
-        padding-inline: 6vw;
-      }
-
-      .nav::after {
-        left: 6vw;
-        right: 6vw;
-      }
-
-      .nav-links,
-      .nav-cta {
-        display: none;
-      }
-
-      .menu-button {
-        display: block;
-      }
-
-      .hero {
-        padding: 0 6vw 13vh;
-      }
-
-      .hero-title {
-        font-size: clamp(4.8rem, 18vw, 9rem);
-      }
-
-      .hero-description {
-        display: block;
-      }
-
-      .hero-scroll {
-        margin-top: 2rem;
-      }
-
-      .hero-index {
-        left: 6vw;
-        right: 6vw;
-      }
-
-      .intro-grid {
-        grid-template-columns: 1fr;
-        gap: 4rem;
-      }
-
-      .intro-side {
-        position: static;
-      }
-
-      .intro-mark {
-        margin-top: 2rem;
-      }
-
-      .intro-main .body-copy {
-        margin-left: 0;
-      }
-
-      .image-story-head,
-      .philosophy-head,
-      .featured-top,
-      .bts-head {
-        display: block;
-      }
-
-      .image-story-head p,
-      .philosophy-head p,
-      .featured-intro,
-      .bts-head p {
-        margin-top: 2rem;
-      }
-
-      .editorial-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 2vw;
-      }
-
-      .editorial-item:nth-child(2) {
-        margin-top: 8vw;
-      }
-
-      .editorial-item:nth-child(3) {
-        grid-column: 1 / -1;
-        margin-top: 0;
-      }
-
-      .philosophy-row {
-        grid-template-columns: 36px 1fr 35px;
-        gap: 1rem;
-        padding: 9vw 0;
-      }
-
-      .philosophy-row p {
-        grid-column: 2;
-        grid-row: 2;
-      }
-
-      .philosophy-row h3 {
-        font-size: clamp(2.8rem, 12vw, 5rem);
-      }
-
-      .featured-layout {
-        grid-template-columns: 1fr;
-      }
-
-      .featured-meta {
-        min-height: auto;
-        gap: 5rem;
-      }
-
-      .featured-gallery {
-        gap: 2vw;
-      }
-
-      .film-header {
-        display: block;
-      }
-
-      .film-header p {
-        margin-top: 2rem;
-      }
-
-      .film-card {
-        min-height: 62vh;
-      }
-
-      .film-content {
-        left: 6vw;
-        right: 6vw;
-        bottom: 6vw;
-      }
-
-      .bts-rail {
-        gap: 2vw;
-        padding-left: 6vw;
-      }
-
-      .bts-card {
-        width: 67vw;
-      }
-
-      .enquire-grid {
-        grid-template-columns: 1fr;
-        gap: 5rem;
-      }
-
-      .footer-main {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .footer-brand {
-        grid-column: 1 / -1;
-        font-size: 19vw;
-      }
-    }
-
-    @media (max-width: 560px) {
-      .display {
-        font-size: 16vw;
-      }
-
-      .hero {
-        min-height: 760px;
-      }
-
-      .hero-title {
-        font-size: 20vw;
-      }
-
-      .hero-description p {
-        font-size: 13px;
-      }
-
-      .editorial-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .editorial-item:nth-child(2),
-      .editorial-item:nth-child(3) {
-        margin-top: 0;
-        grid-column: auto;
-      }
-
-      .editorial-item img {
-        aspect-ratio: .82;
-      }
-
-      .featured-gallery {
-        grid-template-columns: 1fr;
-      }
-
-      .featured-photo:first-child {
-        grid-column: auto;
-      }
-
-      .featured-photo:first-child img,
-      .featured-photo img {
-        aspect-ratio: .8;
-      }
-
-      .quote {
-        font-size: 11vw;
-      }
-
-      .form-bottom {
-        display: block;
-      }
-
-      .form-note {
-        margin-top: 1rem;
-      }
-
-      .footer-main {
-        grid-template-columns: 1fr;
-      }
-
-      .footer-brand {
-        grid-column: auto;
-        font-size: 21vw;
-      }
-
-      .footer-bottom {
-        display: block;
-      }
-
-      .footer-bottom span {
-        display: block;
-        margin-bottom: .5rem;
-      }
-
-      .lightbox-arrow {
-        width: 42px;
-        height: 42px;
-      }
-
-      .lightbox-prev {
-        left: .75rem;
-      }
-
-      .lightbox-next {
-        right: .75rem;
-      }
-
-      .lightbox-close {
-        top: 1rem;
-        right: 1rem;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      *,
-      *::before,
-      *::after {
-        animation-duration: .001ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .001ms !important;
-      }
-
-      .marquee-track,
-      .hero-media img {
-        animation: none;
-      }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f2eee7">
+<meta name="description" content="The Reel Romance — candid wedding photography, cinematic films, pre-wedding stories and behind-the-scenes reels. Bangalore · India · Worldwide.">
+<meta property="og:title" content="The Reel Romance — Weddings, remembered.">
+<meta property="og:description" content="Candid photographs, cinematic films and the beautiful chaos between them.">
+<title>The Reel Romance — Weddings, remembered.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f2eee7;--paper2:#e5dbcd;--cream:#faf7f1;--ink:#171513;--ink2:#211d19;
+  --warm:#c9b7a2;--rust:#8d604a;--muted:#706b64;--line:rgba(23,21,19,.14);
+  --serif:"Playfair Display",Georgia,serif;--sans:"Manrope",Arial,sans-serif;--mono:"DM Mono",monospace;
+  --ease:cubic-bezier(.22,1,.36,1);--gutter:clamp(20px,5vw,76px);--max:1480px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--paper)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body.lock{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+img,video{display:block;max-width:100%}
+::selection{background:var(--ink);color:var(--paper)}
+.wrap{width:min(var(--max),calc(100% - 2*var(--gutter)));margin:auto}
+.mono{font:500 10px/1.2 var(--mono);letter-spacing:.18em;text-transform:uppercase}
+.eyebrow{font:500 11px/1.3 var(--mono);letter-spacing:.19em;text-transform:uppercase}
+.eyebrow:before{content:"";display:inline-block;width:34px;height:1px;background:currentColor;vertical-align:middle;margin:0 10px 2px 0;opacity:.55}
+.display{font:500 clamp(4rem,8.8vw,10rem)/.8 var(--serif);letter-spacing:-.075em;margin:0}
+.display em{font-style:italic}
+.body{font-size:15px;line-height:1.8;color:rgba(23,21,19,.68);max-width:610px}
+.reveal{opacity:0;transform:translateY(48px);transition:opacity 1s var(--ease),transform 1.15s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal.delay1{transition-delay:.1s}.reveal.delay2{transition-delay:.2s}.reveal.delay3{transition-delay:.3s}
+.scale-in{opacity:0;transform:scale(.94);transition:opacity 1.1s var(--ease),transform 1.25s var(--ease)}
+.scale-in.in{opacity:1;transform:none}
+
+/* loader */
+.loader{position:fixed;inset:0;z-index:9999;background:var(--ink);color:var(--cream);display:grid;place-items:center;transition:opacity .8s var(--ease),visibility .8s}
+.loader.done{opacity:0;visibility:hidden;pointer-events:none}
+.loader-box{width:min(560px,76vw)}
+.loader-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px}
+.loader-row strong{font:500 25px var(--serif)}.loader-row span{font:9px var(--mono);letter-spacing:.15em}
+.loader-bar{height:1px;background:#fff2;overflow:hidden}.loader-fill{height:100%;width:0;background:#fff;transition:width 1s var(--ease)}
+
+/* nav */
+.nav{position:fixed;z-index:2000;top:0;left:0;right:0;height:86px;padding:0 var(--gutter);display:flex;align-items:center;justify-content:space-between;color:#fff;transition:height .45s var(--ease),background .45s,color .45s,box-shadow .45s;isolation:isolate}
+.nav:before{content:"";position:absolute;inset:0;background:linear-gradient(#0007,transparent);z-index:-1;pointer-events:none;transition:opacity .45s}
+.nav.scrolled{height:70px;color:var(--ink);background:rgba(242,238,231,.94);backdrop-filter:blur(18px);box-shadow:0 1px 0 var(--line)}
+.nav.scrolled:before{opacity:0}
+.logo{font:500 22px/1 var(--serif);letter-spacing:-.045em;white-space:nowrap}
+.logo em{font-style:italic}
+.nav-links{display:flex;gap:clamp(16px,2.4vw,36px);align-items:center}
+.nav-links a{font:500 10px var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:10px 0;position:relative}
+.nav-links a:after{content:"";position:absolute;left:0;right:0;bottom:4px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .45s var(--ease)}
+.nav-links a:hover:after{transform:scaleX(1);transform-origin:left}
+.nav-cta{border:1px solid currentColor;border-radius:99px;padding:11px 15px;font:500 9px var(--mono);letter-spacing:.13em;text-transform:uppercase}
+.nav-cta:hover{background:var(--ink);color:#fff}
+.menu-btn{display:none;width:50px;height:50px;border:1px solid currentColor;border-radius:50%;background:transparent;position:relative;z-index:2002}
+.menu-btn i,.menu-btn i:after{content:"";position:absolute;width:18px;height:1px;background:currentColor;left:15px;top:24px;transition:.45s var(--ease)}
+.menu-btn i:after{left:0;top:6px}.menu-btn.open i{transform:rotate(45deg)}.menu-btn.open i:after{transform:rotate(-90deg) translateX(6px)}
+
+/* mobile menu */
+.mobile-menu{position:fixed;z-index:1999;inset:0;background:var(--ink);color:var(--cream);padding:110px var(--gutter) 35px;display:flex;flex-direction:column;justify-content:flex-end;clip-path:inset(0 0 100% 0);transition:clip-path .8s var(--ease)}
+.mobile-menu.open{clip-path:inset(0)}
+.mobile-links{display:grid;gap:3px}.mobile-links a{font:500 clamp(3.3rem,15vw,7rem)/.82 var(--serif);letter-spacing:-.07em}
+.mobile-foot{border-top:1px solid #fff2;margin-top:55px;padding-top:16px;display:flex;justify-content:space-between;gap:20px;color:#fff8;font:9px var(--mono);letter-spacing:.13em;text-transform:uppercase}
+
+/* hero */
+.hero{height:100svh;min-height:690px;background:#111;color:#fff;position:relative;overflow:hidden}
+.hero-slides,.hero-slide{position:absolute;inset:0}
+.hero-slide{opacity:0;transform:scale(1.045);transition:opacity 1.15s ease,transform 5.5s var(--ease);pointer-events:none}
+.hero-slide.active{opacity:1;transform:scale(1);pointer-events:auto}
+.hero-slide img{width:100%;height:100%;object-fit:cover}
+.hero-slide:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0005 0%,transparent 36%,#000d 100%)}
+.hero-content{position:absolute;z-index:4;left:var(--gutter);right:var(--gutter);bottom:8.5vh}
+.hero-topline{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;color:#fff}
+.hero-topline .eyebrow{font-size:11px;text-shadow:0 2px 15px #0009}
+.hero-index{font:10px var(--mono);letter-spacing:.16em}
+.hero-title{font:500 clamp(4.4rem,11.7vw,13.5rem)/.72 var(--serif);letter-spacing:-.085em;max-width:1100px;margin:0}
+.hero-title .line{display:block;overflow:hidden}.hero-title .line span{display:block;transform:translateY(110%);animation:titleIn 1.2s var(--ease) forwards}
+.hero-title .line:nth-child(2) span{animation-delay:.12s}.hero-title .line:nth-child(3) span{animation-delay:.24s}
+.hero-title em{font-style:italic}
+.hero-bottom{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-top:34px}
+.hero-bottom p{max-width:470px;margin:0;font-size:14px;line-height:1.7;color:#fffE}
+.hero-scroll{font:10px var(--mono);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+.hero-scroll:after{content:"↓";display:inline-grid;place-items:center;width:31px;height:31px;border:1px solid #fff8;border-radius:50%;margin-left:10px;animation:floatArrow 2.2s ease-in-out infinite}
+.hero-dots{position:absolute;z-index:5;right:var(--gutter);top:120px;display:flex;gap:7px}
+.hero-dot{width:42px;height:2px;border:0;background:#fff5;padding:0}.hero-dot.active{background:#fff}
+.hero-progress{position:absolute;z-index:5;left:var(--gutter);right:var(--gutter);bottom:0;height:2px;background:#fff3;overflow:hidden}
+.hero-progress i{display:block;height:100%;width:0;background:#fff;animation:progress 4s linear infinite}
+@keyframes titleIn{to{transform:none}}@keyframes floatArrow{50%{transform:translateY(4px)}}@keyframes progress{from{width:0}to{width:100%}}
+
+/* ticker */
+.ticker{background:var(--ink);color:var(--cream);overflow:hidden;border-block:1px solid #fff2}
+.ticker-track{display:flex;width:max-content;animation:ticker 25s linear infinite}
+.ticker:hover .ticker-track{animation-play-state:paused}
+.ticker-item{padding:17px 28px;font:500 10px var(--mono);letter-spacing:.19em;text-transform:uppercase;white-space:nowrap}
+.ticker-item b{font:500 17px var(--serif);margin-left:22px}
+@keyframes ticker{to{transform:translateX(-50%)}}
+
+/* idea */
+.idea{padding:clamp(110px,13vw,190px) 0;background:var(--paper);position:relative;overflow:hidden}
+.idea-grid{display:grid;grid-template-columns:24% 1fr;gap:7vw}
+.idea-number{font:500 80px/.7 var(--serif);color:var(--rust);margin-top:45px}
+.idea-main h2{max-width:980px}
+.idea-main .body{margin:55px 0 0 21%;max-width:560px}
+.idea-bridge{display:grid;grid-template-columns:1fr 1fr;gap:5vw;align-items:end;margin:100px 0 0 21%}
+.idea-bridge strong{font:italic 500 clamp(2.1rem,3.7vw,4.3rem)/.94 var(--serif)}
+.idea-bridge .body{margin:0}
+
+/* manifesto */
+.manifesto{padding:clamp(105px,12vw,175px) 0;background:var(--paper2);position:relative;overflow:hidden}
+.manifesto:before{content:"THE REEL ROMANCE";position:absolute;right:-4vw;top:4vw;color:#fff5;font:500 clamp(6rem,17vw,19rem)/.75 var(--serif);letter-spacing:-.09em;white-space:nowrap;pointer-events:none}
+.manifesto-head{position:relative;z-index:1;display:grid;grid-template-columns:1fr .45fr;gap:6vw;align-items:end}
+.manifesto-head h2{max-width:900px}
+.manifesto-head .body{margin:0 0 10px}
+.manifesto-bridge{position:relative;z-index:1;margin:90px 0 75px 25%;font:500 clamp(2rem,3.7vw,4.2rem)/.94 var(--serif);max-width:900px}
+.principles{position:relative;z-index:1;border-top:1px solid var(--line)}
+.principle{display:grid;grid-template-columns:65px 1fr 1fr;gap:30px;padding:28px 0;border-bottom:1px solid var(--line);align-items:start;transition:padding .55s var(--ease),background .55s}
+.principle:hover{padding-left:20px;padding-right:20px;background:#fff4}
+.principle .num{font:10px var(--mono);letter-spacing:.15em}
+.principle h3{font:500 clamp(2rem,3.7vw,4rem)/.9 var(--serif);margin:0}
+.principle p{font-size:13px;line-height:1.75;color:#514b45;margin:0;max-width:470px}
+
+/* craft */
+.craft{padding:clamp(105px,12vw,175px) 0;background:var(--cream)}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:50px;margin-bottom:65px}
+.section-head h2{max-width:900px}.section-head .body{max-width:390px;margin:0}
+.craft-grid{display:grid;grid-template-columns:1.1fr .72fr 1fr;gap:13px;align-items:start}
+.craft-card{position:relative;overflow:hidden;background:#d8cec2;cursor:pointer}
+.craft-card:nth-child(2){margin-top:100px}.craft-card:nth-child(4){margin-top:-30px}.craft-card:nth-child(5){margin-top:75px}
+.craft-card.tall{aspect-ratio:.72}.craft-card.land{aspect-ratio:1.3}.craft-card.square{aspect-ratio:1}
+.craft-card img{width:100%;height:100%;object-fit:cover;transition:transform 1.25s var(--ease),filter .8s}
+.craft-card:hover img{transform:scale(1.055);filter:saturate(1.05)}
+.craft-card:after{content:"";position:absolute;inset:55% 0 0;background:linear-gradient(transparent,#0009);pointer-events:none}
+.card-label{position:absolute;z-index:2;left:15px;bottom:15px;color:#fff;background:#111c;padding:9px 11px;border-radius:99px;font:9px var(--mono);letter-spacing:.12em;text-transform:uppercase;backdrop-filter:blur(8px)}
+.craft-foot{display:flex;justify-content:center;margin-top:55px}
+
+/* work explorer */
+.explorer{background:var(--ink2);color:var(--cream);padding:clamp(105px,12vw,175px) 0;overflow:hidden}
+.explorer-intro{display:grid;grid-template-columns:1fr .65fr;gap:7vw;align-items:end;margin-bottom:75px}
+.explorer-intro .body{color:#fff9}
+.work-tabs{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:45px}
+.work-tab{border:1px solid #fff4;color:#fff;padding:12px 16px;border-radius:99px;background:transparent;font:9px var(--mono);letter-spacing:.13em;text-transform:uppercase;transition:.35s var(--ease)}
+.work-tab.active,.work-tab:hover{background:#fff;color:var(--ink)}
+.work-panel{display:none}.work-panel.active{display:block}
+.work-feature{display:grid;grid-template-columns:1.25fr .75fr;gap:13px;align-items:stretch}
+.work-feature-main{min-height:680px;position:relative;overflow:hidden}.work-feature-side{display:grid;gap:13px}
+.work-feature-side figure,.work-feature-main figure{margin:0;position:relative;overflow:hidden;background:#111;height:100%}
+.work-feature-side figure{min-height:330px}.work-feature img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease),filter .8s}
+.work-feature figure:hover img{transform:scale(1.045);filter:saturate(1.05)}
+.work-feature figcaption{position:absolute;z-index:2;left:16px;right:16px;bottom:16px;display:flex;justify-content:space-between;gap:10px;color:#fff;font:9px var(--mono);letter-spacing:.12em;text-transform:uppercase}
+.work-feature figure:after{content:"";position:absolute;inset:50% 0 0;background:linear-gradient(transparent,#000a)}
+.work-feature figcaption>*{position:relative;z-index:3}
+.work-copy{display:grid;grid-template-columns:1fr 1fr;gap:5vw;margin-top:35px}
+.work-copy h3{font:500 clamp(2.3rem,4.5vw,5rem)/.88 var(--serif);margin:0}.work-copy p{color:#fff9;line-height:1.8;max-width:500px}
+
+/* stories */
+.stories{padding:clamp(110px,12vw,180px) 0;background:var(--paper)}
+.story{border-top:1px solid var(--line);padding:45px 0 95px}
+.story-grid{display:grid;grid-template-columns:23% 1fr;gap:6vw}
+.story-meta{display:flex;flex-direction:column;gap:13px}
+.story-meta .tag{font:italic 29px var(--serif);color:#4d4741}
+.story-title{font:500 clamp(3.8rem,7.2vw,8rem)/.8 var(--serif);letter-spacing:-.07em;margin:0 0 28px}
+.story-intro{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:35px}
+.story-intro p{max-width:550px;color:#5b554e;line-height:1.75;margin:0}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:1px solid currentColor;border-radius:99px;padding:13px 17px;font:500 9px var(--mono);letter-spacing:.13em;text-transform:uppercase;transition:.4s var(--ease);white-space:nowrap}
+.pill:hover{background:var(--ink);color:var(--paper);transform:translateY(-3px)}
+.story-film{display:block;position:relative;aspect-ratio:16/8.5;overflow:hidden;background:#111}
+.story-film img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.story-film:hover img{transform:scale(1.035)}
+.story-film:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent,#0008)}
+.story-play{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%);width:74px;height:74px;border:1px solid #fff9;border-radius:50%;display:grid;place-items:center;background:#0005;color:#fff;backdrop-filter:blur(8px)}
+.story-play:after{content:"▶";font-size:14px;margin-left:3px}
+.story-links{display:flex;gap:11px;flex-wrap:wrap;margin-top:17px}
+.story-links a{font:9px var(--mono);letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid #777;padding-bottom:6px}
+.story-gallery{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:10px;margin-top:20px}
+.story-gallery img{width:100%;height:270px;object-fit:cover}.story-gallery img:first-child{grid-row:span 2;height:560px}
+.story-experience{margin-top:20px;border:1px solid var(--line);padding:18px 20px;display:flex;justify-content:space-between;gap:20px;align-items:center}
+
+/* bts */
+.bts{padding:clamp(110px,12vw,175px) 0;background:var(--warm);overflow:hidden}
+.bts-intro{display:grid;grid-template-columns:1fr .55fr;gap:7vw;align-items:end}
+.bts-intro .body{margin:0;color:#504a44}
+.bts-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:70px}
+.bts-card{position:relative;aspect-ratio:9/14;overflow:hidden;background:#111;cursor:pointer}
+.bts-card img,.bts-card video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease),opacity .35s,filter .7s}
+.bts-card video{opacity:0;z-index:1}.bts-card:hover img{transform:scale(1.06);filter:brightness(.65)}.bts-card:hover video{opacity:1}
+.bts-card:after{content:"";position:absolute;z-index:2;inset:55% 0 0;background:linear-gradient(transparent,#000b);pointer-events:none}
+.bts-meta{position:absolute;z-index:3;left:15px;right:15px;bottom:15px;color:#fff;display:flex;justify-content:space-between;gap:10px}
+.bts-note{margin-top:55px;display:flex;justify-content:space-between;gap:30px;align-items:end}
+.bts-note strong{font:italic 500 clamp(2.2rem,4vw,4.5rem)/.93 var(--serif);max-width:900px}.bts-note span{color:#514a44}
+
+/* pre */
+.pre{padding:clamp(110px,12vw,175px) 0;background:var(--paper2);overflow:hidden}
+.pre-top{display:grid;grid-template-columns:1fr .55fr;gap:7vw;align-items:end}
+.pre-top .body{margin:0}
+.pre-line{font:500 clamp(4rem,11vw,12rem)/.75 var(--serif);letter-spacing:-.08em;margin:90px 0 65px;white-space:nowrap;transform:translateX(-3vw)}
+.pre-line em{font-style:italic}
+.pre-track-wrap{overflow:hidden}
+.pre-track{display:flex;gap:12px;width:max-content;transition:transform 1s var(--ease)}
+.pre-card{width:min(62vw,760px);height:min(56vw,590px);position:relative;overflow:hidden;flex:0 0 auto}
+.pre-card:nth-child(even){width:min(38vw,470px);height:min(48vw,510px);margin-top:80px}
+.pre-card img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s var(--ease)}
+.pre-card:hover img{transform:scale(1.04)}
+.pre-caption{position:absolute;left:15px;right:15px;bottom:15px;color:#fff;display:flex;justify-content:space-between;gap:15px;font:9px var(--mono);letter-spacing:.12em;text-transform:uppercase;text-shadow:0 1px 8px #000}
+.pre-controls{display:flex;justify-content:flex-end;gap:8px;margin-top:15px}.circle{width:46px;height:46px;border:1px solid var(--ink);border-radius:50%;background:transparent}.circle:hover{background:var(--ink);color:var(--paper)}
+
+/* experience */
+.experience{padding:clamp(110px,12vw,175px) 0;background:var(--cream)}
+.exp-head{display:grid;grid-template-columns:1fr .55fr;gap:7vw;align-items:end}
+.exp-head .body{margin:0}.steps{margin-top:80px;border-top:1px solid var(--line)}
+.step{display:grid;grid-template-columns:65px 1fr 1fr;gap:30px;padding:30px 0;border-bottom:1px solid var(--line);transition:.55s var(--ease)}
+.step:hover{padding-left:20px;padding-right:20px;background:#fff7}
+.step h3{font:500 clamp(2rem,3.5vw,3.8rem)/.9 var(--serif);margin:0}.step p{font-size:13px;line-height:1.75;color:#5d5750;margin:0;max-width:480px}
+
+/* why */
+.why{padding:clamp(110px,12vw,170px) 0;background:var(--paper);position:relative;overflow:hidden}
+.why-grid{display:grid;grid-template-columns:.45fr 1fr;gap:7vw}.why-statement{font:italic 500 clamp(2.5rem,4.5vw,5.2rem)/.92 var(--serif);max-width:900px}.why-list{margin-top:70px;border-top:1px solid var(--line)}
+.why-row{display:grid;grid-template-columns:60px 1fr 1fr;gap:30px;padding:25px 0;border-bottom:1px solid var(--line);align-items:start}.why-row h3{font:500 27px/.95 var(--serif);margin:0}.why-row p{margin:0;font-size:13px;line-height:1.7;color:#625c54}
+
+/* contact */
+.contact{background:var(--ink);color:var(--cream);padding:clamp(110px,12vw,175px) 0 35px}
+.contact-grid{display:grid;grid-template-columns:1fr .8fr;gap:8vw;align-items:end}
+.contact h2{max-width:900px}.contact .body{color:#fff9;font-size:16px}.contact-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.contact .pill{border-color:#fff;color:#fff}.contact .pill:hover{background:#fff;color:var(--ink)}
+.form{border-top:1px solid #fff3}.field{border-bottom:1px solid #fff2;padding:18px 0}.field label{display:block;font:9px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#aaa;margin-bottom:9px}
+.field input,.field select,.field textarea{width:100%;border:0;outline:0;background:transparent;color:#fff;font-size:16px}.field select{appearance:none}.field select option{color:#111}.field textarea{min-height:90px;resize:vertical}
+.form-actions{margin-top:24px;display:flex;align-items:center;gap:18px}.submit{border:1px solid #fff;background:#fff;color:#111;border-radius:99px;padding:14px 19px;font:500 9px var(--mono);letter-spacing:.12em;text-transform:uppercase}.submit:hover{background:transparent;color:#fff}.form-note{font-size:10px;line-height:1.5;color:#aaa;max-width:280px}
+.footer{margin-top:100px;border-top:1px solid #fff2;padding-top:17px;display:flex;justify-content:space-between;gap:20px;color:#aaa;font:9px var(--mono);letter-spacing:.12em;text-transform:uppercase}
+
+/* modals / page-like work viewer */
+.modal{position:fixed;inset:0;z-index:5000;background:#0d0c0beF;backdrop-filter:blur(16px);display:grid;place-items:center;opacity:0;visibility:hidden;transition:.5s var(--ease);padding:4vw}
+.modal.open{opacity:1;visibility:visible}
+.modal-panel{position:relative;width:min(1180px,100%);max-height:92svh;overflow:auto;background:var(--paper);color:var(--ink);padding:clamp(28px,5vw,70px);transform:translateY(35px) scale(.97);transition:.65s var(--ease)}
+.modal.open .modal-panel{transform:none}
+.modal-close{position:absolute;right:18px;top:18px;width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:transparent;font-size:25px}
+.modal-kicker{font:10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--rust);margin-bottom:15px}
+.modal-title{font:500 clamp(3.2rem,7vw,7rem)/.8 var(--serif);letter-spacing:-.07em;margin:0}.modal-copy{max-width:690px;font-size:14px;line-height:1.8;color:#5e5851;margin:28px 0 35px}
+.modal-grid{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:10px}.modal-grid img{width:100%;height:260px;object-fit:cover}.modal-grid img:first-child{grid-row:span 2;height:530px}
+.modal-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}
+.video-frame{width:100%;aspect-ratio:16/9;border:0;background:#000}
+
+/* responsive */
+@media(max-width:1000px){
+  :root{--gutter:24px}
+  .nav{height:76px}.nav.scrolled{height:66px}.nav-links,.nav-cta{display:none}.menu-btn{display:block}
+  .hero-content{bottom:7.5vh}.hero-title{font-size:clamp(4rem,15vw,8rem)}.hero-bottom{display:block}.hero-scroll{margin-top:22px}
+  .idea-grid,.manifesto-head,.explorer-intro,.bts-intro,.pre-top,.exp-head,.contact-grid{grid-template-columns:1fr}
+  .idea-main .body{margin:45px 0 0}.idea-bridge{margin:75px 0 0 0}
+  .principle{grid-template-columns:45px 1fr}.principle p{grid-column:2}
+  .manifesto-bridge{margin-left:0}
+  .section-head{display:block}.section-head .body{margin-top:24px}
+  .craft-grid{grid-template-columns:1fr 1fr}.craft-card:nth-child(2),.craft-card:nth-child(4),.craft-card:nth-child(5){margin-top:0}.craft-card:first-child{grid-column:1/-1}
+  .work-feature{grid-template-columns:1fr}.work-feature-main{min-height:600px}.work-feature-side{grid-template-columns:1fr 1fr}.work-copy{grid-template-columns:1fr}
+  .story-grid{grid-template-columns:1fr}.story-meta{flex-direction:row;justify-content:space-between;align-items:end}.story-gallery{grid-template-columns:1fr 1fr}.story-gallery img:first-child{grid-column:1/-1;grid-row:auto;height:380px}.story-gallery img{height:230px}
+  .bts-grid{grid-template-columns:1fr 1fr}
+  .pre-card{width:75vw;height:62vw}.pre-card:nth-child(even){width:58vw;height:57vw}
+  .step{grid-template-columns:45px 1fr}.step p{grid-column:2}
+  .why-grid{grid-template-columns:1fr}.why-row{grid-template-columns:45px 1fr}.why-row p{grid-column:2}
+}
+@media(max-width:600px){
+  :root{--gutter:18px}
+  .logo{font-size:19px}.hero{min-height:650px}.hero-dots{top:98px;right:18px}.hero-dot{width:29px}
+  .hero-topline{margin-bottom:19px}.hero-topline .eyebrow{font-size:9px}.hero-index{font-size:8px}
+  .hero-title{font-size:clamp(3.65rem,18vw,6.2rem);line-height:.75}.hero-bottom p{font-size:13px;max-width:330px}
+  .ticker-item{padding:15px 18px;font-size:9px}.ticker-item b{margin-left:15px}
+  .idea,.manifesto,.craft,.explorer,.stories,.bts,.pre,.experience,.why,.contact{padding:90px 0}
+  .display{font-size:clamp(3.4rem,16vw,5.8rem)}
+  .idea-number{font-size:62px}.idea-bridge{grid-template-columns:1fr;gap:25px}
+  .manifesto-head{gap:35px}.manifesto-bridge{margin:60px 0}.principle{padding:23px 0}
+  .craft-grid{grid-template-columns:1fr}.craft-card:first-child{grid-column:auto}.craft-card.tall,.craft-card.land,.craft-card.square{aspect-ratio:1.02}
+  .work-tabs{gap:6px}.work-tab{padding:10px 12px;font-size:8px}.work-feature-main{min-height:68vh}.work-feature-side{grid-template-columns:1fr 1fr}.work-feature-side figure{min-height:36vh}
+  .story{padding:32px 0 70px}.story-meta{display:block}.story-meta .small{display:block;margin-top:12px}.story-title{font-size:clamp(3.35rem,15vw,5.4rem);margin-top:24px}.story-intro{display:block}.story-intro .pill{margin-top:18px}.story-film{aspect-ratio:1.05}.story-gallery{grid-template-columns:1fr}.story-gallery img:first-child{height:58vh}.story-gallery img{height:48vh}
+  .story-experience{display:block}.story-experience .pill{margin-top:15px}
+  .bts-grid{grid-template-columns:1fr 1fr;gap:7px}.bts-card{aspect-ratio:.72}.bts-note{display:block}.bts-note span{display:block;margin-top:25px}
+  .pre-line{white-space:normal;margin:65px 0 45px;transform:none}.pre-card{width:84vw;height:70vw}.pre-card:nth-child(even){width:68vw;height:64vw;margin-top:55px}
+  .step{padding:23px 0}.step h3{font-size:2.15rem}
+  .form-actions{display:block}.form-note{margin-top:13px}.footer{display:block}.footer span{display:block;margin-top:9px}
+  .modal{padding:0}.modal-panel{height:100svh;max-height:none;padding:78px 18px 30px}.modal-grid{grid-template-columns:1fr 1fr}.modal-grid img:first-child{grid-column:1/-1;grid-row:auto;height:52vh}.modal-grid img{height:32vh}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .ticker-track{animation:none}.reveal,.scale-in{opacity:1;transform:none}
+}
+</style>
 </head>
-
 <body>
 
-  <div class="preloader" id="preloader" aria-hidden="true">
-    <div class="loader-inner">
-      <div class="loader-brand">
-        <strong>The Reel Romance</strong>
-        <span>Loading the story</span>
-      </div>
+<div class="loader" id="loader">
+  <div class="loader-box">
+    <div class="loader-row"><strong>the reel <em>romance</em></strong><span>entering the story</span></div>
+    <div class="loader-bar"><div class="loader-fill" id="loaderFill"></div></div>
+  </div>
+</div>
 
-      <div class="loader-line">
-        <div class="loader-progress" id="loaderProgress"></div>
+<header class="nav" id="nav">
+  <a class="logo" href="#top">the reel <em>romance</em></a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="#stories">Stories</a><a href="#work">Work</a><a href="#bts">BTS</a><a href="#experience">Experience</a><a href="#contact">Let's talk</a>
+  </nav>
+  <a class="nav-cta" href="#contact">Enquire ↗</a>
+  <button class="menu-btn" id="menuBtn" aria-label="Open menu"><i></i></button>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <nav class="mobile-links">
+    <a href="#stories">Stories</a><a href="#work">Work</a><a href="#bts">BTS</a><a href="#prewedding">Pre-wedding</a><a href="#experience">Experience</a><a href="#contact">Let's talk ↗</a>
+  </nav>
+  <div class="mobile-foot"><span>Bangalore · India · Worldwide</span><span>The Reel Romance®</span></div>
+</div>
+
+<main id="top">
+
+<section class="hero" aria-label="Featured wedding stories">
+  <div class="hero-slides" id="heroSlides">
+    <div class="hero-slide active"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2200&q=88" alt="Wedding couple embracing"></div>
+    <div class="hero-slide"><img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=2200&q=88" alt="Wedding celebration"></div>
+    <div class="hero-slide"><img src="https://images.unsplash.com/photo-1544078751-58fee2d8a03b?auto=format&fit=crop&w=2200&q=88" alt="Couple walking together"></div>
+  </div>
+  <div class="hero-dots" id="heroDots">
+    <button class="hero-dot active" aria-label="Hero image 1"></button><button class="hero-dot" aria-label="Hero image 2"></button><button class="hero-dot" aria-label="Hero image 3"></button>
+  </div>
+  <div class="hero-content">
+    <div class="hero-topline"><span class="eyebrow">Bangalore · India · Everywhere</span><span class="hero-index" id="heroIndex">01 / 03</span></div>
+    <h1 class="hero-title">
+      <span class="line"><span>Weddings,</span></span>
+      <span class="line"><span>remembered.</span></span>
+      <span class="line"><span><em>not staged.</em></span></span>
+    </h1>
+    <div class="hero-bottom">
+      <p>Candid photographs, cinematic films and the beautiful chaos between them — made to feel like you, not a template.</p>
+      <div class="hero-scroll">Scroll to enter</div>
+    </div>
+  </div>
+  <div class="hero-progress"><i id="heroProgress"></i></div>
+</section>
+
+<div class="ticker" aria-label="Services">
+  <div class="ticker-track">
+    <span class="ticker-item">Photography <b>✦</b></span><span class="ticker-item">Cinematography <b>✦</b></span><span class="ticker-item">Pre-wedding <b>✦</b></span><span class="ticker-item">BTS reels <b>✦</b></span><span class="ticker-item">Storytelling <b>✦</b></span>
+    <span class="ticker-item">Photography <b>✦</b></span><span class="ticker-item">Cinematography <b>✦</b></span><span class="ticker-item">Pre-wedding <b>✦</b></span><span class="ticker-item">BTS reels <b>✦</b></span><span class="ticker-item">Storytelling <b>✦</b></span>
+  </div>
+</div>
+
+<section class="idea" id="idea">
+  <div class="wrap idea-grid">
+    <aside class="reveal"><span class="eyebrow">01 / The idea</span><div class="idea-number">01</div></aside>
+    <div class="idea-main">
+      <h2 class="display reveal">Not just how it <em>looked.</em><br>How it <em>felt.</em></h2>
+      <p class="body reveal delay1">We watch for the split-second glance, the laugh nobody planned, the hand finding yours in a crowded room. Then we shape those fragments into photographs and films that still feel alive years later.</p>
+      <div class="idea-bridge reveal delay2">
+        <strong>A little direction when you need it. A lot of room to be yourselves.</strong>
+        <p class="body">The result is a wedding story with movement, texture and personality — not a catalogue of poses.</p>
       </div>
     </div>
   </div>
+</section>
 
-  <div class="cursor" id="cursor"></div>
-
-  <header class="nav" id="siteNav">
-
-    <a class="nav-logo" href="#top" aria-label="The Reel Romance home">
-      The Reel <em>Romance</em>
-    </a>
-
-    <nav class="nav-links" aria-label="Primary navigation">
-      <a class="nav-link" href="#story">The work</a>
-      <a class="nav-link" href="#philosophy">Approach</a>
-      <a class="nav-link" href="#film">Film</a>
-      <a class="nav-link" href="#enquire">Enquire</a>
-    </nav>
-
-    <a class="nav-cta magnetic" href="#enquire" data-cursor-large>
-      Start a story
-      <span aria-hidden="true">↗</span>
-    </a>
-
-    <button
-      class="menu-button"
-      id="menuButton"
-      type="button"
-      aria-label="Open menu"
-      aria-expanded="false"
-    >
-      <span class="menu-lines" aria-hidden="true">
-        <span></span>
-        <span></span>
-      </span>
-    </button>
-
-  </header>
-
-  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-    <nav aria-label="Mobile navigation">
-      <a href="#story">The work</a>
-      <a href="#philosophy">Approach</a>
-      <a href="#film">Film</a>
-      <a href="#enquire">Enquire</a>
-    </nav>
-
-    <div class="mobile-meta">
-      <span>Bangalore + everywhere</span>
-      <span>Est. 2026</span>
+<section class="manifesto">
+  <div class="wrap">
+    <div class="manifesto-head">
+      <h2 class="display reveal">No formula.<br>No forced <em>perfection.</em></h2>
+      <p class="body reveal delay1">We build around the people, the pace and the strange little details that make your wedding yours.</p>
+    </div>
+    <div class="manifesto-bridge reveal delay2">The point isn't to make a perfect wedding picture. <em>It's to make a picture that feels like your wedding.</em></div>
+    <div class="principles">
+      <article class="principle reveal"><span class="num">01</span><h3>Emotion <em>first.</em></h3><p>We look for the feeling before the frame. The nervous laugh. The family squeeze. The chaos that becomes the story later.</p></article>
+      <article class="principle reveal delay1"><span class="num">02</span><h3>Story over <em>formula.</em></h3><p>We guide when a little structure helps, then disappear into the room when the real moments start happening.</p></article>
+      <article class="principle reveal delay2"><span class="num">03</span><h3>Made to <em>last.</em></h3><p>Images should age well. Films should still give you goosebumps. We care about the feeling ten years from now.</p></article>
     </div>
   </div>
+</section>
 
-  <main id="top">
-
-    <section class="hero">
-
-      <div class="hero-media">
-        <img
-          src="IMG_hero.JPG"
-          alt="Anurag and Garima on their wedding day"
-          fetchpriority="high"
-        >
-      </div>
-
-      <div class="hero-overlay"></div>
-      <div class="hero-grain"></div>
-
-      <div class="hero-content">
-
-        <div class="hero-eyebrow eyebrow">
-          Bangalore · India · Everywhere
-        </div>
-
-        <h1 class="hero-title">
-          <span class="line">
-            <span>Weddings</span>
-          </span>
-
-          <span class="line">
-            <span>told like <em>stories.</em></span>
-          </span>
-        </h1>
-
-        <div class="hero-description">
-
-          <p>
-            Photography, films and the beautifully unplanned moments
-            between them. For couples who want to remember how it felt,
-            not just how it looked.
-          </p>
-
-          <a class="hero-scroll" href="#story" data-cursor-large>
-            Explore
-            <span class="hero-scroll-line"></span>
-          </a>
-
-        </div>
-
-      </div>
-
-      <div class="hero-index">
-        <span>The Reel Romance®</span>
-        <span>Scroll to begin ↓</span>
-      </div>
-
-    </section>
-
-    <div class="marquee" aria-hidden="true">
-      <div class="marquee-track">
-        <div class="marquee-item">Real people</div>
-        <div class="marquee-item">Unscripted moments</div>
-        <div class="marquee-item">Cinematic frames</div>
-        <div class="marquee-item">Beautiful chaos</div>
-        <div class="marquee-item">Stories that stay</div>
-        <div class="marquee-item">Real people</div>
-        <div class="marquee-item">Unscripted moments</div>
-        <div class="marquee-item">Cinematic frames</div>
-        <div class="marquee-item">Beautiful chaos</div>
-        <div class="marquee-item">Stories that stay</div>
-      </div>
+<section class="craft" id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <div><span class="eyebrow">02 / The craft</span><h2 class="display reveal">See the <em>craft.</em></h2></div>
+      <p class="body reveal delay1">One studio. Different languages — candid photography, cinematic frames, pre-wedding stories and the work that happens behind the camera.</p>
     </div>
-
-    <section class="intro" id="about">
-
-      <div class="container intro-grid">
-
-        <aside class="intro-side" data-reveal="left">
-          <div class="eyebrow">The idea</div>
-
-          <div class="intro-mark" aria-hidden="true">
-            R
-          </div>
-        </aside>
-
-        <div class="intro-main">
-
-          <h2 class="display" data-reveal>
-            Your wedding is not a
-            <em>photoshoot.</em>
-          </h2>
-
-          <div class="body-copy" data-reveal>
-
-            <strong>
-              It is a room full of people you love,
-              a hundred tiny decisions, bad jokes,
-              nervous hands, loud music and one
-              extraordinary day.
-            </strong>
-
-            <p>
-              We photograph the glance before the smile.
-              The friend fixing your collar. Your mother
-              trying not to cry. The dance floor after
-              everyone has stopped pretending to behave.
-            </p>
-
-            <p>
-              The goal is simple: years from now,
-              your photographs should take you back there.
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <section class="image-story" id="story">
-
-      <div class="container">
-
-        <div class="image-story-head" data-reveal>
-
-          <h2 class="display">
-            The moments
-            <em>in between.</em>
-          </h2>
-
-          <p>
-            We don't manufacture the moment.
-            We stay close enough to notice it.
-          </p>
-
-        </div>
-
-        <div class="editorial-grid">
-
-          <figure
-            class="editorial-item"
-            data-lightbox
-            data-image="IMG_1.jpg"
-            data-caption="The anticipation"
-            data-cursor-large
-            data-reveal
-          >
-            <img src="IMG_1.jpg" alt="Wedding portrait" loading="lazy">
-
-            <figcaption class="editorial-caption">
-              <span>The anticipation</span>
-              <span>01 / 05</span>
-            </figcaption>
-          </figure>
-
-          <figure
-            class="editorial-item"
-            data-lightbox
-            data-image="IMG_2.jpg"
-            data-caption="The quiet"
-            data-cursor-large
-            data-reveal
-          >
-            <img src="IMG_2.jpg" alt="Quiet wedding moment" loading="lazy">
-
-            <figcaption class="editorial-caption">
-              <span>The quiet</span>
-              <span>02 / 05</span>
-            </figcaption>
-          </figure>
-
-          <figure
-            class="editorial-item"
-            data-lightbox
-            data-image="IMG_3.jpg"
-            data-caption="The celebration"
-            data-cursor-large
-            data-reveal
-          >
-            <img src="IMG_3.jpg" alt="Wedding celebration" loading="lazy">
-
-            <figcaption class="editorial-caption">
-              <span>The celebration</span>
-              <span>03 / 05</span>
-            </figcaption>
-          </figure>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <section class="philosophy dark" id="philosophy">
-
-      <div class="container">
-
-        <div class="philosophy-head">
-
-          <h2 class="display" data-reveal>
-            No formula.
-            <br>
-            No forced
-            <em>perfection.</em>
-          </h2>
-
-          <p data-reveal>
-            Every couple brings a different rhythm.
-            We build the visual language around yours.
-          </p>
-
-        </div>
-
-        <div class="philosophy-list">
-
-          <article class="philosophy-row" data-reveal>
-            <span class="philosophy-number">01</span>
-
-            <h3>
-              Emotion
-              <em>first.</em>
-            </h3>
-
-            <p>
-              We are not chasing perfect poses.
-              We are looking for the real thing —
-              and knowing when to stay out of its way.
-            </p>
-
-            <span class="philosophy-arrow" aria-hidden="true">↗</span>
-          </article>
-
-          <article class="philosophy-row" data-reveal>
-            <span class="philosophy-number">02</span>
-
-            <h3>
-              Story over
-              <em>formula.</em>
-            </h3>
-
-            <p>
-              Every wedding gets its own rhythm,
-              light, movement and visual language.
-              Nothing is copy-pasted.
-            </p>
-
-            <span class="philosophy-arrow" aria-hidden="true">↗</span>
-          </article>
-
-          <article class="philosophy-row" data-reveal>
-            <span class="philosophy-number">03</span>
-
-            <h3>
-              Made to
-              <em>last.</em>
-            </h3>
-
-            <p>
-              Trends disappear. The feeling shouldn't.
-              Everything we create is designed to still
-              feel honest ten years from now.
-            </p>
-
-            <span class="philosophy-arrow" aria-hidden="true">↗</span>
-          </article>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <section class="featured">
-
-      <div class="container">
-
-        <div class="featured-top">
-
-          <h2 class="display" data-reveal>
-            One day.
-            <br>
-            A thousand
-            <em>frames.</em>
-          </h2>
-
-          <div class="featured-intro" data-reveal>
-
-            <p>
-              Anurag &amp; Garima — Jim Corbett.
-              A day in the wild. Two people,
-              their people, and all the little things
-              that happened in between.
-            </p>
-
-            <a href="#film" data-cursor-large>
-              Watch their film ↗
-            </a>
-
-          </div>
-
-        </div>
-
-        <div class="featured-layout">
-
-          <aside class="featured-meta" data-reveal="left">
-
-            <div class="featured-meta-top">
-              <span>Wedding story 01</span>
-              <span>2026</span>
-            </div>
-
-            <div>
-              <h3>
-                Anurag
-                <em>&amp;</em>
-                Garima
-              </h3>
-
-              <p>
-                A day in the wild. Two people, their people,
-                and all the little things that happened in between.
-              </p>
-            </div>
-
-            <div class="featured-meta-bottom">
-              <span>Jim Corbett</span>
-              <span>26 Apr 2026</span>
-            </div>
-
-          </aside>
-
-          <div class="featured-gallery">
-
-            <figure
-              class="featured-photo"
-              data-lightbox
-              data-image="IMG_hero.JPG"
-              data-caption="The beginning"
-              data-cursor-large
-              data-reveal="right"
-            >
-              <img
-                src="IMG_hero.JPG"
-                alt="Anurag and Garima wedding photograph"
-                loading="lazy"
-              >
-
-              <span class="photo-label">The beginning</span>
-            </figure>
-
-            <figure
-              class="featured-photo"
-              data-lightbox
-              data-image="IMG_3.jpg"
-              data-caption="The celebration"
-              data-cursor-large
-              data-reveal
-            >
-              <img
-                src="IMG_3.jpg"
-                alt="Anurag and Garima celebration"
-                loading="lazy"
-              >
-
-              <span class="photo-label">The celebration</span>
-            </figure>
-
-            <figure
-              class="featured-photo"
-              data-lightbox
-              data-image="IMG_4.jpg"
-              data-caption="The quiet"
-              data-cursor-large
-              data-reveal
-            >
-              <img
-                src="IMG_4.jpg"
-                alt="Anurag and Garima quiet wedding moment"
-                loading="lazy"
-              >
-
-              <span class="photo-label">The quiet</span>
-            </figure>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <section class="film-section" id="film">
-
-      <div class="container">
-
-        <div class="film-header">
-
-          <h2 class="display" data-reveal>
-            And then
-            <em>there's</em>
-            the film.
-          </h2>
-
-          <p data-reveal>
-            Sound. Movement. Silence.
-            The laugh you forgot about.
-            The voice of someone you love.
-            A wedding film should bring the day back,
-            not just show it to you.
-          </p>
-
-        </div>
-
-        <article
-          class="film-card"
-          id="filmCard"
-          data-cursor-large
-          data-video="https://www.youtube-nocookie.com/embed/iCyohnh7PDs?autoplay=1&rel=0"
-          data-reveal
-        >
-
-          <img
-            class="film-poster"
-            src="IMG_4.jpg"
-            alt="Anurag and Garima wedding film"
-            loading="lazy"
-          >
-
-          <span class="film-meta">
-            Anurag &amp; Garima · Jim Corbett · 2026
-          </span>
-
-          <div class="film-content">
-
-            <h3>
-              Press
-              <em>play.</em>
-            </h3>
-
-            <button
-              class="play-button"
-              type="button"
-              aria-label="Play wedding film"
-            >
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M8 5v14l11-7z"></path>
-              </svg>
-            </button>
-
-          </div>
-
-        </article>
-
-      </div>
-
-    </section>
-
-    <section class="bts-section">
-
-      <div class="bts-head container">
-
-        <h2 class="display" data-reveal>
-          Behind the
-          <em>frame.</em>
-        </h2>
-
-        <div data-reveal>
-
-          <p>
-            The chaos.
-            The laughs.
-            The making of the memory.
-          </p>
-
-          <div class="rail-controls">
-
-            <button
-              class="rail-button"
-              id="railPrev"
-              type="button"
-              aria-label="Previous behind the scenes image"
-            >
-              ←
-            </button>
-
-            <button
-              class="rail-button"
-              id="railNext"
-              type="button"
-              aria-label="Next behind the scenes image"
-            >
-              →
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="bts-rail-wrap">
-
-        <div class="bts-rail" id="btsRail">
-
-          <figure
-            class="bts-card"
-            data-lightbox
-            data-image="IMG_1.jpg"
-            data-caption="Behind the frame — 01"
-            data-cursor-large
-          >
-            <img src="IMG_1.jpg" alt="Wedding photography frame" loading="lazy">
-
-            <figcaption class="bts-card-info">
-              <span>Behind the frame</span>
-              <span>01</span>
-            </figcaption>
-          </figure>
-
-          <figure
-            class="bts-card"
-            data-lightbox
-            data-image="IMG_2.jpg"
-            data-caption="Behind the frame — 02"
-            data-cursor-large
-          >
-            <img src="IMG_2.jpg" alt="Wedding photography frame" loading="lazy">
-
-            <figcaption class="bts-card-info">
-              <span>Behind the frame</span>
-              <span>02</span>
-            </figcaption>
-          </figure>
-
-          <figure
-            class="bts-card"
-            data-lightbox
-            data-image="IMG_3.jpg"
-            data-caption="Behind the frame — 03"
-            data-cursor-large
-          >
-            <img src="IMG_3.jpg" alt="Wedding photography frame" loading="lazy">
-
-            <figcaption class="bts-card-info">
-              <span>Behind the frame</span>
-              <span>03</span>
-            </figcaption>
-          </figure>
-
-          <figure
-            class="bts-card"
-            data-lightbox
-            data-image="IMG_4.jpg"
-            data-caption="Behind the frame — 04"
-            data-cursor-large
-          >
-            <img src="IMG_4.jpg" alt="Wedding photography frame" loading="lazy">
-
-            <figcaption class="bts-card-info">
-              <span>Behind the frame</span>
-              <span>04</span>
-            </figcaption>
-          </figure>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <section class="quote-section">
-
-      <div class="container">
-
-        <div class="eyebrow" data-reveal>
-          Why it matters
-        </div>
-
-        <blockquote class="quote" data-reveal>
-          “There are photographs of a wedding
-          you remember taking. And then there are
-          the ones you are grateful someone noticed.”
-        </blockquote>
-
-        <div class="quote-credit" data-reveal>
-          The Reel Romance
-        </div>
-
-      </div>
-
-    </section>
-
-    <section class="enquire" id="enquire">
-
-      <div class="container enquire-grid">
-
-        <div class="enquire-copy">
-
-          <h2 class="display" data-reveal>
-            Let's make
-            <em>yours.</em>
-          </h2>
-
-          <p data-reveal>
-            Tell us a little about the two of you,
-            where you're getting married, and what
-            matters most to you about the day.
-          </p>
-
-          <div class="enquire-meta" data-reveal>
-            <span>Usually reply within 24 hours</span>
-            <span>Bangalore + destination</span>
-          </div>
-
-        </div>
-
-        <div data-reveal="right">
-
-          <form class="enquire-form" id="enquiryForm">
-
-            <div class="field">
-              <label for="name">Your names</label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                placeholder="Anurag &amp; Garima"
-                autocomplete="name"
-                required
-              >
-            </div>
-
-            <div class="field">
-              <label for="email">Email</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="hello@example.com"
-                autocomplete="email"
-                required
-              >
-            </div>
-
-            <div class="field">
-              <label for="date">Wedding date</label>
-              <input id="date" name="date" type="date">
-            </div>
-
-            <div class="field">
-              <label for="location">Where is it happening?</label>
-              <input
-                id="location"
-                name="location"
-                type="text"
-                placeholder="Bangalore, Goa, Jim Corbett..."
-              >
-            </div>
-
-            <div class="field">
-              <label for="coverage">What are you looking for?</label>
-
-              <select id="coverage" name="coverage">
-                <option value="">Select one</option>
-                <option value="Photography">Photography</option>
-                <option value="Film">Wedding film</option>
-                <option value="Photography + Film">
-                  Photography + Film
-                </option>
-                <option value="BTS">Behind the scenes / BTS</option>
-                <option value="Everything">The whole story</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="message">Tell us about it</label>
-
-              <textarea
-                id="message"
-                name="message"
-                placeholder="The vibe, the people, the plans..."
-              ></textarea>
-            </div>
-
-            <div class="form-bottom">
-
-              <button
-                class="submit-button magnetic"
-                type="submit"
-                data-cursor-large
-              >
-                Prepare my enquiry
-                <span aria-hidden="true">↗</span>
-              </button>
-
-              <p class="form-note">
-                This prepares your enquiry and copies it to your
-                clipboard so you can send it directly to us.
-              </p>
-
-            </div>
-
-            <div
-              class="form-success"
-              id="formSuccess"
-              role="status"
-              aria-live="polite"
-            >
-              <strong>Your story is ready.</strong>
-
-              <p>
-                Your enquiry has been copied.
-                Send it to us through Instagram or your preferred
-                contact channel.
-              </p>
-            </div>
-
-          </form>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-  <footer class="footer">
-
-    <div class="container">
-
-      <div class="footer-main">
-
-        <div class="footer-brand">
-          The Reel
-          <em>Romance.</em>
-        </div>
-
-        <div class="footer-column">
-
-          <h4>Navigate</h4>
-
-          <a href="#story">The work</a>
-          <a href="#philosophy">Approach</a>
-          <a href="#film">Film</a>
-          <a href="#enquire">Enquire</a>
-
-        </div>
-
-        <div class="footer-column">
-
-          <h4>Say hello</h4>
-
-          <a
-            href="https://instagram.com/thereelromance"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Instagram ↗
-          </a>
-
-          <p>
-            Bangalore + destination weddings,
-            wherever the story takes us.
-          </p>
-
-        </div>
-
-      </div>
-
-      <div class="footer-bottom">
-        <span>© 2026 The Reel Romance</span>
-        <span>Made for the moments between</span>
-        <span>India · Worldwide</span>
-      </div>
-
+    <div class="craft-grid">
+      <figure class="craft-card tall scale-in"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1400&q=88" alt="Candid wedding portrait"><span class="card-label">Candid</span></figure>
+      <figure class="craft-card land scale-in delay1"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1400&q=88" alt="Wedding detail"><span class="card-label">Details</span></figure>
+      <figure class="craft-card square scale-in delay2"><img src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1400&q=88" alt="Wedding celebration"><span class="card-label">Celebration</span></figure>
+      <figure class="craft-card land scale-in"><img src="https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1600&q=88" alt="Wedding couple outdoors"><span class="card-label">Portraits</span></figure>
+      <figure class="craft-card tall scale-in delay1"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1300&q=88" alt="Intimate couple portrait"><span class="card-label">Intimate</span></figure>
+      <figure class="craft-card land scale-in delay2"><img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=1500&q=88" alt="Wedding bouquet detail"><span class="card-label">The in-between</span></figure>
     </div>
-
-  </footer>
-
-  <div
-    class="lightbox"
-    id="lightbox"
-    role="dialog"
-    aria-modal="true"
-    aria-label="Photography viewer"
-  >
-
-    <button
-      class="lightbox-close"
-      id="lightboxClose"
-      type="button"
-      aria-label="Close image viewer"
-    >
-      ×
-    </button>
-
-    <button
-      class="lightbox-arrow lightbox-prev"
-      id="lightboxPrev"
-      type="button"
-      aria-label="Previous photograph"
-    >
-      ←
-    </button>
-
-    <img
-      class="lightbox-image"
-      id="lightboxImage"
-      src=""
-      alt=""
-    >
-
-    <button
-      class="lightbox-arrow lightbox-next"
-      id="lightboxNext"
-      type="button"
-      aria-label="Next photograph"
-    >
-      →
-    </button>
-
-    <div class="lightbox-counter" id="lightboxCounter">
-      01 / 01
-    </div>
-
   </div>
+</section>
 
-  <div
-    class="video-modal"
-    id="videoModal"
-    role="dialog"
-    aria-modal="true"
-    aria-label="Wedding film"
-  >
-
-    <div class="video-frame">
-
-      <button
-        class="video-close"
-        id="videoClose"
-        type="button"
-        aria-label="Close video"
-      >
-        ×
-      </button>
-
-      <iframe
-        id="videoIframe"
-        title="The Reel Romance wedding film"
-        src=""
-        allow="autoplay; fullscreen; picture-in-picture"
-        allowfullscreen
-      ></iframe>
-
+<section class="explorer" id="work-explorer">
+  <div class="wrap">
+    <div class="explorer-intro">
+      <div><span class="eyebrow">03 / Choose your language</span><h2 class="display reveal">See it.<br><em>Feel it.</em><br>Relive it.</h2></div>
+      <p class="body reveal delay1">Explore the work the way you want. Each chapter is designed to feel like entering the story — not opening a catalogue.</p>
+    </div>
+    <div class="work-tabs" role="tablist">
+      <button class="work-tab active" data-panel="candid">Candid photography</button>
+      <button class="work-tab" data-panel="cinema">Cinematography</button>
+      <button class="work-tab" data-panel="pre">Pre-wedding</button>
+      <button class="work-tab" data-panel="btswork">BTS</button>
     </div>
 
+    <div class="work-panel active" id="panel-candid">
+      <div class="work-feature">
+        <div class="work-feature-main"><figure><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=88" alt="Candid wedding couple"><figcaption><span>01 / Candid</span><span>Open gallery ↗</span></figcaption></figure></div>
+        <div class="work-feature-side"><figure><img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1100&q=88" alt="Wedding ceremony"><figcaption><span>02</span><span>The room</span></figcaption></figure><figure><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1100&q=88" alt="Wedding details"><figcaption><span>03</span><span>The details</span></figcaption></figure></div>
+      </div>
+      <div class="work-copy"><h3>For the moments<br>you didn't know<br>were <em>happening.</em></h3><p>We stay close enough to notice what matters and quiet enough not to interrupt it. The glances, reactions, family, friends and all the beautiful in-between.</p></div>
+    </div>
+
+    <div class="work-panel" id="panel-cinema">
+      <div class="work-feature">
+        <div class="work-feature-main"><figure><img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1800&q=88" alt="Cinematic wedding film placeholder"><figcaption><span>01 / Cinematography</span><span>Play highlights ↗</span></figcaption></figure></div>
+        <div class="work-feature-side"><figure><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1100&q=88" alt="Cinematic portrait"><figcaption><span>02</span><span>Light</span></figcaption></figure><figure><img src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1100&q=88" alt="Wedding celebration"><figcaption><span>03</span><span>Energy</span></figcaption></figure></div>
+      </div>
+      <div class="work-copy"><h3>Not a recap.<br>A piece of life<br>you can <em>step into.</em></h3><p>Voices, music, movement and the tiny details become one cinematic memory — something you can return to long after the flowers are gone.</p></div>
+    </div>
+
+    <div class="work-panel" id="panel-pre">
+      <div class="work-feature">
+        <div class="work-feature-main"><figure><img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1800&q=88" alt="Pre-wedding couple"><figcaption><span>01 / Pre-wedding</span><span>Explore ↗</span></figcaption></figure></div>
+        <div class="work-feature-side"><figure><img src="https://images.unsplash.com/photo-1494774157365-9e04c6720e47?auto=format&fit=crop&w=1100&q=88" alt="Pre-wedding outdoors"><figcaption><span>02</span><span>Wandering</span></figcaption></figure><figure><img src="https://images.unsplash.com/photo-1504159506876-f8338247a14a?auto=format&fit=crop&w=1100&q=88" alt="Couple by the sea"><figcaption><span>03</span><span>Unscripted</span></figcaption></figure></div>
+      </div>
+      <div class="work-copy"><h3>The story<br>starts <em>before.</em></h3><p>No mandap. No 500 guests. No schedule. Just the two of you somewhere beautiful, making memories before the madness begins.</p></div>
+    </div>
+
+    <div class="work-panel" id="panel-btswork">
+      <div class="work-feature">
+        <div class="work-feature-main"><figure><img src="https://images.unsplash.com/photo-1554048612-b6a482bc67e5?auto=format&fit=crop&w=1800&q=88" alt="Photographer working"><figcaption><span>01 / BTS</span><span>Tap to play ↗</span></figcaption></figure></div>
+        <div class="work-feature-side"><figure><img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1100&q=88" alt="Camera closeup"><figcaption><span>02</span><span>The setup</span></figcaption></figure><figure><img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1100&q=88" alt="Production outdoors"><figcaption><span>03</span><span>On the move</span></figcaption></figure></div>
+      </div>
+      <div class="work-copy"><h3>You see the frame.<br><em>We remember</em><br>everything around it.</h3><p>The running, fixing, laughing, climbing, whispering and ridiculous teamwork behind the final frame. This is a core part of the experience — and a story worth seeing.</p></div>
+    </div>
   </div>
-
-  <script>
-    (() => {
-      "use strict";
-
-      const body = document.body;
-      const nav = document.getElementById("siteNav");
-      const cursor = document.getElementById("cursor");
-
-      const preloader = document.getElementById("preloader");
-      const loaderProgress = document.getElementById("loaderProgress");
-
-      const menuButton = document.getElementById("menuButton");
-      const mobileMenu = document.getElementById("mobileMenu");
-
-      const lightbox = document.getElementById("lightbox");
-      const lightboxImage = document.getElementById("lightboxImage");
-      const lightboxClose = document.getElementById("lightboxClose");
-      const lightboxPrev = document.getElementById("lightboxPrev");
-      const lightboxNext = document.getElementById("lightboxNext");
-      const lightboxCounter = document.getElementById("lightboxCounter");
-
-      const videoModal = document.getElementById("videoModal");
-      const videoIframe = document.getElementById("videoIframe");
-      const videoClose = document.getElementById("videoClose");
-      const filmCard = document.getElementById("filmCard");
-
-      const enquiryForm = document.getElementById("enquiryForm");
-      const formSuccess = document.getElementById("formSuccess");
-
-      const btsRail = document.getElementById("btsRail");
-      const railPrev = document.getElementById("railPrev");
-      const railNext = document.getElementById("railNext");
-
-      /* PRELOADER */
-
-      let loaderValue = 0;
-
-      const loaderTimer = window.setInterval(() => {
-        loaderValue += Math.random() * 17;
-
-        if (loaderValue > 92) {
-          loaderValue = 92;
-        }
-
-        loaderProgress.style.width = `${loaderValue}%`;
-      }, 120);
-
-      const finishLoader = () => {
-        window.clearInterval(loaderTimer);
-        loaderProgress.style.width = "100%";
-
-        window.setTimeout(() => {
-          preloader.classList.add("is-done");
-        }, 450);
-      };
-
-      if (document.readyState === "complete") {
-        finishLoader();
-      } else {
-        window.addEventListener("load", finishLoader, { once: true });
-      }
-
-      /* NAVIGATION */
-
-      let lastScrollY = window.scrollY;
-
-      const updateNav = () => {
-        const currentY = window.scrollY;
-
-        nav.classList.toggle("is-scrolled", currentY > 40);
-
-        if (
-          currentY > 180 &&
-          currentY > lastScrollY + 8 &&
-          !mobileMenu.classList.contains("is-open")
-        ) {
-          nav.style.transform = "translateY(-100%)";
-        } else if (currentY < lastScrollY - 8) {
-          nav.style.transform = "translateY(0)";
-        }
-
-        lastScrollY = currentY;
-      };
-
-      window.addEventListener("scroll", updateNav, { passive: true });
-
-      /* MOBILE MENU */
-
-      const setMenu = (open) => {
-        menuButton.classList.toggle("is-open", open);
-        mobileMenu.classList.toggle("is-open", open);
-
-        menuButton.setAttribute("aria-expanded", String(open));
-        mobileMenu.setAttribute("aria-hidden", String(!open));
-
-        body.classList.toggle("is-locked", open);
-      };
-
-      menuButton.addEventListener("click", () => {
-        setMenu(!mobileMenu.classList.contains("is-open"));
-      });
-
-      mobileMenu.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => setMenu(false));
-      });
-
-      /* CURSOR */
-
-      const finePointer =
-        window.matchMedia("(pointer: fine)").matches;
-
-      if (finePointer) {
-        let mouseX = 0;
-        let mouseY = 0;
-        let cursorX = 0;
-        let cursorY = 0;
-
-        window.addEventListener("mousemove", (event) => {
-          mouseX = event.clientX;
-          mouseY = event.clientY;
-          cursor.classList.add("is-visible");
-        });
-
-        const animateCursor = () => {
-          cursorX += (mouseX - cursorX) * .18;
-          cursorY += (mouseY - cursorY) * .18;
-
-          cursor.style.transform =
-            `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
-
-          requestAnimationFrame(animateCursor);
-        };
-
-        animateCursor();
-
-        document
-          .querySelectorAll("[data-cursor-large]")
-          .forEach((element) => {
-
-            element.addEventListener("mouseenter", () => {
-              cursor.classList.add("is-large");
-            });
-
-            element.addEventListener("mouseleave", () => {
-              cursor.classList.remove("is-large");
-            });
-          });
-
-        window.addEventListener("mouseleave", () => {
-          cursor.classList.remove("is-visible");
-        });
-      }
-
-      /* MAGNETIC BUTTONS */
-
-      if (finePointer) {
-        document
-          .querySelectorAll(".magnetic")
-          .forEach((element) => {
-
-            element.addEventListener("mousemove", (event) => {
-
-              const rect = element.getBoundingClientRect();
-
-              const x =
-                (event.clientX - rect.left - rect.width / 2) * .12;
-
-              const y =
-                (event.clientY - rect.top - rect.height / 2) * .12;
-
-              element.style.transform =
-                `translate(${x}px, ${y}px)`;
-            });
-
-            element.addEventListener("mouseleave", () => {
-              element.style.transform = "";
-            });
-          });
-      }
-
-      /* REVEAL */
-
-      const revealElements =
-        document.querySelectorAll("[data-reveal]");
-
-      const revealObserver = new IntersectionObserver(
-        (entries) => {
-
-          entries.forEach((entry) => {
-
-            if (!entry.isIntersecting) {
-              return;
-            }
-
-            entry.target.classList.add("is-visible");
-            revealObserver.unobserve(entry.target);
-          });
-
-        },
-        {
-          threshold: .12,
-          rootMargin: "0px 0px -6% 0px"
-        }
-      );
-
-      revealElements.forEach((element) => {
-        revealObserver.observe(element);
-      });
-
-      /* LIGHTBOX */
-
-      const galleryItems = [
-        ...document.querySelectorAll("[data-lightbox]")
-      ];
-
-      let currentImageIndex = 0;
-
-      const openLightbox = (index) => {
-
-        if (!galleryItems[index]) {
-          return;
-        }
-
-        currentImageIndex = index;
-
-        const item = galleryItems[index];
-
-        lightboxImage.src = item.dataset.image;
-        lightboxImage.alt =
-          item.dataset.caption || "The Reel Romance";
-
-        lightboxCounter.textContent =
-          `${String(index + 1).padStart(2, "0")} / ${String(galleryItems.length).padStart(2, "0")}`;
-
-        lightbox.classList.add("is-open");
-        body.classList.add("is-locked");
-      };
-
-      const closeLightbox = () => {
-
-        lightbox.classList.remove("is-open");
-        body.classList.remove("is-locked");
-
-        window.setTimeout(() => {
-          if (!lightbox.classList.contains("is-open")) {
-            lightboxImage.src = "";
-          }
-        }, 500);
-      };
-
-      const moveLightbox = (direction) => {
-
-        let next = currentImageIndex + direction;
-
-        if (next < 0) {
-          next = galleryItems.length - 1;
-        }
-
-        if (next >= galleryItems.length) {
-          next = 0;
-        }
-
-        openLightbox(next);
-      };
-
-      galleryItems.forEach((item, index) => {
-        item.addEventListener("click", () => {
-          openLightbox(index);
-        });
-      });
-
-      lightboxClose.addEventListener("click", closeLightbox);
-      lightboxPrev.addEventListener("click", () => moveLightbox(-1));
-      lightboxNext.addEventListener("click", () => moveLightbox(1));
-
-      lightbox.addEventListener("click", (event) => {
-        if (event.target === lightbox) {
-          closeLightbox();
-        }
-      });
-
-      /* VIDEO */
-
-      const openVideo = () => {
-        videoIframe.src = filmCard.dataset.video;
-        videoModal.classList.add("is-open");
-        body.classList.add("is-locked");
-      };
-
-      const closeVideo = () => {
-
-        videoModal.classList.remove("is-open");
-        body.classList.remove("is-locked");
-
-        window.setTimeout(() => {
-          if (!videoModal.classList.contains("is-open")) {
-            videoIframe.src = "";
-          }
-        }, 500);
-      };
-
-      filmCard.addEventListener("click", openVideo);
-      videoClose.addEventListener("click", closeVideo);
-
-      videoModal.addEventListener("click", (event) => {
-        if (event.target === videoModal) {
-          closeVideo();
-        }
-      });
-
-      /* BTS RAIL */
-
-      let railOffset = 0;
-
-      const getRailStep = () => {
-        const first = btsRail.querySelector(".bts-card");
-
-        if (!first) {
-          return 0;
-        }
-
-        return first.getBoundingClientRect().width + 16;
-      };
-
-      const updateRail = () => {
-
-        const maxOffset =
-          Math.max(
-            0,
-            btsRail.scrollWidth -
-            window.innerWidth +
-            window.innerWidth * .05
-          );
-
-        railOffset =
-          Math.min(Math.max(railOffset, 0), maxOffset);
-
-        btsRail.style.transform =
-          `translate3d(${-railOffset}px, 0, 0)`;
-      };
-
-      railNext.addEventListener("click", () => {
-        railOffset += getRailStep();
-        updateRail();
-      });
-
-      railPrev.addEventListener("click", () => {
-        railOffset -= getRailStep();
-        updateRail();
-      });
-
-      window.addEventListener("resize", updateRail);
-
-      /* ENQUIRY */
-
-      enquiryForm.addEventListener("submit", async (event) => {
-
-        event.preventDefault();
-
-        const formData = new FormData(enquiryForm);
-
-        const enquiry = [
-          "THE REEL ROMANCE — ENQUIRY",
-          "",
-          `Names: ${String(formData.get("name") || "").trim()}`,
-          `Email: ${String(formData.get("email") || "").trim()}`,
-          `Wedding date: ${String(formData.get("date") || "").trim() || "Not decided yet"}`,
-          `Location: ${String(formData.get("location") || "").trim() || "Not decided yet"}`,
-          `Looking for: ${String(formData.get("coverage") || "").trim() || "Not specified"}`,
-          "",
-          "About the wedding:",
-          String(formData.get("message") || "").trim() || "No additional details."
-        ].join("\n");
-
-        try {
-          await navigator.clipboard.writeText(enquiry);
-        } catch {
-          const temporary = document.createElement("textarea");
-
-          temporary.value = enquiry;
-          temporary.setAttribute("readonly", "");
-          temporary.style.position = "fixed";
-          temporary.style.opacity = "0";
-
-          document.body.appendChild(temporary);
-
-          temporary.select();
-
-          try {
-            document.execCommand("copy");
-          } catch {
-            // Clipboard is unavailable.
-          }
-
-          temporary.remove();
-        }
-
-        formSuccess.classList.add("is-visible");
-
-        formSuccess.scrollIntoView({
-          behavior: "smooth",
-          block: "nearest"
-        });
-      });
-
-      /* KEYBOARD */
-
-      document.addEventListener("keydown", (event) => {
-
-        if (event.key === "Escape") {
-
-          if (lightbox.classList.contains("is-open")) {
-            closeLightbox();
-          }
-
-          if (videoModal.classList.contains("is-open")) {
-            closeVideo();
-          }
-
-          if (mobileMenu.classList.contains("is-open")) {
-            setMenu(false);
-          }
-        }
-
-        if (
-          lightbox.classList.contains("is-open") &&
-          event.key === "ArrowRight"
-        ) {
-          moveLightbox(1);
-        }
-
-        if (
-          lightbox.classList.contains("is-open") &&
-          event.key === "ArrowLeft"
-        ) {
-          moveLightbox(-1);
-        }
-      });
-
-      /* TOUCH LIGHTBOX */
-
-      let touchStartX = 0;
-
-      lightbox.addEventListener(
-        "touchstart",
-        (event) => {
-          touchStartX = event.changedTouches[0].screenX;
-        },
-        { passive: true }
-      );
-
-      lightbox.addEventListener(
-        "touchend",
-        (event) => {
-
-          const touchEndX =
-            event.changedTouches[0].screenX;
-
-          const distance =
-            touchEndX - touchStartX;
-
-          if (Math.abs(distance) < 50) {
-            return;
-          }
-
-          if (distance < 0) {
-            moveLightbox(1);
-          } else {
-            moveLightbox(-1);
-          }
-        },
-        { passive: true }
-      );
-
-      updateNav();
-      updateRail();
-
-    })();
-  </script>
-
+</section>
+
+<section class="stories" id="stories">
+  <div class="wrap">
+    <div class="section-head"><div><span class="eyebrow">04 / Real weddings</span><h2 class="display reveal">Two weddings.<br><em>Two worlds.</em></h2></div><p class="body reveal delay1">Start with a highlights film, then wander through photographs, BTS and pre-wedding moments. Every story opens into its own experience.</p></div>
+
+    <article class="story">
+      <div class="story-grid">
+        <div class="story-meta reveal"><span class="mono">STORY 01 · 2026</span><span class="tag">The Wedding Poetries</span><span class="mono">Jim Corbett · India</span></div>
+        <div>
+          <h3 class="story-title reveal">Anurag <em>&amp;</em><br>Garima</h3>
+          <div class="story-intro reveal delay1"><p>A day full of yellow light, loud friends, quiet glances and the kind of chaos that makes the best frames. Enter the full wedding experience.</p><button class="pill story-open" data-story="garima">View their experience ↗</button></div>
+          <button class="story-film reveal delay2" data-video="iCyohnh7PDs" aria-label="Play Anurag and Garima highlights"><img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1900&q=88" alt="Anurag and Garima highlights placeholder"><span class="story-play"> </span></button>
+          <div class="story-links"><a href="#work">Candid photographs ↗</a><a href="#" class="video-link" data-video="iCyohnh7PDs">Highlights film ↗</a><a href="#bts">BTS reels ↗</a><a href="#prewedding">Pre-wedding ↗</a></div>
+          <div class="story-gallery"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1300&q=88" alt="Wedding story"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=88" alt="Wedding detail"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=88" alt="Wedding portrait"></div>
+          <div class="story-experience"><span class="body">Wedding highlights · Candid gallery · BTS · Pre-wedding · Details</span><button class="pill story-open" data-story="garima">Enter full story ↗</button></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="story">
+      <div class="story-grid">
+        <div class="story-meta reveal"><span class="mono">STORY 02 · 2026</span><span class="tag">Ravi &amp; Saloni</span><span class="mono">India · Worldwide</span></div>
+        <div>
+          <h3 class="story-title reveal">Ravi <em>&amp;</em><br>Saloni</h3>
+          <div class="story-intro reveal delay1"><p>A second world, a different rhythm. A complete experience is ready to grow here — photographs, film, pre-wedding and BTS.</p><button class="pill story-open" data-story="ravi">View their experience ↗</button></div>
+          <button class="story-film reveal delay2" data-video="iCyohnh7PDs" aria-label="Play Ravi and Saloni highlights"><img src="https://images.unsplash.com/photo-1544078751-58fee2d8a03b?auto=format&fit=crop&w=1900&q=88" alt="Ravi and Saloni highlights placeholder"><span class="story-play"> </span></button>
+          <div class="story-links"><a href="#work">Candid photographs ↗</a><a href="#" class="video-link" data-video="iCyohnh7PDs">Highlights film ↗</a><a href="#bts">BTS reels ↗</a><a href="#prewedding">Pre-wedding ↗</a></div>
+          <div class="story-gallery"><img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1300&q=88" alt="Ravi and Saloni placeholder"><img src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=900&q=88" alt="Ravi and Saloni portrait placeholder"><img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=900&q=88" alt="Ravi and Saloni celebration placeholder"></div>
+          <div class="story-experience"><span class="body">Highlights · Photography · BTS · Pre-wedding · More to come</span><button class="pill story-open" data-story="ravi">Enter full story ↗</button></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="bts" id="bts">
+  <div class="wrap">
+    <div class="bts-intro"><div><span class="eyebrow">05 / Behind the frame</span><h2 class="display reveal">Your personal<br><em>paparazzi.</em></h2></div><p class="body reveal delay1">The version of the wedding that lives on your phone. Unfiltered, immediate, gloriously chaotic. Hover on desktop; tap on mobile.</p></div>
+    <div class="bts-grid">
+      <article class="bts-card scale-in"><img src="https://i.ytimg.com/vi/iCyohnh7PDs/maxresdefault.jpg" alt="BTS reel 01"><video muted playsinline loop preload="metadata" src="https://files.catbox.moe/udrcd2.mp4"></video><div class="bts-meta"><span class="mono">BTS 01</span><span class="mono">Play ↗</span></div></article>
+      <article class="bts-card scale-in delay1"><img src="https://images.unsplash.com/photo-1554048612-b6a482bc67e5?auto=format&fit=crop&w=900&q=88" alt="Photographer at work"><video muted playsinline loop preload="metadata" src="https://files.catbox.moe/1m7sx2.mp4"></video><div class="bts-meta"><span class="mono">BTS 02</span><span class="mono">Play ↗</span></div></article>
+      <article class="bts-card scale-in delay2"><img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=88" alt="Production outdoors"><video muted playsinline loop preload="metadata" src="https://files.catbox.moe/lht3eg.mp4"></video><div class="bts-meta"><span class="mono">BTS 03</span><span class="mono">Play ↗</span></div></article>
+      <article class="bts-card scale-in delay3"><img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=900&q=88" alt="Camera closeup"><video muted playsinline loop preload="metadata" src="https://files.catbox.moe/udrcd2.mp4"></video><div class="bts-meta"><span class="mono">BTS 04</span><span class="mono">One more take ↗</span></div></article>
+    </div>
+    <div class="bts-note reveal"><strong>You see the photograph.<br><em>We remember everything around it.</em></strong><span class="mono">Hover · tap · experience the chaos</span></div>
+  </div>
+</section>
+
+<section class="pre" id="prewedding">
+  <div class="wrap">
+    <div class="pre-top"><div><span class="eyebrow">06 / Before the wedding</span><h2 class="display reveal">The story<br>starts <em>before.</em></h2></div><p class="body reveal delay1">Two people. No mandap. No 500 guests. No schedule. Just you, somewhere beautiful, making memories before the madness begins.</p></div>
+    <div class="pre-line reveal">PRE-WEDDING <em>stories.</em></div>
+    <div class="pre-track-wrap">
+      <div class="pre-track" id="preTrack">
+        <figure class="pre-card"><img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1600&q=88" alt="Pre-wedding couple"><figcaption><span>01 / The quiet</span><span>Before everything</span></figcaption></figure>
+        <figure class="pre-card"><img src="https://images.unsplash.com/photo-1494774157365-9e04c6720e47?auto=format&fit=crop&w=1400&q=88" alt="Couple outdoors"><figcaption><span>02 / The two of you</span><span>Nothing staged</span></figcaption></figure>
+        <figure class="pre-card"><img src="https://images.unsplash.com/photo-1504159506876-f8338247a14a?auto=format&fit=crop&w=1600&q=88" alt="Couple by the sea"><figcaption><span>03 / The adventure</span><span>Wherever you are</span></figcaption></figure>
+        <figure class="pre-card"><img src="https://images.unsplash.com/photo-1501901609772-df0848060b33?auto=format&fit=crop&w=1400&q=88" alt="Couple portrait"><figcaption><span>04 / The in-between</span><span>Just being yourselves</span></figcaption></figure>
+      </div>
+    </div>
+    <div class="pre-controls"><button class="circle" id="prePrev" aria-label="Previous pre-wedding image">←</button><button class="circle" id="preNext" aria-label="Next pre-wedding image">→</button></div>
+  </div>
+</section>
+
+<section class="experience" id="experience">
+  <div class="wrap">
+    <div class="exp-head"><div><span class="eyebrow">07 / The experience</span><h2 class="display reveal">The <em>experience.</em></h2></div><div><p class="body reveal delay1">The good stuff starts before the wedding. We learn how you move, what matters to you, who will be on the dance floor, and when to leave the camera alone.</p><p class="body reveal delay2">Then we build a calm process around a wildly emotional day.</p></div></div>
+    <div class="steps">
+      <div class="step reveal"><span class="mono">01</span><h3>Meet, talk, <em>listen.</em></h3><p>We get to know the two of you and the shape of the day. No sales script. Just context.</p></div>
+      <div class="step reveal delay1"><span class="mono">02</span><h3>Plan enough to <em>breathe.</em></h3><p>Timelines, family combinations, key moments and logistics are handled before the chaos begins.</p></div>
+      <div class="step reveal delay2"><span class="mono">03</span><h3>Be present. <em>Not intrusive.</em></h3><p>We guide when it helps and blend in when it doesn't. The goal is photographs that feel lived, not manufactured.</p></div>
+      <div class="step reveal delay3"><span class="mono">04</span><h3>Relive it <em>properly.</em></h3><p>Your gallery and films are built as a body of work — not a folder of files you forget exists.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="why">
+  <div class="wrap why-grid">
+    <div><span class="eyebrow">08 / Why it matters</span><div class="why-statement reveal">Because the day moves once.<br><em>The feeling doesn't have to.</em></div></div>
+    <div>
+      <p class="body reveal">The photographs are the obvious part. The real value is having a team that protects the experience while documenting it with intention.</p>
+      <div class="why-list">
+        <div class="why-row reveal"><span class="mono">01</span><h3>Presence</h3><p>We notice what happens beyond the obvious — the people, pauses and energy that make your day yours.</p></div>
+        <div class="why-row reveal delay1"><span class="mono">02</span><h3>Preparation</h3><p>Thoughtful planning gives you freedom on the day. We know the rhythm without trying to control it.</p></div>
+        <div class="why-row reveal delay2"><span class="mono">03</span><h3>Legacy</h3><p>The work should still matter years later — when today's flowers, outfits and trends are long gone.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div><span class="eyebrow">09 / Let's talk</span><h2 class="display reveal">Tell us<br>about <em>your day.</em></h2><p class="body reveal delay1">Tell us where it's happening, what you're imagining and what you want to remember. No pressure. We'll take it from there.</p><div class="contact-actions"><a class="pill" href="mailto:hello@thereelromance.com">hello@thereelromance.com ↗</a><a class="pill" href="https://wa.me/918800168227" target="_blank" rel="noopener">WhatsApp ↗</a></div></div>
+      <form class="form reveal delay1" id="contactForm">
+        <div class="field"><label for="name">Your name</label><input id="name" name="name" required placeholder="First & last name"></div>
+        <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" required placeholder="you@example.com"></div>
+        <div class="field"><label for="date">Event date</label><input id="date" name="date" type="date"></div>
+        <div class="field"><label for="location">Where is it?</label><input id="location" name="location" placeholder="Bangalore, Goa, Jaipur..."></div>
+        <div class="field"><label for="service">What are you looking for?</label><select id="service" name="service"><option value="">Choose one</option><option>Wedding Photography</option><option>Wedding Film</option><option>BTS</option><option>Pre-Wedding</option><option>Photography + Film</option><option>Photography + Film + BTS</option><option>Not sure yet</option></select></div>
+        <div class="field"><label for="message">Tell us a little more</label><textarea id="message" name="message" placeholder="The vibe, venue, plans, chaos..."></textarea></div>
+        <div class="form-actions"><button class="submit" type="submit">Start the conversation ↗</button><span class="form-note">We'll open WhatsApp with your enquiry filled in, ready for you to send.</span></div>
+      </form>
+    </div>
+    <footer class="footer"><span>© 2026 The Reel Romance®</span><span>Bangalore · India · Worldwide</span><span>Photography · Film · BTS</span></footer>
+  </div>
+</section>
+
+</main>
+
+<div class="modal" id="videoModal" aria-hidden="true">
+  <div class="modal-panel" style="background:#0b0a09;color:#fff;padding:0">
+    <button class="modal-close" id="videoClose" style="color:#fff;border-color:#fff5;top:15px;right:15px;z-index:2">×</button>
+    <iframe class="video-frame" id="videoFrame" title="Wedding highlights" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+  </div>
+</div>
+
+<div class="modal" id="storyModal" aria-hidden="true">
+  <div class="modal-panel">
+    <button class="modal-close" id="storyClose" aria-label="Close story">×</button>
+    <div class="modal-kicker" id="storyKicker"></div>
+    <h2 class="modal-title" id="storyTitle"></h2>
+    <p class="modal-copy" id="storyCopy"></p>
+    <div class="modal-grid" id="storyGrid"></div>
+    <div class="modal-actions"><button class="pill" id="storyFilmButton">Play highlights ↗</button><a class="pill" href="#bts" id="storyBts">Explore BTS ↗</a><a class="pill" href="#prewedding" id="storyPre">See pre-wedding ↗</a></div>
+  </div>
+</div>
+
+<script>
+(()=> {
+  const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* loader */
+  const loader=$('#loader'), fill=$('#loaderFill');
+  let lp=0; const lt=setInterval(()=>{lp=Math.min(100,lp+Math.random()*25);fill.style.width=lp+'%';if(lp>=100)clearInterval(lt)},120);
+  addEventListener('load',()=>{fill.style.width='100%';setTimeout(()=>loader.classList.add('done'),420)});
+
+  /* nav */
+  const nav=$('#nav'), menuBtn=$('#menuBtn'), mobile=$('#mobileMenu');
+  const syncNav=()=>nav.classList.toggle('scrolled',scrollY>55);
+  addEventListener('scroll',syncNav,{passive:true}); syncNav();
+  const closeMenu=()=>{menuBtn.classList.remove('open');mobile.classList.remove('open');document.body.classList.remove('lock')};
+  menuBtn.addEventListener('click',()=>{const open=!mobile.classList.contains('open');menuBtn.classList.toggle('open',open);mobile.classList.toggle('open',open);document.body.classList.toggle('lock',open)});
+  $$('.mobile-links a').forEach(a=>a.addEventListener('click',closeMenu));
+
+  /* reveal */
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.08,rootMargin:'0px 0px -5% 0px'});
+  $$('.reveal,.scale-in').forEach(el=>io.observe(el));
+
+  /* hero: 4 second automatic cadence */
+  const slides=$$('.hero-slide'), dots=$$('.hero-dot'), index=$('#heroIndex'), progress=$('#heroProgress');
+  let current=0, heroTimer;
+  function showHero(i){
+    slides[current].classList.remove('active');dots[current].classList.remove('active');
+    current=(i+slides.length)%slides.length;slides[current].classList.add('active');dots[current].classList.add('active');
+    index.textContent=String(current+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+    progress.style.animation='none';void progress.offsetWidth;progress.style.animation='progress 4s linear infinite';
+  }
+  function resetHero(){clearInterval(heroTimer);heroTimer=setInterval(()=>showHero(current+1),4000)}
+  dots.forEach((d,i)=>d.addEventListener('click',()=>{showHero(i);resetHero()})); resetHero();
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)clearInterval(heroTimer);else resetHero()});
+
+  /* work tabs */
+  $$('.work-tab').forEach(tab=>tab.addEventListener('click',()=>{
+    $$('.work-tab').forEach(x=>x.classList.remove('active'));tab.classList.add('active');
+    $$('.work-panel').forEach(x=>x.classList.remove('active'));$('#panel-'+tab.dataset.panel).classList.add('active');
+  }));
+
+  /* pre-wedding slider */
+  const preTrack=$('#preTrack'), preCards=$$('.pre-card',preTrack); let preIndex=0;
+  function movePre(dir){
+    const gap=12,w=preCards[0].getBoundingClientRect().width+gap;
+    preIndex=Math.max(0,Math.min(preCards.length-1,preIndex+dir));
+    preTrack.style.transform=`translate3d(${-preIndex*w}px,0,0)`;
+  }
+  $('#preNext').addEventListener('click',()=>movePre(1));$('#prePrev').addEventListener('click',()=>movePre(-1));
+
+  /* BTS: hover video on fine pointers, tap opens same clip on touch */
+  const coarse=matchMedia('(pointer:coarse)').matches;
+  $$('.bts-card').forEach(card=>{
+    const v=$('video',card);
+    if(!v)return;
+    if(!coarse){
+      card.addEventListener('mouseenter',()=>{v.currentTime=0;v.play().catch(()=>{})});
+      card.addEventListener('mouseleave',()=>{v.pause();v.currentTime=0});
+    }else{
+      card.addEventListener('click',()=>openVideo('iCyohnh7PDs'));
+    }
+  });
+
+  /* video modal */
+  const vModal=$('#videoModal'), vFrame=$('#videoFrame');
+  function openVideo(id){vFrame.src=`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;vModal.classList.add('open');vModal.setAttribute('aria-hidden','false');document.body.classList.add('lock')}
+  function closeVideo(){vFrame.src='';vModal.classList.remove('open');vModal.setAttribute('aria-hidden','true');document.body.classList.remove('lock')}
+  $$('.video-link,[data-video].story-film').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();openVideo(el.dataset.video)}));
+  $('#videoClose').addEventListener('click',closeVideo);vModal.addEventListener('click',e=>{if(e.target===vModal)closeVideo()});
+
+  /* story experiences */
+  const storyData={
+    garima:{
+      kicker:'Anurag & Garima · Jim Corbett · 26 April 2026',
+      title:'Anurag & Garima',
+      copy:'A day full of yellow light, loud friends, quiet glances and the kind of chaos that makes the best frames. This experience is designed as the front door to the full story — highlights, photographs, BTS, pre-wedding and the details around the day.',
+      images:[
+        'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=88',
+        'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=88',
+        'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=88'
+      ],video:'iCyohnh7PDs'
+    },
+    ravi:{
+      kicker:'Ravi & Saloni · India · Worldwide',
+      title:'Ravi & Saloni',
+      copy:'A second world, a different rhythm. The structure is ready for the complete wedding experience: highlights, candid photography, pre-wedding, BTS reels and the small things nobody else saw.',
+      images:[
+        'https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1500&q=88',
+        'https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1000&q=88',
+        'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1000&q=88'
+      ],video:'iCyohnh7PDs'
+    }
+  };
+  const sModal=$('#storyModal'), sK=$('#storyKicker'), sT=$('#storyTitle'), sC=$('#storyCopy'), sG=$('#storyGrid'), sFilm=$('#storyFilmButton');
+  let activeStory=null;
+  function openStory(key){
+    const d=storyData[key];activeStory=d;sK.textContent=d.kicker;sT.textContent=d.title;sC.textContent=d.copy;
+    sG.innerHTML=d.images.map((src,i)=>`<img src="${src}" alt="${d.title} — story image ${i+1}" loading="lazy">`).join('');
+    sModal.classList.add('open');sModal.setAttribute('aria-hidden','false');document.body.classList.add('lock');
+  }
+  function closeStory(){sModal.classList.remove('open');sModal.setAttribute('aria-hidden','true');document.body.classList.remove('lock')}
+  $$('.story-open').forEach(b=>b.addEventListener('click',()=>openStory(b.dataset.story)));
+  $('#storyClose').addEventListener('click',closeStory);sModal.addEventListener('click',e=>{if(e.target===sModal)closeStory()});
+  sFilm.addEventListener('click',()=>{if(activeStory){closeStory();openVideo(activeStory.video)}});
+
+  /* smooth anchors with fixed nav offset */
+  $$('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+    const id=a.getAttribute('href');if(!id||id==='#')return;const el=$(id);if(!el)return;e.preventDefault();
+    const y=el.getBoundingClientRect().top+scrollY-nav.offsetHeight-8;scrollTo({top:y,behavior:reduce?'auto':'smooth'});
+  }));
+
+  /* enquiry -> WhatsApp */
+  $('#contactForm').addEventListener('submit',e=>{
+    e.preventDefault();const d=new FormData(e.currentTarget);
+    const msg=['Hi The Reel Romance!','',`Name: ${d.get('name')||''}`,`Email: ${d.get('email')||''}`,`Event date: ${d.get('date')||''}`,`Location: ${d.get('location')||''}`,`Looking for: ${d.get('service')||''}`,`Message: ${d.get('message')||''}`].join('\\n');
+    location.href='https://wa.me/918800168227?text='+encodeURIComponent(msg);
+  });
+
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){closeVideo();closeStory();closeMenu()}
+  });
+
+  /* subtle desktop hero parallax */
+  if(!coarse&&!reduce){
+    const hero=$('.hero');
+    hero.addEventListener('pointermove',e=>{
+      const im=$('.hero-slide.active img');if(!im)return;
+      const x=(e.clientX/innerWidth-.5)*3,y=(e.clientY/innerHeight-.5)*2;
+      im.style.transform=`scale(1.03) translate(${x}px,${y}px)`;
+    });
+    hero.addEventListener('pointerleave',()=>$('.hero-slide.active img')?.style.removeProperty('transform'));
+  }
+})();
+</script>
 </body>
 </html>
-```
-
