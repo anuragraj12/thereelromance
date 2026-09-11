@@ -1,0 +1,470 @@
+{
+  "version": 1,
+  "updated": "2026-09-11",
+  "settings": {
+    "heroIntervalMs": 4000,
+    "siteName": "The Reel Romance"
+  },
+  "media": [
+    {
+      "id": "HERO-01",
+      "section": "Hero",
+      "position": "Hero slide 1",
+      "type": "image",
+      "description": "Primary hero — wedding couple embracing",
+      "url": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2200&q=88",
+      "active": true,
+      "alt": "Wedding couple embracing"
+    },
+    {
+      "id": "HERO-02",
+      "section": "Hero",
+      "position": "Hero slide 2",
+      "type": "image",
+      "description": "Hero slide 2 — wedding celebration",
+      "url": "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=2200&q=88",
+      "active": true,
+      "alt": "Wedding celebration"
+    },
+    {
+      "id": "HERO-03",
+      "section": "Hero",
+      "position": "Hero slide 3",
+      "type": "image",
+      "description": "Hero slide 3 — couple walking together",
+      "url": "https://images.unsplash.com/photo-1544078751-58fee2d8a03b?auto=format&fit=crop&w=2200&q=88",
+      "active": true,
+      "alt": "Couple walking together"
+    },
+    {
+      "id": "CRAFT-01",
+      "section": "Craft",
+      "position": "Craft grid 1 — Candid",
+      "type": "image",
+      "description": "Large portrait card — Candid",
+      "url": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1400&q=88",
+      "active": true,
+      "alt": "Candid wedding portrait"
+    },
+    {
+      "id": "CRAFT-02",
+      "section": "Craft",
+      "position": "Craft grid 2 — Details",
+      "type": "image",
+      "description": "Landscape card — Details",
+      "url": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1400&q=88",
+      "active": true,
+      "alt": "Wedding detail"
+    },
+    {
+      "id": "CRAFT-03",
+      "section": "Craft",
+      "position": "Craft grid 3 — Celebration",
+      "type": "image",
+      "description": "Square card — Celebration",
+      "url": "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1400&q=88",
+      "active": true,
+      "alt": "Wedding celebration"
+    },
+    {
+      "id": "CRAFT-04",
+      "section": "Craft",
+      "position": "Craft grid 4 — Portraits",
+      "type": "image",
+      "description": "Landscape card — Portraits",
+      "url": "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1600&q=88",
+      "active": true,
+      "alt": "Wedding couple outdoors"
+    },
+    {
+      "id": "CRAFT-05",
+      "section": "Craft",
+      "position": "Craft grid 5 — Intimate",
+      "type": "image",
+      "description": "Tall card — Intimate",
+      "url": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1300&q=88",
+      "active": true,
+      "alt": "Intimate couple portrait"
+    },
+    {
+      "id": "CRAFT-06",
+      "section": "Craft",
+      "position": "Craft grid 6 — The in-between",
+      "type": "image",
+      "description": "Landscape card — The in-between",
+      "url": "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=1500&q=88",
+      "active": true,
+      "alt": "Wedding bouquet detail"
+    },
+    {
+      "id": "CANDID-01",
+      "section": "Work Explorer",
+      "position": "Candid — main",
+      "type": "image",
+      "description": "Candid photography main image",
+      "url": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=88",
+      "active": true,
+      "alt": "Candid wedding couple"
+    },
+    {
+      "id": "CANDID-02",
+      "section": "Work Explorer",
+      "position": "Candid — side 1",
+      "type": "image",
+      "description": "Candid photography side image — The room",
+      "url": "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1100&q=88",
+      "active": true,
+      "alt": "Wedding ceremony"
+    },
+    {
+      "id": "CANDID-03",
+      "section": "Work Explorer",
+      "position": "Candid — side 2",
+      "type": "image",
+      "description": "Candid photography side image — The details",
+      "url": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1100&q=88",
+      "active": true,
+      "alt": "Wedding details"
+    },
+    {
+      "id": "CINEMA-01",
+      "section": "Work Explorer",
+      "position": "Cinematography — main",
+      "type": "image",
+      "description": "Cinematography main placeholder",
+      "url": "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1800&q=88",
+      "active": true,
+      "alt": "Cinematic wedding film placeholder"
+    },
+    {
+      "id": "CINEMA-02",
+      "section": "Work Explorer",
+      "position": "Cinematography — side 1",
+      "type": "image",
+      "description": "Cinematography side image — Light",
+      "url": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1100&q=88",
+      "active": true,
+      "alt": "Cinematic portrait"
+    },
+    {
+      "id": "CINEMA-03",
+      "section": "Work Explorer",
+      "position": "Cinematography — side 2",
+      "type": "image",
+      "description": "Cinematography side image — Energy",
+      "url": "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1100&q=88",
+      "active": true,
+      "alt": "Wedding celebration"
+    },
+    {
+      "id": "PRE-EX-01",
+      "section": "Work Explorer",
+      "position": "Pre-wedding — main",
+      "type": "image",
+      "description": "Pre-wedding main image",
+      "url": "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1800&q=88",
+      "active": true,
+      "alt": "Pre-wedding couple"
+    },
+    {
+      "id": "PRE-EX-02",
+      "section": "Work Explorer",
+      "position": "Pre-wedding — side 1",
+      "type": "image",
+      "description": "Pre-wedding side image — Wandering",
+      "url": "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?auto=format&fit=crop&w=1100&q=88",
+      "active": true,
+      "alt": "Pre-wedding outdoors"
+    },
+    {
+      "id": "PRE-EX-03",
+      "section": "Work Explorer",
+      "position": "Pre-wedding — side 2",
+      "type": "image",
+      "description": "Pre-wedding side image — Unscripted",
+      "url": "https://images.unsplash.com/photo-1504159506876-f8338247a14a?auto=format&fit=crop&w=1100&q=88",
+      "active": true,
+      "alt": "Couple by the sea"
+    },
+    {
+      "id": "BTS-EX-01",
+      "section": "Work Explorer",
+      "position": "BTS — main",
+      "type": "image",
+      "description": "BTS main image — photographer working",
+      "url": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?auto=format&fit=crop&w=1800&q=88",
+      "active": true,
+      "alt": "Photographer working"
+    },
+    {
+      "id": "BTS-EX-02",
+      "section": "Work Explorer",
+      "position": "BTS — side 1",
+      "type": "image",
+      "description": "BTS side image — The setup",
+      "url": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1100&q=88",
+      "active": true,
+      "alt": "Camera closeup"
+    },
+    {
+      "id": "BTS-EX-03",
+      "section": "Work Explorer",
+      "position": "BTS — side 2",
+      "type": "image",
+      "description": "BTS side image — On the move",
+      "url": "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1100&q=88",
+      "active": true,
+      "alt": "Production outdoors"
+    },
+    {
+      "id": "AG-HERO",
+      "section": "Anurag & Garima",
+      "position": "Wedding story — highlights poster",
+      "type": "image",
+      "description": "Anurag & Garima highlights poster placeholder",
+      "url": "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1900&q=88",
+      "active": true,
+      "alt": "Anurag and Garima highlights placeholder"
+    },
+    {
+      "id": "AG-01",
+      "section": "Anurag & Garima",
+      "position": "Wedding gallery — 01",
+      "type": "image",
+      "description": "Anurag & Garima gallery image 1",
+      "url": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1300&q=88",
+      "active": true,
+      "alt": "Anurag and Garima wedding story"
+    },
+    {
+      "id": "AG-02",
+      "section": "Anurag & Garima",
+      "position": "Wedding gallery — 02",
+      "type": "image",
+      "description": "Anurag & Garima gallery image 2",
+      "url": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=88",
+      "active": true,
+      "alt": "Anurag and Garima wedding detail"
+    },
+    {
+      "id": "AG-03",
+      "section": "Anurag & Garima",
+      "position": "Wedding gallery — 03",
+      "type": "image",
+      "description": "Anurag & Garima gallery image 3",
+      "url": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=88",
+      "active": true,
+      "alt": "Anurag and Garima wedding portrait"
+    },
+    {
+      "id": "AG-FILM",
+      "section": "Anurag & Garima",
+      "position": "Highlights film",
+      "type": "youtube",
+      "description": "Anurag & Garima highlights film",
+      "url": "https://www.youtube.com/watch?v=iCyohnh7PDs",
+      "active": true,
+      "alt": "Anurag and Garima highlights film"
+    },
+    {
+      "id": "AG-BTS-01",
+      "section": "Anurag & Garima",
+      "position": "BTS reel 01",
+      "type": "youtube",
+      "description": "Anurag & Garima BTS reel 1",
+      "url": "https://www.youtube.com/watch?v=G1eAvLR0WII",
+      "active": true,
+      "alt": "Anurag and Garima BTS reel 1"
+    },
+    {
+      "id": "AG-BTS-02",
+      "section": "Anurag & Garima",
+      "position": "BTS reel 02",
+      "type": "youtube",
+      "description": "Anurag & Garima BTS reel 2",
+      "url": "https://www.youtube.com/watch?v=OPmWYErwquI",
+      "active": true,
+      "alt": "Anurag and Garima BTS reel 2"
+    },
+    {
+      "id": "AG-BTS-03",
+      "section": "Anurag & Garima",
+      "position": "BTS reel 03",
+      "type": "youtube",
+      "description": "Anurag & Garima BTS reel 3",
+      "url": "https://www.youtube.com/watch?v=RsikBPvC0aE",
+      "active": true,
+      "alt": "Anurag and Garima BTS reel 3"
+    },
+    {
+      "id": "RS-HERO",
+      "section": "Ravi & Saloni",
+      "position": "Wedding story — highlights poster",
+      "type": "image",
+      "description": "Ravi & Saloni highlights poster placeholder",
+      "url": "https://images.unsplash.com/photo-1544078751-58fee2d8a03b?auto=format&fit=crop&w=1900&q=88",
+      "active": true,
+      "alt": "Ravi and Saloni highlights placeholder"
+    },
+    {
+      "id": "RS-01",
+      "section": "Ravi & Saloni",
+      "position": "Wedding gallery — 01",
+      "type": "image",
+      "description": "Ravi & Saloni gallery image 1",
+      "url": "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1300&q=88",
+      "active": true,
+      "alt": "Ravi and Saloni wedding"
+    },
+    {
+      "id": "RS-02",
+      "section": "Ravi & Saloni",
+      "position": "Wedding gallery — 02",
+      "type": "image",
+      "description": "Ravi & Saloni gallery image 2",
+      "url": "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=900&q=88",
+      "active": true,
+      "alt": "Ravi and Saloni portrait"
+    },
+    {
+      "id": "RS-03",
+      "section": "Ravi & Saloni",
+      "position": "Wedding gallery — 03",
+      "type": "image",
+      "description": "Ravi & Saloni gallery image 3",
+      "url": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=900&q=88",
+      "active": true,
+      "alt": "Ravi and Saloni celebration"
+    },
+    {
+      "id": "RS-FILM",
+      "section": "Ravi & Saloni",
+      "position": "Highlights film",
+      "type": "youtube",
+      "description": "Ravi & Saloni highlights film placeholder",
+      "url": "https://www.youtube.com/watch?v=iCyohnh7PDs",
+      "active": true,
+      "alt": "Ravi and Saloni highlights film placeholder"
+    },
+    {
+      "id": "BTS-01",
+      "section": "BTS",
+      "position": "BTS card 01 — poster",
+      "type": "image",
+      "description": "BTS card 01 poster",
+      "url": "https://i.ytimg.com/vi/iCyohnh7PDs/maxresdefault.jpg",
+      "active": true,
+      "alt": "BTS reel 01"
+    },
+    {
+      "id": "BTS-01-VIDEO",
+      "section": "BTS",
+      "position": "BTS card 01 — hover video",
+      "type": "video",
+      "description": "BTS card 01 direct MP4",
+      "url": "https://files.catbox.moe/udrcd2.mp4",
+      "active": true,
+      "alt": "BTS reel 01 video"
+    },
+    {
+      "id": "BTS-02",
+      "section": "BTS",
+      "position": "BTS card 02 — poster",
+      "type": "image",
+      "description": "BTS card 02 poster",
+      "url": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?auto=format&fit=crop&w=900&q=88",
+      "active": true,
+      "alt": "Photographer at work"
+    },
+    {
+      "id": "BTS-02-VIDEO",
+      "section": "BTS",
+      "position": "BTS card 02 — hover video",
+      "type": "video",
+      "description": "BTS card 02 direct MP4",
+      "url": "https://files.catbox.moe/1m7sx2.mp4",
+      "active": true,
+      "alt": "BTS reel 02 video"
+    },
+    {
+      "id": "BTS-03",
+      "section": "BTS",
+      "position": "BTS card 03 — poster",
+      "type": "image",
+      "description": "BTS card 03 poster",
+      "url": "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=88",
+      "active": true,
+      "alt": "Production outdoors"
+    },
+    {
+      "id": "BTS-03-VIDEO",
+      "section": "BTS",
+      "position": "BTS card 03 — hover video",
+      "type": "video",
+      "description": "BTS card 03 direct MP4",
+      "url": "https://files.catbox.moe/lht3eg.mp4",
+      "active": true,
+      "alt": "BTS reel 03 video"
+    },
+    {
+      "id": "BTS-04",
+      "section": "BTS",
+      "position": "BTS card 04 — poster",
+      "type": "image",
+      "description": "BTS card 04 poster",
+      "url": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=900&q=88",
+      "active": true,
+      "alt": "Camera closeup"
+    },
+    {
+      "id": "BTS-04-VIDEO",
+      "section": "BTS",
+      "position": "BTS card 04 — hover video",
+      "type": "video",
+      "description": "BTS card 04 direct MP4",
+      "url": "https://files.catbox.moe/udrcd2.mp4",
+      "active": true,
+      "alt": "BTS reel 04 video"
+    },
+    {
+      "id": "PRE-01",
+      "section": "Pre-wedding",
+      "position": "Slider image 01 — The quiet",
+      "type": "image",
+      "description": "Pre-wedding slider 1",
+      "url": "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1600&q=88",
+      "active": true,
+      "alt": "Pre-wedding couple"
+    },
+    {
+      "id": "PRE-02",
+      "section": "Pre-wedding",
+      "position": "Slider image 02 — The two of you",
+      "type": "image",
+      "description": "Pre-wedding slider 2",
+      "url": "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?auto=format&fit=crop&w=1400&q=88",
+      "active": true,
+      "alt": "Couple outdoors"
+    },
+    {
+      "id": "PRE-03",
+      "section": "Pre-wedding",
+      "position": "Slider image 03 — The adventure",
+      "type": "image",
+      "description": "Pre-wedding slider 3",
+      "url": "https://images.unsplash.com/photo-1504159506876-f8338247a14a?auto=format&fit=crop&w=1600&q=88",
+      "active": true,
+      "alt": "Couple by the sea"
+    },
+    {
+      "id": "PRE-04",
+      "section": "Pre-wedding",
+      "position": "Slider image 04 — The in-between",
+      "type": "image",
+      "description": "Pre-wedding slider 4",
+      "url": "https://images.unsplash.com/photo-1501901609772-df0848060b33?auto=format&fit=crop&w=1400&q=88",
+      "active": true,
+      "alt": "Couple portrait"
+    }
+  ]
+}
