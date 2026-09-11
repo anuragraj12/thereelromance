@@ -13,7 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Restore Idea → Craft transition
         shell: bash
         run: |
@@ -23,10 +22,8 @@ jobs:
 
           index = Path('index.html')
           text = index.read_text(encoding='utf-8')
-
           marker = '<section class="manifesto">'
-          if 'data-media="IDEA-IMG-01"' not in text:
-              section = '''<section class="idea-craft-transition" aria-label="From idea to craft">
+          section = '''<section class="idea-craft-transition" aria-label="From idea to craft">
             <div class="wrap">
               <div class="ict-head">
                 <span class="eyebrow">A little space between</span>
@@ -39,34 +36,45 @@ jobs:
               <figure class="ict-photo"><img src="" data-media="IDEA-IMG-03" alt="Wedding detail" loading="lazy"></figure>
             </div>
           </section>\n\n'''
-              if marker not in text:
-                  raise SystemExit('Manifesto marker not found; refusing to modify index.html')
-              text = text.replace(marker, section + marker, 1)
 
+          # Strip the malformed transition that was appended after </html>.
           malformed = '<section class="idea-craft-transition" aria-label="A visual pause between the idea and the craft">'
           if malformed in text:
-              text = text.split(malformed, 1)[0].rstrip() + '\n'
-              if not text.endswith('</html>'):
-                  raise SystemExit('Unexpected index.html tail after removing malformed transition')
+              text = text.split(malformed, 1)[0].rstrip()
+              text = text + '\n'
+              if text.endswith('</html>'):
+                  pass
+              else:
+                  text += '</html>\n'
 
-          index.write_text(text, encoding='utf-8')
+          # Insert exactly one valid transition immediately before Manifesto.
+          while text.count('data-media="IDEA-IMG-01"'):
+              if marker in text and text.count('data-media="IDEA-IMG-01"') > 0:
+                  # Remove any valid copy first, then insert the canonical one.
+                  import re
+                  text = re.sub(r'<section class="idea-craft-transition"[^>]*>.*?</section>\s*', '', text, count=1, flags=re.S)
+              break
+          if marker not in text:
+              raise SystemExit('Manifesto marker not found')
+          text = text.replace(marker, section + marker, 1)
 
           manifest = json.loads(Path('media.json').read_text(encoding='utf-8'))
-          ids = {item.get('id') for item in manifest.get('media', [])}
           required = {'IDEA-IMG-01','IDEA-IMG-02','IDEA-IMG-03'}
+          ids = {x.get('id') for x in manifest.get('media', [])}
           if not required.issubset(ids):
-              raise SystemExit(f'Missing required media IDs: {sorted(required - ids)}')
+              raise SystemExit(f'Missing media IDs: {sorted(required - ids)}')
+          if text.count('data-media="IDEA-IMG-01"') != 1:
+              raise SystemExit('Expected exactly one IDEA-IMG-01 element')
 
-          assert all(x in text for x in required)
-          print('Idea → Craft transition restored inside <main>; all three media IDs verified.')
+          index.write_text(text, encoding='utf-8')
+          print('Verified Idea → Craft transition and media IDs.')
           PY
-
-      - name: Commit and remove temporary workflow
+      - name: Commit and remove repair files
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git rm .github/workflows/fix-idea-transition.yml .idea-transition-trigger
+          git rm .github/workflows/fix-idea-transition.yml .idea-transition-trigger .idea-transition-trigger-2
           git commit -m "[idea-transition-fix] restore Idea to Craft images"
           git push
