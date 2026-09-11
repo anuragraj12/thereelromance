@@ -1,0 +1,69 @@
+name: Fix Idea Transition Images
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    if: "!contains(github.event.head_commit.message, '[idea-transition-fix]')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore Idea → Craft transition
+        shell: python
+        run: |
+          from pathlib import Path
+          import json
+
+          index = Path('index.html')
+          text = index.read_text(encoding='utf-8')
+
+          marker = '<section class="manifesto">'
+          if 'data-media="IDEA-IMG-01"' not in text:
+              section = '''<section class="idea-craft-transition" aria-label="From idea to craft">
+  <div class="ict-head">
+    <span class="eyebrow">01.5 / Between the frames</span>
+    <p>Before the craft, there is the feeling.</p>
+  </div>
+  <div class="ict-track">
+    <figure class="ict-photo">
+      <img src="" data-media="IDEA-IMG-01" alt="Intimate wedding moment" loading="lazy">
+    </figure>
+    <figure class="ict-photo ict-photo-tall">
+      <img src="" data-media="IDEA-IMG-02" alt="Wedding celebration" loading="lazy">
+    </figure>
+    <figure class="ict-photo">
+      <img src="" data-media="IDEA-IMG-03" alt="Wedding detail" loading="lazy">
+    </figure>
+  </div>
+</section>
+
+'''
+              if marker not in text:
+                  raise SystemExit('Manifesto marker not found; refusing to modify index.html')
+              text = text.replace(marker, section + marker, 1)
+              index.write_text(text, encoding='utf-8')
+
+          media_path = Path('media.json')
+          manifest = json.loads(media_path.read_text(encoding='utf-8'))
+          ids = {item.get('id') for item in manifest.get('media', [])}
+          required = {'IDEA-IMG-01','IDEA-IMG-02','IDEA-IMG-03'}
+          if not required.issubset(ids):
+              raise SystemExit(f'Missing required media IDs: {sorted(required - ids)}')
+
+          print('Idea → Craft transition restored; all three media IDs verified.')
+
+      - name: Commit and remove temporary workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git rm .github/workflows/fix-idea-transition.yml
+          git commit -m "[idea-transition-fix] restore missing Idea → Craft images"
+          git push
