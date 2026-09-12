@@ -93,7 +93,7 @@ img,video{display:block;max-width:100%}
 .hero-dots{position:absolute;z-index:5;right:var(--gutter);top:120px;display:flex;gap:7px}
 .hero-dot{width:42px;height:2px;border:0;background:#fff5;padding:0}.hero-dot.active{background:#fff}
 .hero-progress{position:absolute;z-index:5;left:var(--gutter);right:var(--gutter);bottom:0;height:2px;background:#fff3;overflow:hidden}
-.hero-progress i{display:block;height:100%;width:0;background:#fff;animation:progress 4s linear infinite}
+.hero-progress i{display:block;height:100%;width:0;background:#fff;animation:progress 7.5s linear infinite}
 @keyframes titleIn{to{transform:none}}@keyframes floatArrow{50%{transform:translateY(4px)}}@keyframes progress{from{width:0}to{width:100%}}
 
 /* ticker */
@@ -284,6 +284,32 @@ img,video{display:block;max-width:100%}
   .form-actions{display:block}.form-note{margin-top:13px}.footer{display:block}.footer span{display:block;margin-top:9px}
   .modal{padding:0}.modal-panel{height:100svh;max-height:none;padding:78px 18px 30px}.modal-grid{grid-template-columns:1fr 1fr}.modal-grid img:first-child{grid-column:1/-1;grid-row:auto;height:52vh}.modal-grid img{height:32vh}
 }
+/* Cinematic scroll refinement — selective, quiet, editorial */
+.idea-craft-transition .ict-head,
+.idea-craft-transition .ict-photo,
+.manifesto-bridge,
+.section-head,
+.explorer-intro,
+.story-film,
+.bts-note{opacity:0;transform:translateY(42px);transition:opacity 1s var(--ease),transform 1.2s var(--ease)}
+.idea-craft-transition .ict-photo:nth-child(2){transition-delay:.12s}
+.idea-craft-transition .ict-photo:nth-child(3){transition-delay:.24s}
+.idea-craft-transition.in-view .ict-head,
+.idea-craft-transition.in-view .ict-photo,
+.manifesto-bridge.in-view,
+.section-head.in-view,
+.explorer-intro.in-view,
+.story-film.in-view,
+.bts-note.in-view{opacity:1;transform:none}
+.idea-craft-transition .ict-photo img{transform:scale(1.045);transition:transform 1.8s var(--ease)}
+.idea-craft-transition.in-view .ict-photo img{transform:scale(1)}
+.hero-slide{transition:opacity 1.8s ease,transform 8s var(--ease)}
+.hero-progress i{animation-duration:7.5s}
+@media(max-width:600px){
+ .idea-craft-transition .ict-head,.idea-craft-transition .ict-photo{transform:translateY(28px)}
+ .hero-slide{transition:opacity 1.5s ease,transform 7.5s var(--ease)}
+}
+
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
   .ticker-track{animation:none}.reveal,.scale-in{opacity:1;transform:none}
@@ -443,7 +469,7 @@ img,video{display:block;max-width:100%}
   <div class="wrap">
     <div class="section-head">
       <div><span class="eyebrow">02 / The craft</span><h2 class="display reveal">See the <em>craft.</em></h2></div>
-      <p class="body reveal delay1">One studio. Different languages — candid photography, cinematic frames, pre-wedding stories and the work that happens behind the camera.</p>
+      <p class="body reveal delay1">One studio. Different languages — photography, film, pre-wedding and the work behind the camera.</p>
     </div>
     <div class="craft-grid">
       <figure class="craft-card tall scale-in"><img src="" data-media="M-04" alt="Candid wedding portrait"><span class="card-label">Candid</span></figure>
@@ -460,7 +486,7 @@ img,video{display:block;max-width:100%}
   <div class="wrap">
     <div class="explorer-intro">
       <div><span class="eyebrow">03 / Choose your language</span><h2 class="display reveal">See it.<br><em>Feel it.</em><br>Relive it.</h2></div>
-      <p class="body reveal delay1">Explore the work the way you want. Each chapter is designed to feel like entering the story — not opening a catalogue.</p>
+      <p class="body reveal delay1">Explore each chapter like entering the story — not opening a catalogue.</p>
     </div>
     <div class="work-tabs" role="tablist">
       <button class="work-tab active" data-panel="candid">Candid photography</button>
@@ -582,7 +608,7 @@ img,video{display:block;max-width:100%}
   <div class="wrap why-grid">
     <div><span class="eyebrow">08 / Why it matters</span><div class="why-statement reveal">Because the day moves once.<br><em>The feeling doesn't have to.</em></div></div>
     <div>
-      <p class="body reveal">The photographs are the obvious part. The real value is having a team that protects the experience while documenting it with intention.</p>
+      <p class="body reveal">The real value is having a team that protects the experience while documenting it with intention.</p>
       <div class="why-list">
         <div class="why-row reveal"><span class="mono">01</span><h3>Presence</h3><p>We notice what happens beyond the obvious — the people, pauses and energy that make your day yours.</p></div>
         <div class="why-row reveal delay1"><span class="mono">02</span><h3>Preparation</h3><p>Thoughtful planning gives you freedom on the day. We know the rhythm without trying to control it.</p></div>
@@ -652,16 +678,26 @@ img,video{display:block;max-width:100%}
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.08,rootMargin:'0px 0px -5% 0px'});
   $$('.reveal,.scale-in').forEach(el=>io.observe(el));
 
-  /* hero: 4 second automatic cadence */
+  /* cinematic section transitions — only selected moments */
+  const cinematicSections=$$('.idea-craft-transition,.manifesto-bridge,.section-head,.explorer-intro,.story-film,.bts-note');
+  const cinematicIO=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in-view');
+      cinematicIO.unobserve(e.target);
+    }
+  }),{threshold:.14,rootMargin:'0px 0px -8% 0px'});
+  cinematicSections.forEach(el=>cinematicIO.observe(el));
+
+  /* hero: slower cinematic cadence */
   const slides=$$('.hero-slide'), dots=$$('.hero-dot'), index=$('#heroIndex'), progress=$('#heroProgress');
   let current=0, heroTimer;
   function showHero(i){
     slides[current].classList.remove('active');dots[current].classList.remove('active');
     current=(i+slides.length)%slides.length;slides[current].classList.add('active');dots[current].classList.add('active');
     index.textContent=String(current+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
-    progress.style.animation='none';void progress.offsetWidth;progress.style.animation='progress 4s linear infinite';
+    progress.style.animation='none';void progress.offsetWidth;progress.style.animation='progress 7.5s linear infinite';
   }
-  function resetHero(){clearInterval(heroTimer);heroTimer=setInterval(()=>showHero(current+1),4000)}
+  function resetHero(){clearInterval(heroTimer);heroTimer=setInterval(()=>showHero(current+1),7500)}
   dots.forEach((d,i)=>d.addEventListener('click',()=>{showHero(i);resetHero()})); resetHero();
   document.addEventListener('visibilitychange',()=>{if(document.hidden)clearInterval(heroTimer);else resetHero()});
 
