@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated": "2026-09-11",
+  "updated": "2026-09-12",
   "settings": {
     "heroIntervalMs": 4000
   },
@@ -411,7 +411,7 @@
       "position": "YouTube film 1",
       "type": "youtube",
       "description": "YouTube film 1",
-      "url": "https://www.youtube.com/watch?v=iCyohnh7PDs",
+      "url": "https://youtu.be/iCyohnh7PDs?si=mRCu_aSHxvWRrcqX",
       "active": true,
       "alt": "YouTube film 1"
     },
