@@ -11,7 +11,7 @@
       "position": "Hero image 1",
       "type": "image",
       "description": "Hero image 1",
-      "url": "https://drive.google.com/uc?export=view&id=1Xny9wzBy4QOCJYcc3M7NbpeqRP4LE4uJ",
+      "url": "https://ik.imagekit.io/ijqhfpipr/IMG_2.jpeg?tr=w-2000,q-auto,f-auto",
       "active": true,
       "alt": "Hero image 1"
     },
@@ -21,7 +21,7 @@
       "position": "Hero image 2",
       "type": "image",
       "description": "Hero image 2",
-      "url": "https://drive.google.com/uc?export=view&id=1BUXk1SHqe6WvwLQSNSyrhEx7RedcAqJM",
+      "url": "https://ik.imagekit.io/ijqhfpipr/IMG_1.jpg?tr=w-2000,q-auto,f-auto",
       "active": true,
       "alt": "Hero image 2"
     },
@@ -31,7 +31,7 @@
       "position": "Hero image 3",
       "type": "image",
       "description": "Hero image 3",
-      "url": "https://drive.google.com/uc?export=view&id=1_ZzjRw2dtvNpLnBTseToR0p6AHSY0Hqo",
+      "url": "https://ik.imagekit.io/ijqhfpipr/IMG_hero.JPG?tr=w-2000,q-auto,f-auto",
       "active": true,
       "alt": "Hero image 3"
     },
