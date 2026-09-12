@@ -74,7 +74,7 @@ img,video{display:block;max-width:100%}
 /* hero */
 .hero{height:100svh;min-height:690px;background:#111;color:#fff;position:relative;overflow:hidden}
 .hero-slides,.hero-slide{position:absolute;inset:0}
-.hero-slide{opacity:0;transform:scale(1.045);transition:opacity 1.15s ease,transform 5.5s var(--ease);pointer-events:none}
+.hero-slide{opacity:0;transform:scale(1.045);transition:opacity 1.8s ease,transform 8s var(--ease);pointer-events:none}
 .hero-slide.active{opacity:1;transform:scale(1);pointer-events:auto}
 .hero-slide img{width:100%;height:100%;object-fit:cover}
 .hero-slide:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0005 0%,transparent 36%,#000d 100%)}
@@ -361,6 +361,33 @@ img,video{display:block;max-width:100%}
 .idea-craft-transition .ict-photo{height:55vw}
 .idea-craft-transition .ict-photo-tall{height:68vw!important;margin-top:20px!important}
 .idea-craft-transition .ict-photo:nth-child(3){grid-column:1/-1;height:52vw;margin-top:0!important}
+}
+
+/* SMART REMOTE-IMAGE SIZING
+   Remote URLs can have very different aspect ratios. Content images opt into
+   natural-ratio sizing so replacements are shown whole instead of being
+   visibly cropped inside a placeholder-shaped box. Hero remains cinematic. */
+[data-media]:not(.hero-slide img){
+  object-position:center center;
+}
+.smart-media-frame{
+  position:relative;
+  overflow:hidden;
+  background:#d8cec2;
+  transition:aspect-ratio .7s var(--ease),min-height .7s var(--ease);
+}
+.smart-media-frame > img,.smart-media-frame > video{
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain !important;
+  object-position:center !important;
+}
+/* Where a section intentionally uses a designed crop, let the image stay
+   visually full while the frame adapts to its real proportions. */
+.smart-ratio{aspect-ratio:var(--smart-ratio, 1 / 1) !important;height:auto !important;min-height:0 !important;}
+.smart-ratio > img,.smart-ratio > video{height:100% !important;}
+@media(max-width:600px){
+  .smart-media-frame{background:var(--paper2);}
 }
 </style>
 </head>
@@ -801,6 +828,31 @@ img,video{display:block;max-width:100%}
 })();
 </script>
 
+<script id="smart-image-sizing">
+(function(){
+  const selector='[data-media]';
+  const excluded=el=>el.closest('.hero-slide') || el.closest('.logo') || el.closest('.nav');
+  const ratioFromImage=(img)=>{
+    if(!img.naturalWidth || !img.naturalHeight) return;
+    const frame=img.closest('figure,.story-film,.bts-card,.pre-card,.work-feature-main figure,.work-feature-side figure,.modal-grid figure,.smart-media-frame');
+    if(!frame || excluded(img)) return;
+    // Only adapt content media. Hero remains edge-to-edge/cinematic.
+    frame.classList.add('smart-media-frame','smart-ratio');
+    const ratio=Math.max(.55,Math.min(2.15,img.naturalWidth/img.naturalHeight));
+    frame.style.setProperty('--smart-ratio',ratio.toFixed(4)+' / 1');
+  };
+  const wire=img=>{
+    if(img.dataset.smartWired) return;
+    img.dataset.smartWired='1';
+    img.addEventListener('load',()=>ratioFromImage(img),{passive:true});
+    if(img.complete) ratioFromImage(img);
+  };
+  const scan=()=>document.querySelectorAll(selector+'[src], img[data-media]').forEach(wire);
+  scan();
+  new MutationObserver(scan).observe(document.documentElement,{subtree:true,attributes:true,attributeFilter:['src']});
+})();
+</script>
+
 <script>
 /* MEDIA.JSON BRIDGE — media URLs are intentionally kept out of the page markup. */
 (async function(){
@@ -854,5 +906,4 @@ img,video{display:block;max-width:100%}
  }catch(e){console.warn("media.json unavailable; fallback media active",e)}
 })();
 </script></body>
-</html
 </html>
