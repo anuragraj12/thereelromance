@@ -19,7 +19,6 @@ Film and BTS use the supplied hosted URLs.
 ## Commit
 Replace:
 - index.html
-- content.json
 
 Do not rename or move the five image files.
 Do not upload the videos to GitHub.
