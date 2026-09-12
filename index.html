@@ -93,7 +93,7 @@ img,video{display:block;max-width:100%}
 .hero-dots{position:absolute;z-index:5;right:var(--gutter);top:120px;display:flex;gap:7px}
 .hero-dot{width:42px;height:2px;border:0;background:#fff5;padding:0}.hero-dot.active{background:#fff}
 .hero-progress{position:absolute;z-index:5;left:var(--gutter);right:var(--gutter);bottom:0;height:2px;background:#fff3;overflow:hidden}
-.hero-progress i{display:block;height:100%;width:0;background:#fff;animation:progress 7.5s linear infinite}
+.hero-progress i{display:block;height:100%;width:0;background:#fff;animation:progress 8.5s linear infinite}
 @keyframes titleIn{to{transform:none}}@keyframes floatArrow{50%{transform:translateY(4px)}}@keyframes progress{from{width:0}to{width:100%}}
 
 /* ticker */
@@ -284,63 +284,205 @@ img,video{display:block;max-width:100%}
   .form-actions{display:block}.form-note{margin-top:13px}.footer{display:block}.footer span{display:block;margin-top:9px}
   .modal{padding:0}.modal-panel{height:100svh;max-height:none;padding:78px 18px 30px}.modal-grid{grid-template-columns:1fr 1fr}.modal-grid img:first-child{grid-column:1/-1;grid-row:auto;height:52vh}.modal-grid img{height:32vh}
 }
-/* Cinematic scroll refinement — selective, quiet, editorial */
-.idea-craft-transition .ict-head,
-.idea-craft-transition .ict-photo,
-.manifesto-bridge,
-.section-head,
-.explorer-intro,
-.story-film,
-.bts-note{opacity:0;transform:translateY(42px);transition:opacity 1s var(--ease),transform 1.2s var(--ease)}
-.idea-craft-transition .ict-photo:nth-child(2){transition-delay:.12s}
-.idea-craft-transition .ict-photo:nth-child(3){transition-delay:.24s}
-.idea-craft-transition.in-view .ict-head,
-.idea-craft-transition.in-view .ict-photo,
-.manifesto-bridge.in-view,
-.section-head.in-view,
-.explorer-intro.in-view,
-.story-film.in-view,
-.bts-note.in-view{opacity:1;transform:none}
-.idea-craft-transition .ict-photo img{transform:scale(1.045);transition:transform 1.8s var(--ease)}
-.idea-craft-transition.in-view .ict-photo img{transform:scale(1)}
-.hero-slide{transition:opacity 1.8s ease,transform 8s var(--ease)}
-.hero-progress i{animation-duration:7.5s}
-@media(max-width:600px){
- .idea-craft-transition .ict-head,.idea-craft-transition .ict-photo{transform:translateY(28px)}
- .hero-slide{transition:opacity 1.5s ease,transform 7.5s var(--ease)}
+
+/* CINEMATIC REFINEMENT V2
+   Intentional motion, not blanket animation.
+   Images keep their existing art-directed crops; remote replacements are
+   fitted intelligently by the media bridge below. */
+:root{
+  --cin-ease:cubic-bezier(.16,1,.3,1);
+  --cin-duration:1.15s;
 }
 
+/* Selected scroll reveals */
+.reveal{
+  opacity:0;
+  transform:translate3d(0,42px,0);
+  transition:opacity .9s var(--cin-ease),transform 1.15s var(--cin-ease);
+  will-change:opacity,transform;
+}
+.reveal.in{opacity:1;transform:none}
+.reveal.delay1{transition-delay:.14s}
+.reveal.delay2{transition-delay:.28s}
+.reveal.delay3{transition-delay:.42s}
+
+.scale-in{
+  opacity:0;
+  transform:translate3d(0,34px,0) scale(.975);
+  transition:opacity 1s var(--cin-ease),transform 1.25s var(--cin-ease);
+}
+.scale-in.in{opacity:1;transform:none}
+.scale-in.delay1{transition-delay:.12s}
+.scale-in.delay2{transition-delay:.24s}
+.scale-in.delay3{transition-delay:.36s}
+
+/* A few whole sections get a quiet lift instead of every child moving. */
+.idea,
+.manifesto,
+.craft,
+.explorer,
+.stories,
+.bts,
+.pre,
+.experience,
+.why{
+  scroll-margin-top:80px;
+}
+
+/* Idea → Craft becomes a visual interlude. */
+.idea-craft-transition{
+  background:var(--paper);
+  padding:clamp(38px,6vw,88px) 0 clamp(92px,11vw,165px);
+  overflow:hidden;
+}
+.idea-craft-transition .ict-head{
+  display:grid;
+  grid-template-columns:auto minmax(260px,510px);
+  justify-content:space-between;
+  align-items:end;
+  gap:40px;
+  margin:0 var(--gutter) clamp(30px,4vw,48px);
+}
+.idea-craft-transition .ict-head .eyebrow{
+  opacity:.62;
+}
+.idea-craft-transition .ict-head p{
+  font:italic 500 clamp(1.45rem,2.5vw,2.7rem)/1.04 var(--serif);
+  max-width:510px;
+  margin:0;
+}
+.idea-craft-transition .ict-track{
+  display:grid;
+  grid-template-columns:1.12fr .68fr 1fr;
+  gap:clamp(8px,1vw,16px);
+  padding:0 var(--gutter);
+  align-items:start;
+}
+.idea-craft-transition .ict-photo{
+  position:relative;
+  margin:0;
+  height:auto;
+  overflow:hidden;
+  background:#d8cec2;
+  opacity:0;
+  transform:translate3d(0,56px,0);
+  transition:opacity 1s var(--cin-ease),transform 1.25s var(--cin-ease);
+}
+.idea-craft-transition .ict-photo:nth-child(2){
+  margin-top:clamp(30px,5vw,82px);
+  transition-delay:.14s;
+}
+.idea-craft-transition .ict-photo:nth-child(3){
+  transition-delay:.28s;
+}
+.idea-craft-transition.in-view .ict-photo{
+  opacity:1;
+  transform:none;
+}
+.idea-craft-transition .ict-photo img{
+  display:block;
+  width:100%;
+  height:auto;
+  min-height:0;
+  aspect-ratio:auto;
+  object-fit:contain;
+  background:#d8cec2;
+  transition:transform 1.8s var(--cin-ease);
+}
+.idea-craft-transition.in-view .ict-photo img{
+  transform:scale(1.015);
+}
+.idea-craft-transition .ict-photo:hover img{
+  transform:scale(1.035);
+}
+
+/* Keep hero cinematic, but give every frame more time to breathe. */
+.hero-slide{
+  transition:opacity 2s ease,transform 9s var(--cin-ease);
+}
+.hero-slide.active{
+  transition:opacity 2s ease,transform 9s var(--cin-ease);
+}
+.hero-progress i{
+  animation-duration:8.5s;
+}
+
+/* Remove the previous "smart ratio" frame experiment.
+   Remote images are now shown at their natural ratio wherever the layout
+   permits, avoiding obvious placeholder-sized crops. */
+.smart-media-frame{
+  overflow:hidden;
+  background:transparent;
+}
+.smart-ratio{
+  aspect-ratio:auto !important;
+  height:auto !important;
+  min-height:0 !important;
+}
+.smart-media-frame > img,
+.smart-media-frame > video{
+  width:100% !important;
+  height:auto !important;
+  object-fit:contain !important;
+  object-position:center !important;
+}
+
+/* Story/modal galleries: never force remote replacements into a tiny crop. */
+.story-gallery img,
+.modal-grid img{
+  object-fit:contain;
+  background:#d8cec2;
+}
+
+/* Respect reduced motion. */
 @media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
-  .ticker-track{animation:none}.reveal,.scale-in{opacity:1;transform:none}
+  .reveal,.scale-in,
+  .idea-craft-transition .ict-photo{
+    opacity:1;
+    transform:none;
+    transition:none;
+  }
+  .idea-craft-transition .ict-photo:nth-child(2),
+  .idea-craft-transition .ict-photo:nth-child(3){transition-delay:0}
 }
 
-/* Visual refinement — the photograph owns the first viewport */
-.hero{min-height:0!important;height:100svh!important}
-.hero-content{bottom:6.5vh!important}
-.hero-title{font-size:clamp(3.5rem,8.4vw,9.2rem)!important;line-height:.78!important;max-width:920px!important}
-.hero-bottom{margin-top:22px!important}
-.hero-bottom p{max-width:390px!important;font-size:13px!important;line-height:1.55!important}
-.hero-topline{margin-bottom:16px!important}
-@media(max-width:1000px){.hero-content{bottom:6vh!important}.hero-title{font-size:clamp(3.3rem,13vw,7rem)!important;max-width:720px!important}}
-@media(max-width:600px){.hero-content{bottom:5vh!important}.hero-title{font-size:clamp(3.15rem,15.5vw,5.6rem)!important;line-height:.79!important}.hero-bottom p{font-size:12px!important;max-width:300px!important}}
-
-
-/* Idea → Craft: fewer words, more atmosphere */
-.idea-craft-transition{background:var(--paper);padding:clamp(50px,7vw,105px) 0 clamp(80px,10vw,150px);overflow:hidden}
-.ict-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:28px}
-.ict-head p{font:italic 500 clamp(1.5rem,2.6vw,2.8rem)/1 var(--serif);max-width:510px;margin:0}
-.ict-track{display:grid;grid-template-columns:1.15fr .62fr 1fr;gap:10px;padding:0 var(--gutter);align-items:start}
-.ict-photo{margin:0;height:clamp(300px,42vw,620px);overflow:hidden;background:#d8cec2}
-.ict-photo-tall{height:clamp(370px,50vw,720px);margin-top:clamp(25px,5vw,75px)}
-.ict-photo img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease),filter .8s}
-.ict-photo:hover img{transform:scale(1.045);filter:saturate(1.04)}
+@media(max-width:1000px){
+  .idea-craft-transition .ict-head{
+    grid-template-columns:1fr;
+    gap:10px;
+  }
+  .idea-craft-transition .ict-track{
+    grid-template-columns:1.08fr .72fr 1fr;
+  }
+}
 @media(max-width:600px){
- .idea-craft-transition{padding:42px 0 75px}
- .ict-head{display:block;padding:0 var(--gutter)}
- .ict-head p{margin-top:10px;font-size:21px;max-width:310px}
- .ict-track{grid-template-columns:1fr 1fr;gap:7px;padding:0 7px}
- .ict-photo{height:55vw}.ict-photo-tall{height:68vw;margin-top:20px}.ict-photo:nth-child(3){grid-column:1/-1;height:52vw;margin-top:0}
+  .idea-craft-transition{
+    padding:38px 0 86px;
+  }
+  .idea-craft-transition .ict-head{
+    display:block;
+    margin:0 var(--gutter) 24px;
+  }
+  .idea-craft-transition .ict-head p{
+    margin-top:9px;
+    font-size:21px;
+    max-width:310px;
+  }
+  .idea-craft-transition .ict-track{
+    grid-template-columns:1fr 1fr;
+    gap:7px;
+    padding:0 7px;
+  }
+  .idea-craft-transition .ict-photo{
+    transform:translate3d(0,34px,0);
+  }
+  .idea-craft-transition .ict-photo:nth-child(2){
+    margin-top:22px;
+  }
+  .idea-craft-transition .ict-photo:nth-child(3){
+    grid-column:1/-1;
+    margin-top:0;
+  }
 }
 
 </style>
@@ -435,7 +577,7 @@ img,video{display:block;max-width:100%}
       <span class="line"><span><em>not staged.</em></span></span>
     </h1>
     <div class="hero-bottom">
-      <p>Candid photographs, cinematic films and the beautiful chaos between them — made to feel like you, not a template.</p>
+      <p>Candid photographs, cinematic films and the beautiful chaos between them.</p>
       <div class="hero-scroll">Scroll to enter</div>
     </div>
   </div>
@@ -454,7 +596,7 @@ img,video{display:block;max-width:100%}
     <aside class="reveal"><span class="eyebrow">01 / The idea</span><div class="idea-number">01</div></aside>
     <div class="idea-main">
       <h2 class="display reveal">Not just how it <em>looked.</em><br>How it <em>felt.</em></h2>
-      <p class="body reveal delay1">We watch for the split-second glance, the laugh nobody planned, the hand finding yours in a crowded room. Then we shape those fragments into photographs and films that still feel alive years later.</p>
+      <p class="body reveal delay1">We watch for the split-second glance, the laugh nobody planned, the hand finding yours. Then we shape those fragments into work that still feels alive years later.</p>
       <div class="idea-bridge reveal delay2">
         <strong>A little direction when you need it. A lot of room to be yourselves.</strong>
         <p class="body">The result is a wedding story with movement, texture and personality — not a catalogue of poses.</p>
@@ -481,7 +623,7 @@ img,video{display:block;max-width:100%}
   <div class="wrap">
     <div class="manifesto-head">
       <h2 class="display reveal">No formula.<br>No forced <em>perfection.</em></h2>
-      <p class="body reveal delay1">We build around the people, the pace and the strange little details that make your wedding yours.</p>
+      <p class="body reveal delay1">We build around the people, the pace and the details that make your wedding yours.</p>
     </div>
     <div class="manifesto-bridge reveal delay2">The point isn't to make a perfect wedding picture. <em>It's to make a picture that feels like your wedding.</em></div>
     <div class="principles">
@@ -621,7 +763,7 @@ img,video{display:block;max-width:100%}
 
 <section class="experience" id="experience">
   <div class="wrap">
-    <div class="exp-head"><div><span class="eyebrow">07 / The experience</span><h2 class="display reveal">The <em>experience.</em></h2></div><div><p class="body reveal delay1">The good stuff starts before the wedding. We learn how you move, what matters to you, who will be on the dance floor, and when to leave the camera alone.</p><p class="body reveal delay2">Then we build a calm process around a wildly emotional day.</p></div></div>
+    <div class="exp-head"><div><span class="eyebrow">07 / The experience</span><h2 class="display reveal">The <em>experience.</em></h2></div><div><p class="body reveal delay1">We learn how you move, what matters, who will be on the dance floor — and when to leave the camera alone.</p><p class="body reveal delay2">Then we build a calm process around a wildly emotional day.</p></div></div>
     <div class="steps">
       <div class="step reveal"><span class="mono">01</span><h3>Meet, talk, <em>listen.</em></h3><p>We get to know the two of you and the shape of the day. No sales script. Just context.</p></div>
       <div class="step reveal delay1"><span class="mono">02</span><h3>Plan enough to <em>breathe.</em></h3><p>Timelines, family combinations, key moments and logistics are handled before the chaos begins.</p></div>
@@ -635,7 +777,7 @@ img,video{display:block;max-width:100%}
   <div class="wrap why-grid">
     <div><span class="eyebrow">08 / Why it matters</span><div class="why-statement reveal">Because the day moves once.<br><em>The feeling doesn't have to.</em></div></div>
     <div>
-      <p class="body reveal">The real value is having a team that protects the experience while documenting it with intention.</p>
+      <p class="body reveal">A team that protects the experience while documenting it with intention.</p>
       <div class="why-list">
         <div class="why-row reveal"><span class="mono">01</span><h3>Presence</h3><p>We notice what happens beyond the obvious — the people, pauses and energy that make your day yours.</p></div>
         <div class="why-row reveal delay1"><span class="mono">02</span><h3>Preparation</h3><p>Thoughtful planning gives you freedom on the day. We know the rhythm without trying to control it.</p></div>
@@ -722,9 +864,9 @@ img,video{display:block;max-width:100%}
     slides[current].classList.remove('active');dots[current].classList.remove('active');
     current=(i+slides.length)%slides.length;slides[current].classList.add('active');dots[current].classList.add('active');
     index.textContent=String(current+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
-    progress.style.animation='none';void progress.offsetWidth;progress.style.animation='progress 7.5s linear infinite';
+    progress.style.animation='none';void progress.offsetWidth;progress.style.animation='progress 8.5s linear infinite';
   }
-  function resetHero(){clearInterval(heroTimer);heroTimer=setInterval(()=>showHero(current+1),7500)}
+  function resetHero(){clearInterval(heroTimer);heroTimer=setInterval(()=>showHero(current+1),8500)}
   dots.forEach((d,i)=>d.addEventListener('click',()=>{showHero(i);resetHero()})); resetHero();
   document.addEventListener('visibilitychange',()=>{if(document.hidden)clearInterval(heroTimer);else resetHero()});
 
@@ -828,30 +970,7 @@ img,video{display:block;max-width:100%}
 })();
 </script>
 
-<script id="smart-image-sizing">
-(function(){
-  const selector='[data-media]';
-  const excluded=el=>el.closest('.hero-slide') || el.closest('.logo') || el.closest('.nav');
-  const ratioFromImage=(img)=>{
-    if(!img.naturalWidth || !img.naturalHeight) return;
-    const frame=img.closest('figure,.story-film,.bts-card,.pre-card,.work-feature-main figure,.work-feature-side figure,.modal-grid figure,.smart-media-frame');
-    if(!frame || excluded(img)) return;
-    // Only adapt content media. Hero remains edge-to-edge/cinematic.
-    frame.classList.add('smart-media-frame','smart-ratio');
-    const ratio=Math.max(.55,Math.min(2.15,img.naturalWidth/img.naturalHeight));
-    frame.style.setProperty('--smart-ratio',ratio.toFixed(4)+' / 1');
-  };
-  const wire=img=>{
-    if(img.dataset.smartWired) return;
-    img.dataset.smartWired='1';
-    img.addEventListener('load',()=>ratioFromImage(img),{passive:true});
-    if(img.complete) ratioFromImage(img);
-  };
-  const scan=()=>document.querySelectorAll(selector+'[src], img[data-media]').forEach(wire);
-  scan();
-  new MutationObserver(scan).observe(document.documentElement,{subtree:true,attributes:true,attributeFilter:['src']});
-})();
-</script>
+
 
 <script>
 /* MEDIA.JSON BRIDGE — media URLs are intentionally kept out of the page markup. */
@@ -890,20 +1009,60 @@ img,video{display:block;max-width:100%}
 
 <script id="media-json-bridge">
 (async function(){
- const fallback={"IDEA-IMG-01": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=88", "IDEA-IMG-02": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=88", "IDEA-IMG-03": "https://images.unsplash.com/photo-1519225421980-27b7f5b3d6f8?auto=format&fit=crop&w=1800&q=88"};
- const apply=(map)=>document.querySelectorAll("[data-media]").forEach(el=>{
-   const x=map[el.dataset.media]; if(!x) return;
-   const url=typeof x==="string"?x:x.url; if(!url)return;
-   if(el.tagName==="IMG"){el.src=url;if(x.alt)el.alt=x.alt}
-   if(el.tagName==="VIDEO"){el.src=url}
- });
- apply(fallback);
- try{
-   const r=await fetch("media.json?v=4",{cache:"no-store"});
-   if(!r.ok)throw new Error("media.json unavailable");
-   const d=await r.json(),map=Object.fromEntries((d.media||[]).map(x=>[x.id,x]));
-   apply(map); window.REEL_ROMANCE_MEDIA=map;
- }catch(e){console.warn("media.json unavailable; fallback media active",e)}
+  const mediaEls=()=>[...document.querySelectorAll('[data-media]')];
+
+  function apply(map){
+    mediaEls().forEach(el=>{
+      const item=map[el.dataset.media];
+      if(!item || item.active===false || !item.url) return;
+
+      if(el.tagName==='IMG'){
+        if(el.src!==item.url) el.src=item.url;
+        if(item.alt) el.alt=item.alt;
+
+        // For non-hero media, let the actual source dimensions define the
+        // visible height. This prevents a replacement URL from looking
+        // like a small image trapped inside an oversized placeholder.
+        if(!el.closest('.hero-slide')){
+          const fitNatural=()=>{
+            if(!el.naturalWidth || !el.naturalHeight) return;
+            el.style.aspectRatio='auto';
+            el.style.height='auto';
+            el.style.objectFit='contain';
+            el.style.backgroundColor='transparent';
+
+            const frame=el.closest('.ict-photo,.story-gallery img,.modal-grid img');
+            if(frame && frame.tagName==='IMG'){
+              frame.style.height='auto';
+            }
+          };
+          el.addEventListener('load',fitNatural,{once:true});
+          if(el.complete) fitNatural();
+        }
+      }else if(el.tagName==='VIDEO'){
+        if(el.src!==item.url) el.src=item.url;
+      }
+    });
+
+    window.REEL_ROMANCE_MEDIA=map;
+  }
+
+  try{
+    const response=await fetch('media.json?v=5',{cache:'no-store'});
+    if(!response.ok) throw new Error('media.json unavailable');
+    const manifest=await response.json();
+    const map=Object.fromEntries((manifest.media||[]).map(item=>[item.id,item]));
+    apply(map);
+
+    const ytId=url=>(url.match(/(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?v=|embed\/|shorts\/))([^?&#/]+)/i)||[])[1]||'';
+    const youtubeItems=Object.values(map).filter(x=>x.type==='youtube');
+    document.querySelectorAll('[data-video]').forEach(el=>{
+      const match=youtubeItems.find(x=>ytId(x.url)===el.dataset.video);
+      if(match) el.dataset.media=match.id;
+    });
+  }catch(error){
+    console.warn('The Reel Romance media.json could not be loaded.',error);
+  }
 })();
 </script></body>
 </html>
