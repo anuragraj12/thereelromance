@@ -1,0 +1,58 @@
+{
+  "couple-floral-arch": {
+    "width": 1180,
+    "height": 1262,
+    "widths": [
+      480,
+      800,
+      1180
+    ],
+    "lqip": "data:image/webp;base64,UklGRuQAAABXRUJQVlA4INgAAABQBQCdASoYABoAPu1wsFKppiSiqAgBMB2JZAC7B2zQGH19rXJoY7rZqCS0iCy7cOnjlQAA/uI2dYLl+STfw2FwIAvdndMq3T3yhMdFIlV4qtwHbfr4Q3IEVogMQh9V+AFznmYF21OOJQTzGmgx02uAXtkLaiqdn+09ghYHnTJW1MTx2mDBAoPIPmiTSA4S1USbxHcbcow2zgXJKouM7JRg+2JznI9GbS+aOFuKZ3lqaY9Td6tFunYNjfPfpp1vl/7wttQX0Ygx08HbkegDdpMSO2kctW8U5AA="
+  },
+  "haldi-celebration": {
+    "width": 7952,
+    "height": 5304,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "lqip": "data:image/webp;base64,UklGRqwAAABXRUJQVlA4IKAAAAAwBACdASoYABAAPu1iqU2ppaOiMAgBMB2JZACdMoABzm+dz55IHFTpkDgA/tg0hvBdt11/UNFE4Fq88YLr4/5KXRz2Fe+3BmBP7PdYSsMiXH/2KF5ldpVZq/S2mVurw/+8ISEhzClWuQJPuUkOw2GUrqs+lPqFGTmQ8v9OcnbCRtamwaNng3MILYz5dTEa5qf9wsyu5BltzHcnGzJs/AAA"
+  },
+  "haldi-hands": {
+    "width": 5168,
+    "height": 3448,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "lqip": "data:image/webp;base64,UklGRtgAAABXRUJQVlA4IMwAAABwBACdASoYABAAPu1iqU2ppaOiMAgBMB2JbACdMoAlthWg7txl+8r8v3voAADKN0xsGe1O2jXhQjAj8qK2nkVg4YusMnzY1Hvi/fMEaHN1x7ffPsXt6mFSX1967AI/Yp47/AsoOLkg/ld62AiVd1TBkPKMsYJMRrXTqoMH4rA+lnoGCK35nKdq6v5/XHvkw+p5n1vzQsxFjtTT0baruglNL3U8Ola4zURuGX7P5WyPxLcHpOePieoMiwYOiKKe6Cy6L1BfNeIToUcAAAA="
+  },
+  "holding-hands": {
+    "width": 1009,
+    "height": 1513,
+    "widths": [
+      480,
+      800,
+      1009
+    ],
+    "lqip": "data:image/webp;base64,UklGRhoBAABXRUJQVlA4IA4BAACQBgCdASoYACQAPu1kp0+ppSMiMBVaqTAdiWoAyBdoyAcNGZNPbQJ+waKpyxfB62nrk+udzsi6L5dia4McAP7v0HyOI1mwpu0a6Q+NZL4DV5+Fz18agxfBysQe9o+HeecuGbxHanV7BZlCeCcYnjQevA6Xw8yhLtOGFHdnOEYUPmsxg85GlsnhTaX28wDP/BWUpPkRQrKce9mnF08qtSJvaX1n0FzBQP/HWw+JimIEiP0ieVhBXvfV+nIzN6Egs5qDA7d/iw+o/P5tglG3SBesG/ACFnpG5qsNITLsJDOygMEmMLKBBenZAW3/MFZH3T/w0Ct1wyAIVOAoe3W3+0LVlbnDi+a0VLmWUKAAAAA="
+  },
+  "river-bride": {
+    "width": 5304,
+    "height": 3749,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "lqip": "data:image/webp;base64,UklGRo4AAABXRUJQVlA4IIIAAADwBACdASoYABEAPu1kq06ppaQiKA1RMB2JYwC7AA3R1yIEq3h/p4FpdvwmI83kPAAA/ursautCb5aUOeZzQVpsvm6Bh06j02TMS5cMxXOISnvEBbURoN3GTT1Og4+k5JsLlajr5iBXDKAEzkjptUl9sWo91qwMLJ3YyqAHz6mD0AAA"
+  }
+}

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /tools/
+Disallow: /src/
+Disallow: /content/
+
+Sitemap: https://threelromance.com/sitemap.xml
