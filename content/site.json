@@ -1,0 +1,177 @@
+{
+  "_readme": "This file is the whole website. Edit text and photos here; the pages are rebuilt from it automatically (see README.md, section 'Editing the site'). Image 'src' can be  local:<name> (a photo prepared into assets/media),  ik:<file name> (a file in your ImageKit library), or a full https:// link.",
+
+  "site": {
+    "name": "The Reel Romance",
+    "url": "https://threelromance.com",
+    "title": "The Reel Romance — Wedding Photography & Films, Bangalore",
+    "description": "Candid wedding photography, cinematic wedding films, pre-wedding shoots and behind-the-scenes reels. Based in Bangalore (Bengaluru), travelling across India and beyond.",
+    "shareImage": "local:river-bride",
+    "locale": "en_IN",
+    "city": "Bangalore",
+    "region": "Karnataka",
+    "country": "IN",
+    "areaServed": ["India", "Worldwide"],
+    "imagekit": "https://ik.imagekit.io/ijqhfpipr/"
+  },
+
+  "contact": {
+    "whatsapp": "918800168227",
+    "phoneDisplay": "+91 88001 68227",
+    "email": "hello@threelromance.com",
+    "instagram": "",
+    "youtube": "https://www.youtube.com/@anuragraj12",
+    "formEndpoint": "",
+    "_formEndpoint": "Optional. Paste a Formspree / Web3Forms / Google Apps Script URL to also receive enquiries by email. Empty = enquiries open WhatsApp."
+  },
+
+  "hero": {
+    "eyebrow": "Wedding photography & films",
+    "place": "Bangalore · across India & beyond",
+    "titleLines": ["Weddings,", "remembered.", "*Not staged.*"],
+    "intro": "Candid photographs, cinematic films and the beautiful chaos in between — made to feel like you, not a template.",
+    "slides": [
+      { "src": "local:river-bride", "alt": "A bride in a red lehenga standing alone on the rocky bed of a river at dusk", "focus": "52% 55%", "focusMobile": "54% 50%", "scene": "The river, Jim Corbett" },
+      { "src": "local:haldi-celebration", "alt": "Friends in yellow cheering around the bride at her haldi", "focus": "45% 45%", "focusMobile": "40% 50%", "scene": "Haldi, Jim Corbett" },
+      { "src": "ik:DSC01889.JPG", "alt": "A candle-lit mandap glowing in a garden at night", "focus": "55% 60%", "focusMobile": "58% 60%", "scene": "The mandap, after dark", "ratio": "3/2" }
+    ]
+  },
+
+  "prologue": {
+    "kicker": "The idea",
+    "heading": "Not just how it looked. *How it felt.*",
+    "body": "We watch for the split-second glance, the laugh nobody planned, the hand finding yours in a crowded room. Then we shape those fragments into photographs and films that still feel alive years later.",
+    "aside": "A little direction when you need it. A lot of room to be yourselves.",
+    "images": [
+      { "src": "local:holding-hands", "alt": "The groom's hand holding the bride's hennaed hand, red bangles on her wrist", "focus": "50% 45%" },
+      { "src": "local:haldi-hands", "alt": "Turmeric-covered hands of the bride during the haldi ceremony", "focus": "55% 50%" }
+    ]
+  },
+
+  "frames": {
+    "kicker": "Selected frames",
+    "heading": "The in-between, *kept.*",
+    "note": "Scroll to advance the reel",
+    "items": [
+      { "src": "local:haldi-hands", "alt": "Hands covered in turmeric paste at the haldi", "caption": "Haldi" },
+      { "src": "local:couple-floral-arch", "alt": "The couple in garlands beneath a white floral arch by the river", "caption": "Varmala" },
+      { "src": "ik:IMG_2.jpeg", "alt": "The baraat moving under tall trees with red umbrellas", "caption": "Baraat", "ratio": "3/2" },
+      { "src": "local:holding-hands", "alt": "The couple's hands clasped during the ceremony", "caption": "The promise" },
+      { "src": "ik:_LST2641.JPG", "alt": "The couple dancing on stage under beams of light at the sangeet", "caption": "Sangeet", "ratio": "3/2" },
+      { "src": "ik:DSC01988.jpeg", "alt": "Guests pulling each other into the celebration at night", "caption": "After dark", "ratio": "3/2" },
+      { "src": "ik:DSC09832.JPG", "alt": "A yellow haldi mandap dressed in marigolds", "caption": "The yellow hour", "ratio": "3/2" },
+      { "src": "ik:rav3.JPG", "alt": "The couple seated on stage with their families at the reception", "caption": "Family", "ratio": "3/2" },
+      { "src": "ik:GSR07341.JPG", "alt": "Friends performing on a lit stage at the sangeet", "caption": "The performance", "ratio": "3/2" }
+    ]
+  },
+
+  "films": {
+    "kicker": "Films",
+    "heading": "Not a recap. A piece of life you can *step into.*",
+    "body": "Voices, music, movement and the tiny details, cut into one cinematic memory — something to return to long after the flowers are gone.",
+    "items": [
+      {
+        "title": "Wedding Highlight",
+        "couple": "Anurag & Garima",
+        "place": "Jim Corbett",
+        "youtube": "iCyohnh7PDs",
+        "poster": { "src": "local:river-bride", "alt": "Still from the Anurag & Garima wedding film: the bride by the river", "focus": "52% 55%" }
+      }
+    ]
+  },
+
+  "stories": {
+    "kicker": "Real weddings",
+    "heading": "Every wedding is its own *world.*",
+    "items": [
+      {
+        "slug": "anurag-garima",
+        "published": true,
+        "couple": "Anurag & Garima",
+        "date": "2026-04-26",
+        "place": "Jim Corbett, Uttarakhand",
+        "services": ["Photography", "Film", "BTS reels"],
+        "summary": "A riverside wedding full of yellow light, loud friends, quiet glances — and the kind of chaos that makes the best frames.",
+        "intro": "A riverside wedding in Jim Corbett: a haldi drenched in yellow, a baraat under old trees, and a varmala beneath white flowers by the water. We stayed close enough to notice what mattered, and quiet enough not to interrupt it.",
+        "cover": { "src": "local:couple-floral-arch", "alt": "Anurag and Garima in garlands beneath a white floral arch", "focus": "50% 40%", "focusMobile": "50% 40%" },
+        "film": "iCyohnh7PDs",
+        "gallery": [
+          { "src": "local:river-bride", "alt": "Garima standing on the riverbed in her red lehenga" },
+          { "src": "local:holding-hands", "alt": "Anurag holding Garima's hennaed hand" },
+          { "src": "local:haldi-celebration", "alt": "Friends cheering around Garima at the haldi" },
+          { "src": "local:couple-floral-arch", "alt": "The couple under the floral arch after the varmala" },
+          { "src": "local:haldi-hands", "alt": "Turmeric-covered hands during the haldi" },
+          { "src": "ik:IMG_2.jpeg", "alt": "The baraat arriving under the trees", "ratio": "3/2" }
+        ],
+        "bts": ["udrcd2", "lht3eg"]
+      },
+      {
+        "slug": "ravi-saloni",
+        "published": false,
+        "_note": "Hidden until real photos are added. Set published to true when ready.",
+        "couple": "Ravi & Saloni",
+        "date": "",
+        "place": "",
+        "services": ["Photography", "Film"],
+        "summary": "",
+        "intro": "",
+        "cover": { "src": "ik:rav3.JPG", "alt": "Ravi and Saloni with their families on stage", "ratio": "3/2" },
+        "film": "",
+        "gallery": [],
+        "bts": []
+      }
+    ]
+  },
+
+  "bts": {
+    "kicker": "Behind the frame",
+    "heading": "Your personal *paparazzi.*",
+    "body": "The wedding as it lived on your phone — unfiltered, immediate, gloriously chaotic. Vertical reels of everything happening around the frame, made to be shared.",
+    "items": [
+      { "id": "udrcd2", "src": "https://files.catbox.moe/udrcd2.mp4", "label": "Moments before" },
+      { "id": "1m7sx2", "src": "https://files.catbox.moe/1m7sx2.mp4", "label": "Getting ready, the boys" },
+      { "id": "lht3eg", "src": "https://files.catbox.moe/lht3eg.mp4", "label": "Sangeet night" }
+    ]
+  },
+
+  "services": {
+    "kicker": "What we make",
+    "heading": "Four ways to *remember it.*",
+    "items": [
+      { "name": "Candid photography", "line": "The glances, reactions, family and friends — every ritual, every reaction, as it happened.", "from": "", "image": { "src": "local:haldi-celebration", "alt": "Haldi celebration" } },
+      { "name": "Wedding films", "line": "A cinematic highlight film cut to music, with the voices and vows that matter.", "from": "", "image": { "src": "local:river-bride", "alt": "The bride by the river" } },
+      { "name": "Pre-wedding", "line": "Just the two of you, somewhere beautiful, before the madness begins.", "from": "", "image": null },
+      { "name": "BTS reels", "line": "Vertical reels of the running, laughing and fixing that happens around the frame.", "from": "", "image": { "src": "ik:_LST2641.JPG", "alt": "Sangeet on stage", "ratio": "3/2" } }
+    ]
+  },
+
+  "process": {
+    "kicker": "How it works",
+    "heading": "A calm process for a *wildly emotional* day.",
+    "steps": [
+      { "title": "Meet, talk, listen", "body": "We get to know the two of you and the shape of the day. No sales script — just context." },
+      { "title": "Plan enough to breathe", "body": "Timelines, family combinations, key moments and logistics are handled before the chaos begins." },
+      { "title": "Be present, not intrusive", "body": "We guide when it helps and blend in when it doesn't, so the photographs feel lived, not manufactured." },
+      { "title": "Relive it properly", "body": "Your gallery and films arrive as a body of work — not a folder of files you forget exists." }
+    ]
+  },
+
+  "testimonials": {
+    "kicker": "Kind words",
+    "_note": "Add real client words here, e.g. { \"quote\": \"...\", \"name\": \"Priya & Arjun\", \"detail\": \"Udaipur, 2025\" }. The section stays hidden while this list is empty.",
+    "items": []
+  },
+
+  "faq": {
+    "kicker": "Questions",
+    "_note": "Add { \"q\": \"...\", \"a\": \"...\" } pairs. The section stays hidden while this list is empty.",
+    "items": []
+  },
+
+  "enquiry": {
+    "kicker": "Let's talk",
+    "heading": "Tell us about *your day.*",
+    "body": "Where it's happening, what you're imagining and what you want to remember. No pressure — we'll take it from there.",
+    "services": ["Photography", "Film", "Pre-wedding", "BTS reels", "Not sure yet"]
+  }
+}
