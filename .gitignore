@@ -1,2 +1,7 @@
 .DS_Store
 __MACOSX/
+node_modules/
+# Full-resolution originals: prepared with tools/prepare_images.py, never published
+media-src/
+# local test output
+.qa/
