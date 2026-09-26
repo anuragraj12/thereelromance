@@ -1,0 +1,53 @@
+name: Build & check site
+
+# Every change to the content, templates or styles is rebuilt and checked.
+# On main, the rebuilt pages are committed back so GitHub Pages serves them.
+on:
+  push:
+    branches: [main]
+    paths: ["content/**", "src/**", "assets/**", "build.mjs", "tools/**", ".github/workflows/site.yml"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: site-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build pages from content/site.json
+        run: node build.mjs
+
+      - name: Quality checks (alt text, broken links, stock photos, content errors)
+        run: node tools/check.mjs
+
+      - name: Pull request — make sure the committed pages are up to date
+        if: github.event_name == 'pull_request'
+        run: |
+          if ! git diff --quiet -- index.html 404.html stories sitemap.xml robots.txt site.webmanifest; then
+            echo "::warning::Generated pages differ from the commit. Run 'node build.mjs' and commit, or merge and let main rebuild."
+          fi
+
+      - name: Main — commit rebuilt pages
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: |
+          git add -A index.html 404.html stories sitemap.xml robots.txt site.webmanifest
+          if git diff --cached --quiet; then
+            echo "Pages already up to date."
+          else
+            git config user.name  "site-bot"
+            git config user.email "site-bot@users.noreply.github.com"
+            git commit -m "chore: rebuild pages from content"
+            git push
+          fi
