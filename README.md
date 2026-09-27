@@ -25,7 +25,7 @@ The easy way is on GitHub itself: open `content/site.json` → ✏️ **Edit** �
 The *Build & check site* action rebuilds the pages and commits them; the live site updates a minute later.
 If the check fails (for example a photo has no description), the action turns red and tells you exactly which line to fix.
 
-Text: anything wrapped in `*asterisks*` is set in *italic serif*, e.g. `"Tell us about *your day.*"`.
+Text: anything wrapped in `*asterisks*` becomes a handwritten script word, e.g. `"Tell us about *your day.*"`. Keep it to one to three words per heading.
 
 ### Changing a photo (and why it can't look stretched any more)
 
@@ -84,7 +84,8 @@ GitHub Pages serves the repository root of `main`. `.nojekyll` switches off Jeky
 
 ## Design notes
 
-* Type: *Instrument Serif* (display) and *Hanken Grotesk* (text), self-hosted, OFL licensed (see `assets/fonts`).
+* Type: *Italiana* (headlines), *WindSong* (the handwritten words — anything in `*asterisks*`), *Hanken Grotesk* (text). Self-hosted, OFL licensed (see `assets/fonts`).
+* Motion: film-leader countdown on the first visit, letterbox opening, words rising line by line, handwritten words "written" in ink, curtain reveals and parallax on photos, a sideways film-strip, a scroll-speed marquee, film grain, a cursor that labels what things do (Play / View / Scroll), magnetic buttons, eased wheel scrolling, and page transitions between the home page and stories.
 * Colour: ivory `#f3eee6`, ink `#141210`, one sindoor accent `#b23a24` used only for tiny details.
 * Breakpoints: phone < 600px, tablet 600–1023px, desktop ≥ 1024px; landscape phones/tablets get their own hero rules.
 * Motion respects "reduce motion" settings: the letterbox intro, reel pinning, autoplay and Ken Burns all switch off.
