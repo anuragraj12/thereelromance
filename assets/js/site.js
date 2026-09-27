@@ -38,19 +38,62 @@
     if (img.complete) done(); else img.addEventListener("load", done, { once: true });
   });
 
+  /* ------------------------------------------------------------ split headings into words
+     Each word slides up from behind its own mask. *Emphasised* words stay whole:
+     they are "written" in ink instead (see [data-ink] in the CSS). */
+  function splitWords(el) {
+    if (el.dataset.splitDone) return;
+    el.dataset.splitDone = "1";
+    let n = 0;
+    const walk = (node) => {
+      [...node.childNodes].forEach((child) => {
+        if (child.nodeType === 3) {
+          const parts = child.textContent.split(/(\s+)/);
+          const frag = document.createDocumentFragment();
+          parts.forEach((p) => {
+            if (!p) return;
+            if (/^\s+$/.test(p)) { frag.appendChild(document.createTextNode(" ")); return; }
+            const w = document.createElement("span"); w.className = "w";
+            const wi = document.createElement("span"); wi.className = "wi"; wi.textContent = p;
+            wi.style.setProperty("--wi", n++);
+            w.appendChild(wi); frag.appendChild(w);
+          });
+          child.replaceWith(frag);
+        } else if (child.nodeType === 1 && child.tagName !== "EM" && child.tagName !== "BR") {
+          walk(child);
+        } else if (child.tagName === "EM") {
+          child.style.setProperty("--ink-d", `${0.25 + n * 0.055}s`);
+          n++;
+        }
+      });
+    };
+    walk(el);
+  }
+  const motionOK = !reduceMotion.matches;
+  const splits = motionOK ? $$(".h2, [data-split]") : [];
+  splits.forEach(splitWords);
+
   /* ------------------------------------------------------------ reveal on scroll */
-  const reveals = $$("[data-reveal]");
-  if ("IntersectionObserver" in window && !reduceMotion.matches) {
+  const reveals = $$("[data-reveal], [data-reveal-img]");
+  const headings = $$(".h2");
+  if ("IntersectionObserver" in window && motionOK) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
-        if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+        if (!e.isIntersecting) return;
+        e.target.classList.add(e.target.matches(".h2") ? "is-split" : "is-in");
+        io.unobserve(e.target);
       });
     }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
     reveals.forEach((el) => io.observe(el));
+    headings.forEach((el) => io.observe(el));
     // Safety net: never leave content hidden (e.g. printing, odd browsers).
-    window.addEventListener("beforeprint", () => reveals.forEach((el) => el.classList.add("is-in")));
+    window.addEventListener("beforeprint", () => {
+      reveals.forEach((el) => el.classList.add("is-in"));
+      headings.forEach((el) => el.classList.add("is-split"));
+    });
   } else {
     reveals.forEach((el) => el.classList.add("is-in"));
+    headings.forEach((el) => el.classList.add("is-split"));
   }
 
   /* ------------------------------------------------------------ header */
@@ -99,11 +142,36 @@
   /* ------------------------------------------------------------ hero */
   const hero = $("[data-hero]");
   if (hero) {
-    // Letterbox intro: once per visit, only when motion is welcome.
-    if (!reduceMotion.matches && !store.get("trr-intro")) {
-      hero.classList.add("intro");
+    // Opening titles. First visit per session: a film-leader countdown, then the
+    // letterbox opens and the title is written in. Any tap/key/scroll skips it.
+    const inkEls = $$("[data-ink]", hero);
+    const display = $(".hero__display", hero);
+    const goLive = (delay) => {
+      hero.classList.remove("is-live");
+      display?.classList.remove("is-split");
+      inkEls.forEach((e) => e.classList.remove("is-inked"));
+      hero.style.setProperty("--hero-d", `${delay}s`);
+      void hero.offsetWidth; // restart transitions with the new delay
+      hero.classList.add("is-live");
+      display?.classList.add("is-split");
+      inkEls.forEach((e) => e.classList.add("is-inked"));
+    };
+    if (motionOK && !store.get("trr-intro")) {
       store.set("trr-intro", "1");
-      setTimeout(() => hero.classList.remove("intro"), 1800);
+      hero.classList.add("intro");
+      document.documentElement.classList.add("is-intro");
+      const end = () => {
+        clearTimeout(timer);
+        ["pointerdown", "keydown", "wheel", "touchstart"].forEach((t) => window.removeEventListener(t, skip));
+        hero.classList.remove("intro");
+        document.documentElement.classList.remove("is-intro");
+      };
+      const skip = () => { end(); goLive(0.05); };
+      const timer = setTimeout(end, 3400);
+      ["pointerdown", "keydown", "wheel", "touchstart"].forEach((t) => window.addEventListener(t, skip, { passive: true }));
+      requestAnimationFrame(() => goLive(2.8));
+    } else {
+      requestAnimationFrame(() => goLive(motionOK ? 0.15 : 0));
     }
 
     const slides = $$("[data-slide]", hero);
@@ -181,7 +249,7 @@
     const idx = $("[data-reel-index]", reel);
     const bar = $("[data-reel-progress]", reel);
     const desktop = mq("(min-width: 1024px)");
-    let pinned = false, distance = 0, ticking = false;
+    let pinned = false, distance = 0, ticking = false, lastX = 0, settle = 0;
 
     const setIndex = (p) => {
       const i = clamp(Math.round(p * (frames.length - 1)), 0, frames.length - 1);
@@ -205,8 +273,17 @@
       if (pinned) {
         const top = reel.getBoundingClientRect().top;
         const p = distance ? clamp(-top / distance, 0, 1) : 0;
-        reel.style.setProperty("--reel-x", (p * distance).toFixed(1));
+        const x = p * distance;
+        reel.style.setProperty("--reel-x", x.toFixed(1));
         setIndex(p);
+        // frames lean into the direction of travel, then settle
+        if (motionOK) {
+          const skew = clamp((x - lastX) * 0.06, -5, 5);
+          lastX = x;
+          track.style.setProperty("--skew", `${(-skew).toFixed(2)}deg`);
+          clearTimeout(settle);
+          settle = setTimeout(() => track.style.setProperty("--skew", "0deg"), 90);
+        }
       } else {
         const max = viewport.scrollWidth - viewport.clientWidth;
         setIndex(max > 0 ? viewport.scrollLeft / max : 0);
@@ -400,6 +477,151 @@
     watch($(".cta-band"), "form");
   }
 
-  /* ------------------------------------------------------------ smooth in-page links */
-  if (!reduceMotion.matches) document.documentElement.style.scrollBehavior = "smooth";
+  /* ------------------------------------------------------------ scroll-linked motion
+     One animation loop drives everything that follows the scroll position:
+     the hero pulling away, photo parallax, the film poster growing, the marquee. */
+  const heroMotion = $("[data-hero]");
+  const parallax = $$("[data-parallax]");
+  const bigPoster = $(".film--big .film__poster");
+  const marquee = $("[data-marquee]");
+  const mTrack = marquee && $("[data-marquee-track]", marquee);
+  if (motionOK) {
+    const visible = new Set();
+    let lastScroll = -1, vel = 0, mx = 0, dir = 1, prevY = window.scrollY;
+    if ("IntersectionObserver" in window) {
+      const vio = new IntersectionObserver((es) => {
+        es.forEach((e) => (e.isIntersecting ? visible.add(e.target) : visible.delete(e.target)));
+        lastScroll = -1; // recompute positions for anything that just came into view
+      }, { rootMargin: "20% 0px" });
+      [...parallax, bigPoster, marquee].filter(Boolean).forEach((el) => vio.observe(el));
+    }
+    const frame = () => {
+      const y = window.scrollY, vh = window.innerHeight;
+      const dy = y - prevY; prevY = y;
+      vel += (dy - vel) * 0.2;
+      if (dy) dir = dy > 0 ? 1 : -1;
+      if (y !== lastScroll) {
+        lastScroll = y;
+        if (heroMotion) {
+          const hp = clamp(y / heroMotion.offsetHeight, 0, 1);
+          heroMotion.style.setProperty("--hp", hp.toFixed(4));
+        }
+        visible.forEach((el) => {
+          const r = el.getBoundingClientRect();
+          if (el.hasAttribute("data-parallax")) {
+            const speed = parseFloat(el.dataset.parallax) || 0.1;
+            const off = r.top + r.height / 2 - vh / 2;
+            el.style.setProperty("--py", `${(-off * speed).toFixed(1)}px`);
+          } else if (el === bigPoster) {
+            el.style.setProperty("--fp", clamp((vh * 0.9 - r.top) / (vh * 0.55), 0, 1).toFixed(4));
+          }
+        });
+      }
+      if (mTrack && visible.has(marquee)) {
+        const third = mTrack.scrollWidth / 3;
+        mx -= (0.6 + Math.min(Math.abs(vel) * 0.35, 14)) * dir;
+        if (mx <= -third) mx += third;
+        if (mx > 0) mx -= third;
+        mTrack.style.setProperty("--mx", `${mx.toFixed(1)}px`);
+      }
+      raf = requestAnimationFrame(frame);
+    };
+    let raf = requestAnimationFrame(frame);
+    document.addEventListener("visibilitychange", () => {
+      cancelAnimationFrame(raf);
+      if (!document.hidden) raf = requestAnimationFrame(frame);
+    });
+  }
+
+  /* ------------------------------------------------------------ desktop polish:
+     eased wheel scrolling, a cursor that tells you what a thing does, magnetic buttons */
+  const finePointer = mq("(hover: hover) and (pointer: fine)").matches;
+  const root = document.documentElement;
+  let glideTo = null;
+
+  if (motionOK && finePointer) {
+    let target = window.scrollY, current = window.scrollY, running = false;
+    const maxY = () => root.scrollHeight - window.innerHeight;
+    const step = () => {
+      current += (target - current) * 0.11;
+      if (Math.abs(target - current) < 0.4) { current = target; running = false; }
+      window.scrollTo({ top: current, behavior: "instant" });
+      if (running) requestAnimationFrame(step);
+    };
+    const start = () => { if (!running) { running = true; requestAnimationFrame(step); } };
+    glideTo = (y) => { if (!running) current = window.scrollY; target = clamp(y, 0, maxY()); start(); };
+    window.addEventListener("wheel", (e) => {
+      if (e.ctrlKey || e.defaultPrevented || root.classList.contains("menu-open")) return;
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      if (e.target.closest && e.target.closest("textarea, dialog")) return;
+      e.preventDefault();
+      const dy = e.deltaMode === 1 ? e.deltaY * 40 : e.deltaMode === 2 ? e.deltaY * window.innerHeight : e.deltaY;
+      if (!running) current = target = window.scrollY;
+      target = clamp(target + dy, 0, maxY());
+      start();
+    }, { passive: false });
+    window.addEventListener("scroll", () => { if (!running) current = target = window.scrollY; }, { passive: true });
+
+    // cursor
+    const cursor = $(".cursor");
+    const label = cursor && $(".cursor__label", cursor);
+    if (cursor) {
+      let cx = -100, cy = -100, tx = -100, ty = -100;
+      const loop = () => {
+        cx += (tx - cx) * 0.22; cy += (ty - cy) * 0.22;
+        cursor.style.transform = `translate3d(${cx.toFixed(1)}px, ${cy.toFixed(1)}px, 0)`;
+        requestAnimationFrame(loop);
+      };
+      requestAnimationFrame(loop);
+      window.addEventListener("pointermove", (e) => {
+        if (e.pointerType !== "mouse") return;
+        tx = e.clientX; ty = e.clientY; cursor.classList.add("is-on");
+      }, { passive: true });
+      document.addEventListener("pointerleave", () => cursor.classList.remove("is-on"));
+      window.addEventListener("pointerdown", () => cursor.classList.add("is-down"));
+      window.addEventListener("pointerup", () => cursor.classList.remove("is-down"));
+      document.addEventListener("pointerover", (e) => {
+        const t = e.target.closest ? e.target : null;
+        const labelled = t && t.closest("[data-cursor]");
+        const link = t && t.closest("a, button, label, input, textarea, summary");
+        cursor.classList.toggle("is-label", !!labelled);
+        cursor.classList.toggle("is-link", !labelled && !!link);
+        if (labelled) label.textContent = labelled.dataset.cursor;
+      });
+    }
+
+    // magnetic buttons
+    $$(".btn").forEach((b) => {
+      b.addEventListener("pointermove", (e) => {
+        const r = b.getBoundingClientRect();
+        const dx = clamp((e.clientX - r.left - r.width / 2) * 0.28, -10, 10);
+        const dy = clamp((e.clientY - r.top - r.height / 2) * 0.4, -8, 8);
+        b.classList.add("is-magnet");
+        b.style.setProperty("--mx-b", `${dx.toFixed(1)}px`);
+        b.style.setProperty("--my-b", `${dy.toFixed(1)}px`);
+      });
+      b.addEventListener("pointerleave", () => {
+        b.classList.remove("is-magnet");
+        b.style.setProperty("--mx-b", "0px");
+        b.style.setProperty("--my-b", "0px");
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------ in-page links glide */
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest && e.target.closest('a[href*="#"]');
+    if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey) return;
+    const url = new URL(a.href, location.href);
+    if (url.pathname !== location.pathname || !url.hash || url.hash === "#") return;
+    const el = document.getElementById(decodeURIComponent(url.hash.slice(1)));
+    if (!el) return;
+    e.preventDefault();
+    const y = el.getBoundingClientRect().top + window.scrollY - (url.hash === "#top" || url.hash === "#main" ? 0 : 0);
+    if (glideTo) glideTo(y);
+    else window.scrollTo({ top: y, behavior: motionOK ? "smooth" : "auto" });
+    history.pushState(null, "", url.hash);
+    if (!el.hasAttribute("tabindex")) el.setAttribute("tabindex", "-1");
+    el.focus({ preventScroll: true });
+  });
 })();

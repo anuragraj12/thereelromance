@@ -19,7 +19,7 @@ const ICON = {
 const HERO_SIZES = "(max-aspect-ratio: 3/2) 150vh, 100vw";
 
 const wordmark = (tag = "span", cls = "wordmark") =>
-  `<${tag} class="${cls}">The Reel <em>Romance</em></${tag}>`;
+  `<${tag} class="${cls}"><span class="wordmark__caps">The Reel</span> <span class="wordmark__script">Romance</span></${tag}>`;
 
 // ================================================================ layout
 export function layout(c, page) {
@@ -71,7 +71,8 @@ ${shareUrl ? `<meta property="og:image" content="${esc(shareUrl)}">\n<meta prope
 <link rel="icon" href="${b}assets/icons/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="${b}assets/icons/apple-touch-icon.png">
 <link rel="manifest" href="${b}site.webmanifest">
-<link rel="preload" href="${b}assets/fonts/instrument-serif.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="${b}assets/fonts/italiana.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="${b}assets/fonts/windsong.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="${b}assets/fonts/hanken-grotesk.woff" as="font" type="font/woff" crossorigin>
 ${page.preload || ""}
 <link rel="stylesheet" href="${b}assets/css/site.css?v=${page.v.css}">
@@ -80,6 +81,8 @@ ${page.preload || ""}
 </head>
 <body class="${page.bodyClass || ""}">
 <a class="skip" href="#main">Skip to content</a>
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
 ${header(c, page)}
 <main id="main">
 ${page.body}
@@ -195,7 +198,7 @@ function filmCard(film, ctx, { big = true } = {}) {
     ? fillImg(film.poster, ctx, { sizes: "(max-width: 599px) 190vw, (min-width: 1600px) 1500px, 92vw" })
     : `<img class="fill" src="${ytThumb(film.youtube)}" alt="${esc(film.title)}" loading="lazy" decoding="async">`;
   return `<figure class="film ${big ? "film--big" : ""}" data-reveal>
-    <button class="film__poster frame" type="button" data-film="${esc(film.youtube)}" aria-label="Play film: ${esc(film.title)}${film.couple ? " — " + esc(film.couple) : ""}">
+    <button class="film__poster frame" type="button" data-cursor="Play" data-film="${esc(film.youtube)}" aria-label="Play film: ${esc(film.title)}${film.couple ? " — " + esc(film.couple) : ""}">
       ${poster}
       <span class="film__bars" aria-hidden="true"></span>
       <span class="film__play" aria-hidden="true">${ICON.play}<span>Play film</span></span>
@@ -210,7 +213,7 @@ function filmCard(film, ctx, { big = true } = {}) {
 function btsPhones(items, { label = true } = {}) {
   return `<div class="bts__phones">
     ${items.map((v, i) => `<figure class="phone" data-reveal style="--d:${i * 90}ms">
-      <div class="phone__screen">
+      <div class="phone__screen" data-cursor="Sound">
         <video class="phone__video" muted playsinline loop preload="none" data-src="${esc(v.src)}" aria-label="${esc(v.label || "Behind-the-scenes reel")}"></video>
         <span class="phone__label">${esc(v.label || "")}</span>
         <button class="phone__sound" type="button" data-sound aria-pressed="false" aria-label="Turn sound on">${ICON.mute}${ICON.sound}</button>
@@ -244,9 +247,23 @@ export function home(c, ctx) {
   </div>
   <div class="hero__shade" aria-hidden="true"></div>
   <div class="letterbox" aria-hidden="true"><i></i><i></i></div>
+  <div class="leader" aria-hidden="true" data-leader>
+    <div class="leader__frame">
+      <span class="leader__cross"></span>
+      <span class="leader__ring"></span><span class="leader__ring leader__ring--in"></span>
+      <span class="leader__sweep"></span>
+      <span class="leader__num"><b>3</b><b>2</b><b>1</b></span>
+    </div>
+    <p class="leader__title">${wordmark()}</p>
+    <p class="leader__meta"><span>Reel 01</span><span>Picture start</span></p>
+  </div>
   <div class="hero__content wrap">
     <p class="hero__eyebrow"><span>${esc(hero.eyebrow)}</span><span>${esc(hero.place)}</span></p>
-    <h1 class="hero__title">${hero.titleLines.map((l, i) => `<span class="hero__line" style="--i:${i}"><span>${md(l)}</span></span>`).join(" ")}</h1>
+    <h1 class="hero__title">
+      <span class="hero__display" data-split>${esc(hero.title.display)}</span>
+      <span class="hero__script" data-ink>${esc(hero.title.script)}</span>
+      <span class="hero__caps">${esc(hero.title.caps)}</span>
+    </h1>
     <div class="hero__foot">
       <p class="hero__intro">${esc(hero.intro)}</p>
       <div class="hero__ctas">
@@ -275,14 +292,20 @@ export function home(c, ctx) {
       <p class="label">${esc(prologue.kicker)}</p>
       <h2 class="h2" id="prologue-h" data-reveal>${md(prologue.heading)}</h2>
       <p class="lead" data-reveal>${esc(prologue.body)}</p>
-      <p class="prologue__aside" data-reveal><em>${esc(prologue.aside)}</em></p>
+      <p class="prologue__aside" data-reveal>${esc(prologue.aside)}</p>
     </div>
     <div class="prologue__images">
-      ${pA ? `<div class="frame frame--portrait prologue__a" data-reveal>${fillImg(pA, ctx, { sizes: "(min-width: 1024px) 28vw, 60vw" })}</div>` : ""}
-      ${pB ? `<div class="frame frame--landscape prologue__b" data-reveal style="--d:120ms">${fillImg(pB, ctx, { sizes: "(min-width: 1024px) 30vw, 70vw" })}</div>` : ""}
+      ${pA ? `<div class="frame frame--portrait prologue__a" data-reveal-img data-parallax="0.12">${fillImg(pA, ctx, { sizes: "(min-width: 1024px) 28vw, 60vw" })}</div>` : ""}
+      ${pB ? `<div class="frame frame--landscape prologue__b" data-reveal-img data-parallax="-0.08" style="--d:160ms">${fillImg(pB, ctx, { sizes: "(min-width: 1024px) 30vw, 70vw" })}</div>` : ""}
     </div>
   </div>
 </section>`;
+
+  const words = c.marquee || [];
+  const marqueeRun = words.map((w, i) => `<span class="marquee__word${i % 2 ? " marquee__word--script" : ""}">${esc(w)}</span><span class="marquee__star">✦</span>`).join("");
+  const marqueeHtml = words.length ? `<div class="marquee" aria-hidden="true" data-marquee>
+  <div class="marquee__track" data-marquee-track>${marqueeRun}${marqueeRun}${marqueeRun}</div>
+</div>` : "";
 
   const reelHtml = `<section class="reel" id="work" aria-labelledby="work-h" data-reel>
   <div class="reel__sticky">
@@ -293,7 +316,7 @@ export function home(c, ctx) {
       </div>
       <p class="reel__note"><span class="reel__count"><span data-reel-index>01</span> / ${pad(frames.items.length)}</span><span class="reel__hint">${esc(frames.note)}</span></p>
     </div>
-    <div class="reel__viewport" data-reel-viewport tabindex="0" aria-label="Selected frames, scroll horizontally">
+    <div class="reel__viewport" data-reel-viewport data-cursor="Scroll" tabindex="0" aria-label="Selected frames, scroll horizontally">
       <ol class="reel__track" data-reel-track>
         ${frames.items.map((f, i) => `<li class="reel__frame">
           <figure>
@@ -324,8 +347,8 @@ export function home(c, ctx) {
     ${head(stories, "stories-h")}
     <div class="stories__list stories__list--${Math.min(published.length, 3)}">
       ${published.map((s, i) => `<article class="story-card${i === 0 ? " story-card--feature" : ""}" data-reveal>
-        <a class="story-card__link" href="stories/${esc(s.slug)}/">
-          <div class="frame story-card__media">${fillImg(s.cover, ctx, { sizes: i === 0 ? "(min-width: 1024px) 60vw, 120vw" : "(min-width: 1024px) 40vw, 100vw" })}</div>
+        <a class="story-card__link" href="stories/${esc(s.slug)}/" data-cursor="View">
+          <div class="frame story-card__media" data-reveal-img data-parallax="0.08" style="view-transition-name:story-${esc(s.slug)}">${fillImg(s.cover, ctx, { sizes: i === 0 ? "(min-width: 1024px) 60vw, 120vw" : "(min-width: 1024px) 40vw, 100vw" })}</div>
           <div class="story-card__body">
             <p class="label">${[formatDate(s.date), s.place].filter(Boolean).map(esc).join(" · ")}</p>
             <h3 class="story-card__title">${esc(s.couple).replace("&amp;", "<em>&amp;</em>")}</h3>
@@ -403,7 +426,7 @@ export function home(c, ctx) {
 
   const enquiryHtml = enquiryBlock(c);
 
-  const body = [heroHtml, prologueHtml, reelHtml, filmsHtml, storiesHtml, btsHtml, servicesHtml, processHtml, testimonialsHtml, faqHtml, enquiryHtml].join("\n");
+  const body = [heroHtml, prologueHtml, marqueeHtml, reelHtml, filmsHtml, storiesHtml, btsHtml, servicesHtml, processHtml, testimonialsHtml, faqHtml, enquiryHtml].join("\n");
 
   const first = resolveImage(slides[0], ctx);
   const preload = first && first.srcset
@@ -491,7 +514,7 @@ export function story(c, s, ctx, all) {
 
   const body = `<article class="story">
   <header class="story-hero" data-hero-simple>
-    <div class="story-hero__media">${fillImg(s.cover, ctx, { sizes: HERO_SIZES, eager: true })}</div>
+    <div class="story-hero__media" style="view-transition-name:story-${esc(s.slug)}">${fillImg(s.cover, ctx, { sizes: HERO_SIZES, eager: true })}</div>
     <div class="hero__shade" aria-hidden="true"></div>
     <div class="wrap story-hero__content">
       <p class="label label--light"><a href="${b}#stories">Real weddings</a> · ${esc(formatDate(s.date))}</p>
