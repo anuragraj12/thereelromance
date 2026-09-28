@@ -325,21 +325,31 @@ export function home(c, ctx) {
   </div>
 </section>` : "";
 
-  const storiesHtml = published.length ? `<section class="stories" id="stories" aria-labelledby="stories-h">
+  // Published stories get their own page; "teaser" stories show a card only,
+  // until their photos and details are added.
+  const listed = stories.items.filter((s) => s.published || s.teaser);
+  const featureFirst = listed.length !== 2; // two stories sit side by side as equals
+  const storyCard = (s, i) => {
+    const feature = featureFirst && i === 0;
+    const inner = `
+          <div class="frame story-card__media">${fillImg(s.cover, ctx, { sizes: feature ? "(min-width: 1024px) 60vw, 120vw" : "(min-width: 600px) 50vw, 120vw" })}</div>
+          <div class="story-card__body">
+            <p class="label">${[formatDate(s.date), s.place].filter(Boolean).map(esc).join(" · ") || "Real wedding"}</p>
+            <h3 class="story-card__title">${esc(s.couple).replace("&amp;", "<em>&amp;</em>")}</h3>
+            ${s.summary ? `<p class="body">${esc(s.summary)}</p>` : ""}
+            ${s.published
+              ? `<span class="link-arrow">View their story ${ICON.arrow}</span>`
+              : `<span class="story-card__soon">Full story coming soon</span>`}
+          </div>`;
+    return `<article class="story-card${feature ? " story-card--feature" : ""}${s.published ? "" : " story-card--teaser"}" data-reveal style="--d:${i * 120}ms">
+        ${s.published ? `<a class="story-card__link" href="stories/${esc(s.slug)}/">${inner}</a>` : `<div class="story-card__link">${inner}</div>`}
+      </article>`;
+  };
+  const storiesHtml = listed.length ? `<section class="stories" id="stories" aria-labelledby="stories-h">
   <div class="wrap">
     ${head(stories, "stories-h")}
-    <div class="stories__list stories__list--${Math.min(published.length, 3)}">
-      ${published.map((s, i) => `<article class="story-card${i === 0 ? " story-card--feature" : ""}" data-reveal>
-        <a class="story-card__link" href="stories/${esc(s.slug)}/">
-          <div class="frame story-card__media">${fillImg(s.cover, ctx, { sizes: i === 0 ? "(min-width: 1024px) 60vw, 120vw" : "(min-width: 1024px) 40vw, 100vw" })}</div>
-          <div class="story-card__body">
-            <p class="label">${[formatDate(s.date), s.place].filter(Boolean).map(esc).join(" · ")}</p>
-            <h3 class="story-card__title">${esc(s.couple).replace("&amp;", "<em>&amp;</em>")}</h3>
-            <p class="body">${esc(s.summary)}</p>
-            <span class="link-arrow">View their story ${ICON.arrow}</span>
-          </div>
-        </a>
-      </article>`).join("")}
+    <div class="stories__list stories__list--${Math.min(listed.length, 3)}">
+      ${listed.map(storyCard).join("")}
     </div>
   </div>
 </section>` : "";
