@@ -71,7 +71,7 @@ ${shareUrl ? `<meta property="og:image" content="${esc(shareUrl)}">\n<meta prope
 <link rel="icon" href="${b}assets/icons/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="${b}assets/icons/apple-touch-icon.png">
 <link rel="manifest" href="${b}site.webmanifest">
-<link rel="preload" href="${b}assets/fonts/instrument-serif.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="${b}assets/fonts/cormorant-garamond.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="${b}assets/fonts/hanken-grotesk.woff" as="font" type="font/woff" crossorigin>
 ${page.preload || ""}
 <link rel="stylesheet" href="${b}assets/css/site.css?v=${page.v.css}">
@@ -269,17 +269,23 @@ export function home(c, ctx) {
 </section>`;
 
   const [pA, pB] = prologue.images;
-  const prologueHtml = `<section class="prologue" aria-labelledby="prologue-h">
-  <div class="wrap prologue__grid">
-    <div class="prologue__text">
-      <p class="label">${esc(prologue.kicker)}</p>
-      <h2 class="h2" id="prologue-h" data-reveal>${md(prologue.heading)}</h2>
-      <p class="lead" data-reveal>${esc(prologue.body)}</p>
-      <p class="prologue__aside" data-reveal><em>${esc(prologue.aside)}</em></p>
-    </div>
-    <div class="prologue__images">
-      ${pA ? `<div class="frame frame--portrait prologue__a" data-reveal>${fillImg(pA, ctx, { sizes: "(min-width: 1024px) 28vw, 60vw" })}</div>` : ""}
-      ${pB ? `<div class="frame frame--landscape prologue__b" data-reveal style="--d:120ms">${fillImg(pB, ctx, { sizes: "(min-width: 1024px) 30vw, 70vw" })}</div>` : ""}
+  const ideaPhoto = (img, cls, frame, sizes, d) => img ? `<figure class="idea__photo ${cls}" data-reveal style="--d:${d}ms">
+        <div class="frame ${frame}">${fillImg(img, ctx, { sizes })}</div>
+        ${img.caption ? `<figcaption>${esc(img.caption)}</figcaption>` : ""}
+      </figure>` : "";
+  const prologueHtml = `<section class="idea" aria-labelledby="idea-h">
+  <div class="wrap">
+    <header class="idea__head">
+      <p class="label idea__kicker">${esc(prologue.kicker)}</p>
+      <h2 class="h2 idea__title" id="idea-h" data-reveal>${md(prologue.heading)}</h2>
+    </header>
+    <div class="idea__spread">
+      ${ideaPhoto(pA, "idea__photo--a", "frame--portrait", "(min-width: 1024px) 34vw, (min-width: 600px) 46vw, 50vw", 0)}
+      <div class="idea__text" data-reveal style="--d:120ms">
+        <p class="lead">${esc(prologue.body)}</p>
+        <p class="idea__quote">${esc(prologue.aside)}</p>
+      </div>
+      ${ideaPhoto(pB, "idea__photo--b", "frame--tall", "(min-width: 1024px) 24vw, (min-width: 600px) 46vw, 50vw", 220)}
     </div>
   </div>
 </section>`;
