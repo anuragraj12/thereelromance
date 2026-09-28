@@ -626,3 +626,15 @@ html.menu-open{overflow:hidden}
 @view-transition{navigation:auto}
 ::view-transition-old(root),::view-transition-new(root){animation-duration:.5s;animation-timing-function:ease}
 @media (prefers-reduced-motion:reduce){@view-transition{navigation:none}}
+
+/* Two stories sit side by side as equals; a teaser card has no link yet */
+@media (min-width:600px){
+  .stories__list--2 .story-card .story-card__media{aspect-ratio:4/5}
+  .stories__list--2{column-gap:clamp(24px,4vw,64px)}
+  .stories__list--2 .story-card:nth-child(2){margin-top:clamp(40px,8vw,140px)}
+}
+.stories__list--2 .story-card__title{font-size:clamp(2.4rem,1.6rem + 3vw,4.4rem)}
+.story-card--teaser .story-card__link{cursor:default}
+.story-card--teaser:hover .story-card__media img.fill{transform:none}
+.story-card__soon{justify-self:start;margin-top:8px;display:inline-flex;align-items:center;gap:10px;font:600 .75rem/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--stone)}
+.story-card__soon::before{content:"";width:22px;height:1px;background:var(--accent)}
