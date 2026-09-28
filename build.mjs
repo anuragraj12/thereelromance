@@ -44,7 +44,7 @@ for (const s of published) {
     path: `/stories/${s.slug}/`,
     ctx, body, preload, v,
     bodyClass: "page-story",
-    title: `${s.couple} — ${s.place.split(",")[0]} wedding | ${content.site.name}`,
+    title: `${s.couple} — ${s.place ? s.place.split(",")[0] + " wedding" : "a wedding story"} | ${content.site.name}`,
     description: s.summary || content.site.description,
     shareImage: s.cover,
   }));

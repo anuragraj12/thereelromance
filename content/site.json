@@ -213,15 +213,12 @@
       },
       {
         "slug": "ravi-saloni",
-        "published": false,
-        "_note": "Shown on the home page as a 'coming soon' card (teaser: true). Add photos, date, place and intro, then set published to true to give it its own page.",
+        "published": true,
+        "_note": "Page is live with the cover photo only. Add gallery photos, date, place, services, intro, film id and bts ids as they come in; each section appears automatically.",
         "couple": "Ravi & Saloni",
         "date": "",
         "place": "",
-        "services": [
-          "Photography",
-          "Film"
-        ],
+        "services": [],
         "summary": "A second world, a different rhythm.",
         "intro": "",
         "cover": {
@@ -232,8 +229,7 @@
         },
         "film": "",
         "gallery": [],
-        "bts": [],
-        "teaser": true
+        "bts": []
       }
     ]
   },

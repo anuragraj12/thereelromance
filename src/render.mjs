@@ -502,7 +502,12 @@ export function story(c, s, ctx, all) {
   const idx = all.indexOf(s);
   const next = all.length > 1 ? all[(idx + 1) % all.length] : null;
   const b = ctx.base;
-  const film = s.film ? { youtube: s.film, title: "Wedding Highlight", couple: s.couple, place: s.place.split(",")[0], poster: s.gallery[0] } : null;
+  const place = (s.place || "").trim();
+  const gallery = s.gallery || [];
+  const film = s.film ? { youtube: s.film, title: "Wedding Highlight", couple: s.couple, place: place.split(",")[0], poster: gallery[0] || s.cover } : null;
+  const meta = [["Date", formatDate(s.date)], ["Place", place], ["We made", (s.services || []).join(", ")]].filter(([, v]) => v);
+  const intro = s.intro || s.summary;
+  const cols = Math.min(3, Math.max(1, gallery.length));
   const btsItems = (s.bts || []).map((id) => c.bts.items.find((v) => v.id === id)).filter(Boolean);
 
   const body = `<article class="story">
@@ -510,32 +515,36 @@ export function story(c, s, ctx, all) {
     <div class="story-hero__media">${fillImg(s.cover, ctx, { sizes: HERO_SIZES, eager: true })}</div>
     <div class="hero__shade" aria-hidden="true"></div>
     <div class="wrap story-hero__content">
-      <p class="label label--light"><a href="${b}#stories">Real weddings</a> · ${esc(formatDate(s.date))}</p>
+      <p class="label label--light"><a href="${b}#stories">Real weddings</a>${s.date ? ` · ${esc(formatDate(s.date))}` : ""}</p>
       <h1 class="story-hero__title">${esc(s.couple).replace("&amp;", "<em>&amp;</em>")}</h1>
-      <p class="story-hero__place">${esc(s.place)}</p>
+      ${place ? `<p class="story-hero__place">${esc(place)}</p>` : ""}
     </div>
   </header>
 
-  <section class="story-intro">
+  ${intro || meta.length ? `<section class="story-intro">
     <div class="wrap story-intro__grid">
-      <dl class="story-meta">
-        <div><dt class="label">Date</dt><dd>${esc(formatDate(s.date))}</dd></div>
-        <div><dt class="label">Place</dt><dd>${esc(s.place)}</dd></div>
-        <div><dt class="label">We made</dt><dd>${s.services.map(esc).join(", ")}</dd></div>
-      </dl>
-      <p class="lead story-intro__text" data-reveal>${esc(s.intro)}</p>
+      ${meta.length ? `<dl class="story-meta">
+        ${meta.map(([k, v]) => `<div><dt class="label">${k}</dt><dd>${esc(v)}</dd></div>`).join("")}
+      </dl>` : "<div></div>"}
+      ${intro ? `<p class="lead story-intro__text" data-reveal>${esc(intro)}</p>` : ""}
     </div>
-  </section>
+  </section>` : ""}
 
   ${film ? `<section class="story-film dark"><div class="wrap">${filmCard(film, ctx)}</div></section>` : ""}
 
-  ${s.gallery.length ? `<section class="gallery" aria-label="Photographs">
+  ${gallery.length ? `<section class="gallery" aria-label="Photographs">
     <div class="wrap">
-      <div class="gallery__cols">
-        ${s.gallery.map((g) => `<figure class="gallery__item" data-reveal>${naturalImg(g, ctx, { sizes: "(min-width: 1024px) 33vw, (min-width: 600px) 50vw, 100vw" })}</figure>`).join("")}
+      <div class="gallery__cols gallery__cols--${cols}">
+        ${gallery.map((g) => `<figure class="gallery__item" data-reveal>${naturalImg(g, ctx, { sizes: "(min-width: 1024px) 33vw, (min-width: 600px) 50vw, 100vw" })}</figure>`).join("")}
       </div>
     </div>
-  </section>` : ""}
+  </section>` : `<section class="gallery-soon" aria-labelledby="soon-h">
+    <div class="wrap gallery-soon__inner">
+      <p class="label">The gallery</p>
+      <h2 class="h2" id="soon-h" data-reveal>Being edited, <em>frame by frame.</em></h2>
+      <p class="body" data-reveal>${esc(s.couple)}’s photographs${s.film ? "" : " and film"} are on their way to this page.</p>
+    </div>
+  </section>`}
 
   ${btsItems.length ? `<section class="bts bts--story" aria-labelledby="story-bts-h">
     <div class="wrap bts__grid">
