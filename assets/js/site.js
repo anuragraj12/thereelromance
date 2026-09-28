@@ -115,8 +115,16 @@
     hero.style.setProperty("--hero-ms", HOLD + "ms");
     let current = 0, timer = null, userPaused = reduceMotion.matches, inView = true;
 
+    let prevTimer = 0;
     const show = (i) => {
-      slides[current].classList.remove("is-active");
+      // The outgoing photo stays fully visible underneath while the next one
+      // fades in on top — no dip to black between slides.
+      const prev = slides[current];
+      slides.forEach((s) => s.classList.remove("is-prev"));
+      prev.classList.add("is-prev");
+      prev.classList.remove("is-active");
+      clearTimeout(prevTimer);
+      prevTimer = setTimeout(() => prev.classList.remove("is-prev"), 2100);
       current = (i + slides.length) % slides.length;
       slides[current].classList.add("is-active");
       dots.forEach((d, n) => {
@@ -219,8 +227,16 @@
     desktop.addEventListener?.("change", measure);
     document.addEventListener("media:resize", measure);
     if ("ResizeObserver" in window) new ResizeObserver(measure).observe(track);
-    // Frames further along load a little before they're needed.
-    $$("img", track).forEach((img, i) => { if (i < 3) img.loading = "eager"; });
+    // Browsers never trigger native lazy-loading for photos sitting to the side
+    // of a horizontal strip, so the strip loads all its frames itself as soon
+    // as it comes near the screen (the first three straight away).
+    const reelImgs = $$("img", track);
+    reelImgs.forEach((img, i) => { if (i < 3) img.loading = "eager"; });
+    const loadAll = () => reelImgs.forEach((img) => { img.loading = "eager"; });
+    if ("IntersectionObserver" in window) {
+      const near = new IntersectionObserver(([e]) => { if (e.isIntersecting) { loadAll(); near.disconnect(); } }, { rootMargin: "150% 0px" });
+      near.observe(reel);
+    } else loadAll();
     measure();
   }
 

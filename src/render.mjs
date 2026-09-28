@@ -71,7 +71,7 @@ ${shareUrl ? `<meta property="og:image" content="${esc(shareUrl)}">\n<meta prope
 <link rel="icon" href="${b}assets/icons/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="${b}assets/icons/apple-touch-icon.png">
 <link rel="manifest" href="${b}site.webmanifest">
-<link rel="preload" href="${b}assets/fonts/instrument-serif.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="${b}assets/fonts/cormorant-garamond.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="${b}assets/fonts/hanken-grotesk.woff" as="font" type="font/woff" crossorigin>
 ${page.preload || ""}
 <link rel="stylesheet" href="${b}assets/css/site.css?v=${page.v.css}">
@@ -269,17 +269,23 @@ export function home(c, ctx) {
 </section>`;
 
   const [pA, pB] = prologue.images;
-  const prologueHtml = `<section class="prologue" aria-labelledby="prologue-h">
-  <div class="wrap prologue__grid">
-    <div class="prologue__text">
-      <p class="label">${esc(prologue.kicker)}</p>
-      <h2 class="h2" id="prologue-h" data-reveal>${md(prologue.heading)}</h2>
-      <p class="lead" data-reveal>${esc(prologue.body)}</p>
-      <p class="prologue__aside" data-reveal><em>${esc(prologue.aside)}</em></p>
-    </div>
-    <div class="prologue__images">
-      ${pA ? `<div class="frame frame--portrait prologue__a" data-reveal>${fillImg(pA, ctx, { sizes: "(min-width: 1024px) 28vw, 60vw" })}</div>` : ""}
-      ${pB ? `<div class="frame frame--landscape prologue__b" data-reveal style="--d:120ms">${fillImg(pB, ctx, { sizes: "(min-width: 1024px) 30vw, 70vw" })}</div>` : ""}
+  const ideaPhoto = (img, cls, frame, sizes, d) => img ? `<figure class="idea__photo ${cls}" data-reveal style="--d:${d}ms">
+        <div class="frame ${frame}">${fillImg(img, ctx, { sizes })}</div>
+        ${img.caption ? `<figcaption>${esc(img.caption)}</figcaption>` : ""}
+      </figure>` : "";
+  const prologueHtml = `<section class="idea" aria-labelledby="idea-h">
+  <div class="wrap">
+    <header class="idea__head">
+      <p class="label idea__kicker">${esc(prologue.kicker)}</p>
+      <h2 class="h2 idea__title" id="idea-h" data-reveal>${md(prologue.heading)}</h2>
+    </header>
+    <div class="idea__spread">
+      ${ideaPhoto(pA, "idea__photo--a", "frame--portrait", "(min-width: 1024px) 34vw, (min-width: 600px) 46vw, 50vw", 0)}
+      <div class="idea__text" data-reveal style="--d:120ms">
+        <p class="lead">${esc(prologue.body)}</p>
+        <p class="idea__quote">${esc(prologue.aside)}</p>
+      </div>
+      ${ideaPhoto(pB, "idea__photo--b", "frame--tall", "(min-width: 1024px) 24vw, (min-width: 600px) 46vw, 50vw", 220)}
     </div>
   </div>
 </section>`;
@@ -319,21 +325,31 @@ export function home(c, ctx) {
   </div>
 </section>` : "";
 
-  const storiesHtml = published.length ? `<section class="stories" id="stories" aria-labelledby="stories-h">
+  // Published stories get their own page; "teaser" stories show a card only,
+  // until their photos and details are added.
+  const listed = stories.items.filter((s) => s.published || s.teaser);
+  const featureFirst = listed.length !== 2; // two stories sit side by side as equals
+  const storyCard = (s, i) => {
+    const feature = featureFirst && i === 0;
+    const inner = `
+          <div class="frame story-card__media">${fillImg(s.cover, ctx, { sizes: feature ? "(min-width: 1024px) 60vw, 120vw" : "(min-width: 600px) 50vw, 120vw" })}</div>
+          <div class="story-card__body">
+            <p class="label">${[formatDate(s.date), s.place].filter(Boolean).map(esc).join(" · ") || "Real wedding"}</p>
+            <h3 class="story-card__title">${esc(s.couple).replace("&amp;", "<em>&amp;</em>")}</h3>
+            ${s.summary ? `<p class="body">${esc(s.summary)}</p>` : ""}
+            ${s.published
+              ? `<span class="link-arrow">View their story ${ICON.arrow}</span>`
+              : `<span class="story-card__soon">Full story coming soon</span>`}
+          </div>`;
+    return `<article class="story-card${feature ? " story-card--feature" : ""}${s.published ? "" : " story-card--teaser"}" data-reveal style="--d:${i * 120}ms">
+        ${s.published ? `<a class="story-card__link" href="stories/${esc(s.slug)}/">${inner}</a>` : `<div class="story-card__link">${inner}</div>`}
+      </article>`;
+  };
+  const storiesHtml = listed.length ? `<section class="stories" id="stories" aria-labelledby="stories-h">
   <div class="wrap">
     ${head(stories, "stories-h")}
-    <div class="stories__list stories__list--${Math.min(published.length, 3)}">
-      ${published.map((s, i) => `<article class="story-card${i === 0 ? " story-card--feature" : ""}" data-reveal>
-        <a class="story-card__link" href="stories/${esc(s.slug)}/">
-          <div class="frame story-card__media">${fillImg(s.cover, ctx, { sizes: i === 0 ? "(min-width: 1024px) 60vw, 120vw" : "(min-width: 1024px) 40vw, 100vw" })}</div>
-          <div class="story-card__body">
-            <p class="label">${[formatDate(s.date), s.place].filter(Boolean).map(esc).join(" · ")}</p>
-            <h3 class="story-card__title">${esc(s.couple).replace("&amp;", "<em>&amp;</em>")}</h3>
-            <p class="body">${esc(s.summary)}</p>
-            <span class="link-arrow">View their story ${ICON.arrow}</span>
-          </div>
-        </a>
-      </article>`).join("")}
+    <div class="stories__list stories__list--${Math.min(listed.length, 3)}">
+      ${listed.map(storyCard).join("")}
     </div>
   </div>
 </section>` : "";
@@ -486,7 +502,12 @@ export function story(c, s, ctx, all) {
   const idx = all.indexOf(s);
   const next = all.length > 1 ? all[(idx + 1) % all.length] : null;
   const b = ctx.base;
-  const film = s.film ? { youtube: s.film, title: "Wedding Highlight", couple: s.couple, place: s.place.split(",")[0], poster: s.gallery[0] } : null;
+  const place = (s.place || "").trim();
+  const gallery = s.gallery || [];
+  const film = s.film ? { youtube: s.film, title: "Wedding Highlight", couple: s.couple, place: place.split(",")[0], poster: gallery[0] || s.cover } : null;
+  const meta = [["Date", formatDate(s.date)], ["Place", place], ["We made", (s.services || []).join(", ")]].filter(([, v]) => v);
+  const intro = s.intro || s.summary;
+  const cols = Math.min(3, Math.max(1, gallery.length));
   const btsItems = (s.bts || []).map((id) => c.bts.items.find((v) => v.id === id)).filter(Boolean);
 
   const body = `<article class="story">
@@ -494,32 +515,36 @@ export function story(c, s, ctx, all) {
     <div class="story-hero__media">${fillImg(s.cover, ctx, { sizes: HERO_SIZES, eager: true })}</div>
     <div class="hero__shade" aria-hidden="true"></div>
     <div class="wrap story-hero__content">
-      <p class="label label--light"><a href="${b}#stories">Real weddings</a> · ${esc(formatDate(s.date))}</p>
+      <p class="label label--light"><a href="${b}#stories">Real weddings</a>${s.date ? ` · ${esc(formatDate(s.date))}` : ""}</p>
       <h1 class="story-hero__title">${esc(s.couple).replace("&amp;", "<em>&amp;</em>")}</h1>
-      <p class="story-hero__place">${esc(s.place)}</p>
+      ${place ? `<p class="story-hero__place">${esc(place)}</p>` : ""}
     </div>
   </header>
 
-  <section class="story-intro">
+  ${intro || meta.length ? `<section class="story-intro">
     <div class="wrap story-intro__grid">
-      <dl class="story-meta">
-        <div><dt class="label">Date</dt><dd>${esc(formatDate(s.date))}</dd></div>
-        <div><dt class="label">Place</dt><dd>${esc(s.place)}</dd></div>
-        <div><dt class="label">We made</dt><dd>${s.services.map(esc).join(", ")}</dd></div>
-      </dl>
-      <p class="lead story-intro__text" data-reveal>${esc(s.intro)}</p>
+      ${meta.length ? `<dl class="story-meta">
+        ${meta.map(([k, v]) => `<div><dt class="label">${k}</dt><dd>${esc(v)}</dd></div>`).join("")}
+      </dl>` : "<div></div>"}
+      ${intro ? `<p class="lead story-intro__text" data-reveal>${esc(intro)}</p>` : ""}
     </div>
-  </section>
+  </section>` : ""}
 
   ${film ? `<section class="story-film dark"><div class="wrap">${filmCard(film, ctx)}</div></section>` : ""}
 
-  ${s.gallery.length ? `<section class="gallery" aria-label="Photographs">
+  ${gallery.length ? `<section class="gallery" aria-label="Photographs">
     <div class="wrap">
-      <div class="gallery__cols">
-        ${s.gallery.map((g) => `<figure class="gallery__item" data-reveal>${naturalImg(g, ctx, { sizes: "(min-width: 1024px) 33vw, (min-width: 600px) 50vw, 100vw" })}</figure>`).join("")}
+      <div class="gallery__cols gallery__cols--${cols}">
+        ${gallery.map((g) => `<figure class="gallery__item" data-reveal>${naturalImg(g, ctx, { sizes: "(min-width: 1024px) 33vw, (min-width: 600px) 50vw, 100vw" })}</figure>`).join("")}
       </div>
     </div>
-  </section>` : ""}
+  </section>` : `<section class="gallery-soon" aria-labelledby="soon-h">
+    <div class="wrap gallery-soon__inner">
+      <p class="label">The gallery</p>
+      <h2 class="h2" id="soon-h" data-reveal>Being edited, <em>frame by frame.</em></h2>
+      <p class="body" data-reveal>${esc(s.couple)}’s photographs${s.film ? "" : " and film"} are on their way to this page.</p>
+    </div>
+  </section>`}
 
   ${btsItems.length ? `<section class="bts bts--story" aria-labelledby="story-bts-h">
     <div class="wrap bts__grid">
