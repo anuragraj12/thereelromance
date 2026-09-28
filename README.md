@@ -25,7 +25,7 @@ The easy way is on GitHub itself: open `content/site.json` → ✏️ **Edit** �
 The *Build & check site* action rebuilds the pages and commits them; the live site updates a minute later.
 If the check fails (for example a photo has no description), the action turns red and tells you exactly which line to fix.
 
-Text: anything wrapped in `*asterisks*` is set in *italic serif*, e.g. `"Tell us about *your day.*"`.
+Text: anything wrapped in `*asterisks*` is set in *italic*, e.g. `"Tell us about *your day.*"`.
 
 ### Changing a photo (and why it can't look stretched any more)
 
@@ -84,7 +84,8 @@ GitHub Pages serves the repository root of `main`. `.nojekyll` switches off Jeky
 
 ## Design notes
 
-* Type: *Instrument Serif* (display) and *Hanken Grotesk* (text), self-hosted, OFL licensed (see `assets/fonts`).
+* Type: *Cormorant Garamond* (headlines, with true italics for *emphasis*) and *Hanken Grotesk* (text), self-hosted, OFL licensed (see `assets/fonts`).
+* Motion is deliberately calm: soft fade-ups, a slow hero cross-fade, the letterbox opening, the pinned film strip, and a gentle cross-fade between pages.
 * Colour: ivory `#f3eee6`, ink `#141210`, one sindoor accent `#b23a24` used only for tiny details.
 * Breakpoints: phone < 600px, tablet 600–1023px, desktop ≥ 1024px; landscape phones/tablets get their own hero rules.
 * Motion respects "reduce motion" settings: the letterbox intro, reel pinning, autoplay and Ken Burns all switch off.

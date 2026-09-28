@@ -43,14 +43,14 @@
     "body": "We watch for the split-second glance, the laugh nobody planned, the hand finding yours in a crowded room. Then we shape those fragments into photographs and films that still feel alive years later.",
     "aside": "A little direction when you need it. A lot of room to be yourselves.",
     "images": [
-      { "src": "local:holding-hands", "alt": "The groom's hand holding the bride's hennaed hand, red bangles on her wrist", "focus": "50% 45%" },
-      { "src": "local:haldi-hands", "alt": "Turmeric-covered hands of the bride during the haldi ceremony", "focus": "55% 50%" }
+      { "src": "local:holding-hands", "alt": "The groom's hand holding the bride's hennaed hand, red bangles on her wrist", "focus": "50% 45%", "caption": "The promise" },
+      { "src": "local:haldi-hands", "alt": "Turmeric-covered hands of the bride during the haldi ceremony", "focus": "42% 50%", "caption": "Haldi" }
     ]
   },
 
   "frames": {
     "kicker": "Selected frames",
-    "heading": "The in-between, *kept.*",
+    "heading": "The in‑between, *kept.*",
     "note": "Scroll to advance the reel",
     "items": [
       { "src": "local:haldi-hands", "alt": "Hands covered in turmeric paste at the haldi", "caption": "Haldi" },
