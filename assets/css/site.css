@@ -638,3 +638,11 @@ html.menu-open{overflow:hidden}
 .story-card--teaser:hover .story-card__media img.fill{transform:none}
 .story-card__soon{justify-self:start;margin-top:8px;display:inline-flex;align-items:center;gap:10px;font:600 .75rem/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--stone)}
 .story-card__soon::before{content:"";width:22px;height:1px;background:var(--accent)}
+
+/* gallery adapts to how many photos a story has */
+@media (min-width:600px){.gallery__cols--1{columns:1;max-width:min(900px,100%);margin-inline:auto}}
+@media (min-width:1024px){.gallery__cols--2{columns:2}}
+/* shown on a story page until its photographs are added */
+.gallery-soon{padding-block:clamp(72px,9vw,150px);border-top:1px solid var(--line)}
+.gallery-soon__inner{display:grid;gap:22px;justify-items:center;text-align:center}
+.gallery-soon .h2{max-width:14em}
